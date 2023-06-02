@@ -2,8 +2,10 @@ import boto3
 import json
 
 
+# Todo: Expand to meet requirements!!!!
 def lambda_handler(event, context):
     # Retrieve Data from DB
+
     table_name = event['table']
     key = event['key']
 
