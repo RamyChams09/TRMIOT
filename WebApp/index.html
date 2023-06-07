@@ -31,5 +31,33 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="app.js"></script>
+
+  <!-- Login Script -->
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.935.0.min.js"></script>
+  <!-- 
+    <script src="scripts/amazon-cognito-identity.min.js"></script> 
+  -->
+  
+  <script>
+    // Initialize the Amazon Cognito credentials provider
+    AWS.config.region = 'eu-central-1'; //AWS region
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials
+    
+    // Create an instance of the Amazon Cognito service
+    var cognitoIdentity = new AWS.CognitoIdentity();
+
+    // Retrieve the User Pool ID and Client ID from the URL parameters
+    var urlParams = new URLSearchParams(window.location.search);
+    var userPoolId = urlParams.get('eu-central-1_lpgDFIdQ1'); //User Pool ID
+    var clientId = urlParams.get('709eu8fla6cpc05b71hgebg8f5'); //Client ID
+
+    // Set the User Pool ID and Client ID in the Cognito service configuration
+    var poolData = {
+      UserPoolId: userPoolId,
+      ClientId: clientId
+    };
+    var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+  </script>
+
 </body>
 </html>
