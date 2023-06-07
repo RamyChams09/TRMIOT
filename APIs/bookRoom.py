@@ -16,7 +16,14 @@ def lambda_handler(event, context):
     body = event['body']
     from_address = event['from_address']
 
-    body_message = f'{body}\nMeetingroom: {meetingroomID}\nDate: {date}\nStart time: {start_time}\nEnd time: {end_time}\nBooking code: {booking_code}\n \nto edit or cancel this booking please click here'
+    body_message = f"{body}\n\
+    Meetingroom: {meetingroomID}\n\
+    Date: {date}\n\
+    Start time: {start_time}\n\
+    End time: {end_time}\n\
+    Booking code: {booking_code}\n \n\
+to edit or cancel this booking please click here\n\n\
+Kind regards\n Your booking team"
 
     print(meetingroomID)
 
@@ -72,3 +79,4 @@ def lambda_handler(event, context):
             "status": 500,
             "body": json.dumps("data failed to post")
         }
+
