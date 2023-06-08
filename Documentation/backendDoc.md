@@ -2,12 +2,12 @@ Process
 
   1) Cloud settings - region, budget
 
-- we defined the resource budget - AWS Console > Billing Dasboard > Budget
-- we defined the region for implementation as per customer's request - Region > Frankfurt
+    - we defined the resource budget - AWS Console > Billing Dasboard > Budget
+    - we defined the region for implementation as per customer's request - Region > Frankfurt
 
   2) AWS component definition
   
-- as per customer's request, we selected the following AWS components: Lambda, SES, DynamoDB, IAM, S3, API Gateway
+    - as per customer's request, we selected the following AWS components: Lambda, SES, DynamoDB, IAM, S3, API Gateway
 
     Lambda - an event-driven serverless computing platform
     Simple Email Service (SES) - emnail platform enbaling sending and receiving of emails in HTML format
