@@ -15,7 +15,6 @@ Process
     Identitiy and Access Management (IAM) - central management platform for AWS resource user access
     S3 - simple storage service
     API Gateway - fully managed services for API management 
-    
 
   3) IAM role definition
 
