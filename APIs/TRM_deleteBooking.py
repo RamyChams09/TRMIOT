@@ -2,7 +2,7 @@ import json
 import boto3
 
 
-def lambda_handler(event):
+def lambda_handler(event, context):
     # Receive DELETE data from the API
     booking_code = event["booking_code"]
 
@@ -13,8 +13,8 @@ def lambda_handler(event):
     from_address = event["from_address"]
 
     body_message = f"""{body}
-    \tBooking code:{booking_code}
-    \tSatus:\t'Canceled'
+    \tBooking code:\t {booking_code}
+    \tSatus:\t Canceled
 
     You booking has been canceled successfully
 
@@ -71,4 +71,3 @@ def lambda_handler(event):
             'statusCode': 500,
             'body': f'Error: {str(e)}'
         }
-

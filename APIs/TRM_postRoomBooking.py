@@ -2,7 +2,7 @@ import json
 import boto3
 
 
-def lambda_handler(event):
+def lambda_handler(event, context):
     # Receive the Post Data from the API
     meetingroomID = event["meetingroomID"]
     date = event["date"]
@@ -18,11 +18,11 @@ def lambda_handler(event):
     from_address = event['from_address']
 
     body_message = f"""{body}
-    \tMeeting room: {meetingroomID}
-    \tDate: {date}
-    \tStart time: {start_time}
-    \tEnd time: {end_time}
-    \tBooking code: {booking_code}
+        \tMeeting room:\t {meetingroomID}
+        \tDate:\t {date}
+        \tStart time:\t {start_time}
+        \tEnd time:\t {end_time}
+        \tBooking code:\t {booking_code}
 
     To edit or cancel this booking, please click the following link: https://example.com
 
@@ -31,7 +31,7 @@ def lambda_handler(event):
 
     # load the DynamoDB client
     dynamodb = boto3.resource("dynamodb")
-    table = dynamodb.Table("TRM-MeetingRoom_Booking")
+    table = dynamodb.Table("TRM_MeetingRoom_Booking")
 
     # load the ses client
     client = boto3.client('ses')
