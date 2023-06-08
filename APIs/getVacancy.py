@@ -4,8 +4,16 @@ import json
 
 # Todo: Expand to meet requirements!!!!
 def lambda_handler(event, context):
-    # Retrieve Data from DB
+    """
+    Function to retrieve item from DynamoDB
+    :param event: The event passed to the Lambda function
+    :param context: The runtime information of the Lambda function
+    :return: None
+    :raises: Exception: If DynamoDB returns an error
 
+    """
+
+    # Get the table name and key from the event data
     table_name = event['table']
     key = event['key']
 
