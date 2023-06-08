@@ -34,10 +34,7 @@
 
   <!-- Login Script -->
   <script src="https://sdk.amazonaws.com/js/aws-sdk-2.935.0.min.js"></script>
-  <!-- 
-    <script src="scripts/amazon-cognito-identity.min.js"></script> 
-  -->
-  
+
   <script>
     // Initialize the Amazon Cognito credentials provider
     AWS.config.region = 'eu-central-1'; //AWS region
@@ -50,13 +47,49 @@
     var urlParams = new URLSearchParams(window.location.search);
     var userPoolId = urlParams.get('eu-central-1_lpgDFIdQ1'); //User Pool ID
     var clientId = urlParams.get('709eu8fla6cpc05b71hgebg8f5'); //Client ID
+      if (userPoolId && clientId) {
+        poolData.UserPoolId = userPoolId;
+        poolData.ClientId = clientId;
+        userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+      }
 
     // Set the User Pool ID and Client ID in the Cognito service configuration
     var poolData = {
-      UserPoolId: userPoolId,
-      ClientId: clientId
+      UserPoolId: 'eu-central-1_lpgDFIdQ1' ,
+      ClientId: '709eu8fla6cpc05b71hgebg8f5' ,
     };
     var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+    var userData = {
+      Username: username,
+      Pool: userPool,
+    };
+    var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+    cognitoUser.authenticaeUser(authenticationDetails, {
+      onSuccess: function(result) {
+          var accessToken = result.getAccessToken().getJwtToken();
+
+          AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                    Logins: {
+                            // insert specific aws region and User Pool-ID
+                            'cognito-idp.eu-central-1.amazonaws.com/eu-central-1_lpgDFIdQ1' : result
+                            .getIdToken()
+                            .getJwtToken(),
+                    },
+          });
+
+          //refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
+          AWS.config.credentials.refresh(error => {
+                    if (error) {
+                            console.error(error);
+                    } else {
+                      console.log('successfully logged!');
+                    }
+          });
+      },
+      onFailure: function(err) {
+              alert(err.message || JSON.stringify(err));
+      },
+    });
   </script>
 
 </body>
