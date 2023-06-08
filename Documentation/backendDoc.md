@@ -18,58 +18,58 @@ Process
 
   3) IAM role definition
 
-IAM > Roles > Create Role
+    IAM > Roles > Create Role
 
-In order to establish the connection between Lambda and other AWS components, the following IAM roles were defined:
+    In order to establish the connection between Lambda and other AWS components, the following IAM roles were defined:
 
-   A) TRM_postRoomBooking-role-z1i9g8w9
+    A) TRM_postRoomBooking-role-z1i9g8w9
         - permissions: AWSLambdaBasicExecutionRole-2741c49f-eb05-4f23-8fbb-a56fe62f5cee, SESFullAccess, DynamoDB-Putitem
         
-   B) TRM_deleteBooking-role-z0itjt76
+    B) TRM_deleteBooking-role-z0itjt76
         - AWSLambdaBasicExecutionRole-8653ab0f-9a33-4848-b058-b926101e04c0, DynamoDB_Delete-Update_Item, SESFullAccess
         
-   C) TRM_getRoomVacancy
+    C) TRM_getRoomVacancy
         - AWSLambdaBasicExecutionRole-02040bd4-28c8-4a34-8676-d0c80f0ca52c, AWSLambdaSNSTopicDestinationExecutionRole-d1d0e6aa-7f49-4fa8-b7b7-1554989d1c27, TRM_Lambda_Get_Data
 
    4) APIs definition
 
-API Gateway > Create API
+    API Gateway > Create API
 
-   A) TRM_RoomBooking_API - Rest API, connects frontend with the room booking Lambda function
-   B)
+    A) TRM_RoomBooking_API - Rest API, connects frontend with the room booking Lambda function
+    B)
   
    5) Lambda Function definition
 
-Lambda > create functiona
+    Lambda > create functiona
 
-   A) TRM_postRoomBooking - when triggered, the function posts booking details into DynamoDB and sends an email notifaction through SES to an end user
+     A) TRM_postRoomBooking - when triggered, the function posts booking details into DynamoDB and sends an email notifaction through SES to an end user
 
-   B) TRM_deleteBooking - when triggered, the function deletes booking details in DynamoDb and send an email notification through SES to an end user
+     B) TRM_deleteBooking - when triggered, the function deletes booking details in DynamoDb and send an email notification through SES to an end user
 
-   C) TRM_getRoomVacancy - when triggered, the function retrieves data from DynamoDB and sends it to frotend in order to display conference room vacancies
+     C) TRM_getRoomVacancy - when triggered, the function retrieves data from DynamoDB and sends it to frotend in order to display conference room vacancies
    
-   D) TRM_update - To be continued 
+     D) TRM_update - To be continued 
 
   6) DynamoDB table definition
 
-DynamoDB > create table
+    DynamoDB > create table
 
-   A) TRM_MeetingRoom_Booking - the table stores booking information such as the booking code, date, time, employee ID and the meeting room name
-    - Partition Key: booking_code
+     A) TRM_MeetingRoom_Booking - the table stores booking information such as the booking code, date, time, employee ID and the meeting room name
+      - Partition Key: booking_code
 
-   B) UserList - the table stores the user information such as user names and email addresses
-    - Partition Key: User Name
+     B) UserList - the table stores the user information such as user names and email addresses
+      - Partition Key: User Name
     
-   C) Sensors - to be continued
+     C) Sensors - to be continued
 
 
   7) Notification workflow using SES
   
-SES > Email verification
+    SES > Email verification
 
-  All functionalities are enabled through Lambda functions.
+    All functionalities are enabled through Lambda functions.
  
  
 Data Flow
 
-- add the flow diagram and describe it
+    - add the flow diagram and describe it
