@@ -35,7 +35,7 @@ Process
 
     API Gateway > Create API
 
-    A) TRM_RoomBooking_API - Rest API, connects frontend with the room booking Lambda function
+    A) TRM_RoomBooking_API - Rest API, connects frontend with the room booking Lambda functions
     B)
   
    5) Lambda Function definition
@@ -48,7 +48,7 @@ Process
 
      C) TRM_getRoomVacancy - when triggered, the function retrieves data from DynamoDB and sends it to frotend in order to display conference room vacancies
    
-     D) TRM_update - To be continued 
+     D) TRM_UpdateBooking - when triggered, the function will update the booking details in DynamonDB and send an email notification through SES to an end user
 
   6) DynamoDB table definition
 
