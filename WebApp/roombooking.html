@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TRM Room Booking</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="roombooking.css">
 </head>
 <body>
   <header class="bg-primary text-white py-3">
@@ -14,9 +14,30 @@
     </div>
   </header>
 
-  <!--Booking the Room-->
-  <main class="container my-4">
+  <main class="container-fluid my-4">
     <div class="row">
+
+        <!--Booking Summary-->
+      <div class="col-md-6">
+        <div id="bookingSummary">
+          <h2>Booking Summary</h2>
+          <div class="form-group">
+            <label for="summaryRoom">Room:</label>
+            <input type="text" id="summaryRoom" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label for="summaryDate">Date:</label>
+            <input type="text" id="summaryDate" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label for="summaryTime">Time:</label>
+            <input type="text" id="summaryTime" class="form-control" readonly>
+          </div>
+        </div>
+      </div>
+
+  
+      <!--Room booking-->
       <div class="col-md-6">
         <h2>Book a Room</h2>
         <form id="bookingForm">
@@ -29,36 +50,27 @@
             </select>
           </div>
 
-          <!--The Date for the Booking-->
           <div class="form-group">
             <label for="date">Date:</label>
             <input type="date" id="date" class="form-control" required>
           </div>
 
-          <!--The Time for the Booking-->
           <div class="form-group">
-            <label for="time">Time (24-hour format):</label>
-            <input type="time" id="time" class="form-control" required>
+            <label for="inTime">In Time:</label>
+            <input type="time" id="inTime" class="form-control" required>
           </div>
 
-        <!-- Additional requirement for the booking-->   
           <div class="form-group">
-            <label for="additionalInfo">Additional Information:</label>
-            <textarea id="additionalInfo" class="form-control"></textarea>
+            <label for="outTime">Out Time:</label>
+            <input type="time" id="outTime" class="form-control" required>
           </div>
 
-          <!--click the button to book-->
           <button type="submit" class="btn btn-primary">Book Now</button>
         </form>
       </div>
 
-      <!--It shows the room Occupancy-->
-      <div class="col-md-6">
-        <h2>Room Occupancy</h2>
-        <div id="occupancyGraph">
-          <!--Occupancy graph will be added -->
-        </div>
-      </div>
+
+
     </div>
   </main>
 
@@ -68,6 +80,8 @@
     </div>
   </footer>
 
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
