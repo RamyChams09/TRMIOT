@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TRM Room Booking</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="roombooking.css">
 </head>
 <body>
   <header class="bg-primary text-white py-3">
@@ -16,15 +16,27 @@
 
   <main class="container-fluid my-4">
     <div class="row">
-  
-      <!--Room Occupancy-->
+
+        <!--Booking Summary-->
       <div class="col-md-6">
-        <h2>Room Occupancy</h2>
-        <div id="occupancyGraph">
-          <!-- Add occupancy graph or table -->
+        <div id="bookingSummary">
+          <h2>Booking Summary</h2>
+          <div class="form-group">
+            <label for="summaryRoom">Room:</label>
+            <input type="text" id="summaryRoom" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label for="summaryDate">Date:</label>
+            <input type="text" id="summaryDate" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label for="summaryTime">Time:</label>
+            <input type="text" id="summaryTime" class="form-control" readonly>
+          </div>
         </div>
       </div>
 
+  
       <!--Room booking-->
       <div class="col-md-6">
         <h2>Book a Room</h2>
@@ -57,6 +69,8 @@
         </form>
       </div>
 
+
+
     </div>
   </main>
 
@@ -66,6 +80,8 @@
     </div>
   </footer>
 
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
