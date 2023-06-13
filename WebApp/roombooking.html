@@ -16,61 +16,39 @@
 
   <main class="container-fluid my-4">
     <div class="row">
-
-        <!--Booking Summary-->
+      <!-- Booking Summary -->
       <div class="col-md-6">
-        <div id="bookingSummary">
-          <h2>Booking Summary</h2>
-          <div class="form-group">
-            <label for="summaryRoom">Room:</label>
-            <input type="text" id="summaryRoom" class="form-control" readonly>
-          </div>
-          <div class="form-group">
-            <label for="summaryDate">Date:</label>
-            <input type="text" id="summaryDate" class="form-control" readonly>
-          </div>
-          <div class="form-group">
-            <label for="summaryTime">Time:</label>
-            <input type="text" id="summaryTime" class="form-control" readonly>
-          </div>
-        </div>
-      </div>
-
-  
-      <!--Room booking-->
+      <!-- Room booking -->
       <div class="col-md-6">
         <h2>Book a Room</h2>
-        <form id="bookingForm">
+        <form action="#" id="bookingForm">
           <div class="form-group">
-            <label for="roomSelect">Select a Room:</label>
+            <label for="roomSelect">Select Room:</label>
             <select id="roomSelect" class="form-control">
-              <option value="room1">Room 1</option>
-              <option value="room2">Room 2</option>
+              <option value="1">Room 1</option>
+              <option value="2">Room 2</option>
               <!-- Add more room options -->
             </select>
           </div>
 
           <div class="form-group">
-            <label for="date">Date:</label>
-            <input type="date" id="date" class="form-control" required>
+            <label for="date">Booking Date:</label>
+            <input type="date" id="date" class="form-control" required> 
           </div>
 
           <div class="form-group">
-            <label for="inTime">In Time:</label>
-            <input type="time" id="inTime" class="form-control" required>
+            <label for="inTime">Start Time:</label>
+            <input type="time" id="start_time" class="form-control" required>
           </div>
 
           <div class="form-group">
-            <label for="outTime">Out Time:</label>
-            <input type="time" id="outTime" class="form-control" required>
+            <label for="outTime">End Time:</label>
+            <input type="time" id="end_time" class="form-control" required>
           </div>
 
-          <button type="submit" class="btn btn-primary">Book Now</button>
+          <button onclick="accessAPI()" type="submit" class="btn btn-primary">Book Now</button>
         </form>
       </div>
-
-
-
     </div>
   </main>
 
@@ -82,6 +60,70 @@
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="app.js"></script>
+  <script src="roomboooking.js"></script>
+</body>
+</html>
+
+  
+  <script>
+    //const form = document.querySelector('form')
+    //form.addEventListener('submit', accessAPI);
+    
+    //var roomID = document.getElementById('roomSelect').value;
+    
+    /*
+    function accessAPI() {
+      var apiUrl = 'https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/';
+      
+      var roomID = document.getElementById('roomSelect');
+      var selected_room = roomID.options[roomID.selectedIndex].value;
+      var booking_date = document.getElementById('date').value;
+      var start_time = document.getElementById('start_time').value;
+      var end_time = document.getElementById('end_time').value;
+
+       // Validate if the selected date and time are in the future
+  var currentTime = new Date().getTime();
+  var selectedDateTime = new Date(`${booking_date}T${start_time}`).getTime();
+  
+  if (selectedDateTime < currentTime) {
+    alert('Please select a future date and time.');
+    return;
+  }
+
+      var postData = {
+        'meetingroomID': selected_room,
+        'booking_date': booking_date,
+        'start_time': start_time,
+        'end_time': end_time,
+        'employeeID': 'Jessica',
+        'to_address': 'stephen.aliemeke@capgemini.com',
+        'subject': 'Booking Confirmation',
+        'body': 'Congratulations you have booked as below:',
+        'from_address': 'ronja.pill@capgemini.com'   
+      }
+
+      console.log(postData)
+
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
+      })
+        .then(function(response) {
+          return response.json();
+        })
+          .then(function(data) {
+            console.log(data);
+          })
+          .catch(function(error) {
+            console.error('Error:', error);
+          });
+    }
+    */
+  </script>
+
+  
 </body>
 </html>
