@@ -1,5 +1,6 @@
 //Libraries
 #include <Arduino.h>
+#include <time.h>
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
 #include <ArduinoJson.h>
@@ -18,10 +19,11 @@
 //WIFI Settings
 #define WIFI_TIMEOUT_MS 20000
 //AWS Related
-#define AWS_IOT_PUBLISH_TOPIC "esp32/pub"
-#define AWS_IOT_SUBSCRIBE_TOPIC "esp32/sub"
-#define AWS_IOT_RECEIVE_TOPIC "esp32/rec"
+#define AWS_IOT_PUBLISH_TOPIC "esp32/pub" //Add to Subscribe topic on AWS
+#define AWS_IOT_SUBSCRIBE_TOPIC "esp32/sub" //Add to Publish Topic on AWS
 
+//Variables
+unsigned long lastMillis = 0;
 
 
 //Instances
@@ -49,26 +51,84 @@ int  reMap(int analogValue)
     return newAnalogValue;
 }
 
-void messageReceived(char *topic, byte *payload, unsigned int length)
+
+// Get current date/time, format is YYYY-MM-DD.HH:mm:ss
+const std::string currentDateTime() {
+  configTime(TIME_ZONE * 3600, 0 * 3600, "pool.ntp.org", "time.nist.gov");
+  time_t     now = time(0);
+  struct tm  tstruct;
+  gmtime_r   (&now, &tstruct);
+  char       buff[80];
+  //tstruct = *localtime(&now);
+
+  strftime(buff, sizeof(buff), "%Y-%m-%d.%X", &tstruct);
+  //Serial.println(asctime(&tstruct));
+
+  return buff;
+}
+
+
+/**
+ * Sends data from ESP32 to AWS every 10 secs
+*/
+void publishAuto(void)
 {
-  Serial.print("Received [");
+    StaticJsonDocument<200> doc;
+    doc[currentDateTime()] = String(reMap(analogRead(LRD)));
+    //Handle JSON and Send to Client
+    char jsonBuffer[512];
+    serializeJson(doc, jsonBuffer); 
+    client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
+
+}
+
+/**
+ * Sends data from ESP32 to AWS
+*/
+void publishPerRequest(String sensorCommand)
+{
+  if(sensorCommand == "1")
+  {
+    StaticJsonDocument<200> doc;
+    doc[currentDateTime()] = String(reMap(analogRead(LRD)));
+    //Handle JSON and Send to Client
+    char jsonBuffer[512];
+    serializeJson(doc, jsonBuffer); 
+    client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
+  }
+  else
+  {
+    Serial.println("Not defined Command!");
+  }
+  //ADD IF MORE COMMANDS NEEDS TOBE HANDLED
+}
+
+
+/**
+ * Receive Data from AWS to ESP32
+*/
+void receiveMessage(char *topic, byte *payload, unsigned int length)
+{
+  Serial.print("Received Topic Name: [");
   Serial.print(topic);
   Serial.print("]: ");
 
   StaticJsonDocument<200> doc;
   deserializeJson(doc,payload);
-  String relay1 = doc["status"];
-  int r1 = relay1.toInt();
-  if(r1 == 1)
-    Serial.print("Working!");
-  //TODO ADD IF STATEMENTS
-
-  for (int i = 0; i < length; i++)
+  String receivedSensorCommand = doc["Sensor Command"];
+  
+  //Give sensor command to do something
+  if(receivedSensorCommand == "1")
   {
-    Serial.print((char)payload[i]);
+    Serial.println(reMap(analogRead(LRD)));
+    publishPerRequest(receivedSensorCommand);
   }
-  Serial.println();
+  else
+  {
+    Serial.print("Undefined sensor command has been received!");
+  }
 }
+
 
 /**
  * Connects to the WIFI
@@ -100,6 +160,8 @@ void connectToWiFi()
 }
 
 
+
+
 void connectToAWS()
 {
   //Configure WiFiClientSecure to use the AWS IOT device credentials
@@ -116,7 +178,7 @@ void connectToAWS()
   //Connect to the MQTT broker on the AWS endpoint we defined earlier
   client.setServer(AWS_IOT_ENDPOINT, 8883);
   //Create a message handler
-  client.setCallback(messageReceived);
+  client.setCallback(receiveMessage);
 
   //Connection starts here
   Serial.println("Connecting to AWS IoT Core...");
@@ -139,18 +201,26 @@ void connectToAWS()
 }
 
 
+
 void setup() {
   Serial.begin(115200);
   connectToWiFi();
-  delay(2000);
+  delay(5000);
   connectToAWS();
 }
+
+
 
 void loop() {
 
 client.loop();
-//Serial.println(reMap(analogRead(LRD)));
-delay(1000);
+
+if (millis() - lastMillis > 10000)
+{
+  lastMillis = millis();
+  publishAuto();
+}
+
 
 }
 
