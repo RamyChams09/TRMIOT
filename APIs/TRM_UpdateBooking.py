@@ -1,28 +1,27 @@
 import json
 import boto3
 
+import variable
+
 
 def lambda_handler(event, context):
     # Receive the Post Data from the API
-    meetingroomID = event["meetingroomID"]
-    date = event["date"]
-    start_time = event["start_time"]
-    end_time = event["end_time"]
+    new_meetingroomID = event["meetingroomID"]
+    new_date = event["booking_date"]
+    new_start_time = event["start_time"]
+    new_end_time = event["end_time"]
     booking_code = event["booking_code"]
-    employeeID = event["employeeID"]
+    booking_date = event["booking_date"]
 
     # Receive the email Attributes from the API
     to_address = event["to_address"]
-    subject = event['subject']
-    body = event['body']
-    from_address = event['from_address']
 
-    body_message = f"""{body}
+    body_message = f"""{variable.BODY}
     Your booking has been updated as below:
-    \tMeetingroom: {meetingroomID}
-    \tDate: {date}
-    \tStart time: {start_time}
-    \tEnd time: {end_time}
+    \tMeetingroom: {new_meetingroomID}
+    \tDate: {new_date}
+    \tStart time: {new_start_time}
+    \tEnd time: {new_end_time}
     \tBooking code: {booking_code}
 
     To edit or cancel this booking, please click the following link: https://example.com
@@ -30,31 +29,36 @@ def lambda_handler(event, context):
     Kind regards
     Your booking team"""
 
-    # load the DynamoDB client
-    dynamodb = boto3.resource("dynamodb")
-    table = dynamodb.Table("TRM_MeetingRoom_Booking")
-
-    # load the ses client
+    # load the clients
+    dynamodb = boto3.client("dynamodb")
     client = boto3.client('ses')
 
-    #if get:
-        # TODO: write code...
+    # if get:
+    # TODO: write code...
+
+    update_expression = 'SET meetingroomID = :mID, start_time = :st, end_time = :et, booking_date = :bd'
+
+    exp_attribute_values = {
+        ':mID': {'S': new_meetingroomID},
+        ':st': {'S': new_start_time},
+        ':et': {'S': new_end_time},
+        ':bd': {'S': new_date}
+    }
 
     try:
-        post_response = table.put_item(
-            Item={
-                "meetingroomID": meetingroomID,
-                "date": date,
-                "start_time": start_time,
-                "end_time": end_time,
-                "booking_code": booking_code,
-                "employeeID": employeeID
-            }
+        update_response = dynamodb.update_item(
+            TableName="TRM_MeetingRoom_Booking",
+            Key={
+                'booking_code': {'S': booking_code},
+                'booking_date': {'S': booking_date}
+            },
+            UpdateExpression=update_expression,
+            ExpressionAttributeValues=exp_attribute_values,
         )
 
-        if post_response['ResponseMetadata']['HTTPStatusCode'] == 200:
+        if update_response['ResponseMetadata']['HTTPStatusCode'] == 200:
             email_response = client.send_email(
-                Source=from_address,
+                Source=variable.FROM_ADDRESS,
                 Destination={
                     'ToAddresses':
                         [
@@ -64,7 +68,7 @@ def lambda_handler(event, context):
                 },
                 Message={
                     'Subject': {
-                        'Data': subject
+                        'Data': variable.SUBJECT
                     },
                     'Body': {
                         'Text': {
@@ -78,14 +82,14 @@ def lambda_handler(event, context):
 
             return {
                 "status": 200,
-                "body": json.dumps("data posted successfully"),
+                "body": json.dumps("data updated successfully"),
                 'body': json.dumps(email_response)
             }
 
         else:
             return {
                 "status": 400,
-                "body": json.dumps("data failed to post")
+                "body": json.dumps("data failed to update")
             }
 
     except Exception as e:

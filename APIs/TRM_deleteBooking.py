@@ -1,19 +1,19 @@
 import json
 import boto3
 
+import variables
+
+from sendEmail import sendEmail
+
 
 def lambda_handler(event, context):
     # Receive DELETE data from the API
     booking_code = event["booking_code"]
+    booking_date = event["booking_date"]
 
-    # defining response email
-    to_address = event["to_address"]
-    subject = event["subject"]
-    body = event["body"]
-    from_address = event["from_address"]
-
-    body_message = f"""{body}
+    body_message = f"""{variables.BODY}
     \tBooking code:\t {booking_code}
+    \tBooking date:\t {booking_date}
     \tSatus:\t Canceled
 
     You booking has been canceled successfully
@@ -22,49 +22,37 @@ def lambda_handler(event, context):
     Your booking team"""
 
     # load the DynamoDB client
-    dynamodb = boto3.resource("dynamodb")
-    table_name = dynamodb.Table("TRM_MeetingRoom_Booking")
+    dynamodb = boto3.client("dynamodb")
+    #  table_name = dynamodb.Table("TRM_MeetingRoom_Booking")
 
-    # load the SES client
-    client = boto3.client("ses")
+    print(booking_code)
 
     try:
-        delete_response = table_name.delete_item(
+        response = dynamodb.get_item(
+            TableName="TRM_MeetingRoom_Booking",
             Key={
-                'booking_code': booking_code
+                'booking_code': {'S': booking_code},
+                'booking_date': {'S': booking_date}
             }
         )
-
-        if delete_response['ResponseMetadata']['HTTPStatusCode'] == 200:
-            email_response = client.send_email(
-                Source=from_address,
-                Destination={
-                    'ToAddresses':
-                        [
-                            to_address
-                        ]
-                },
-                Message={
-                    'Subject': {
-                        'Data': subject
-                    },
-                    'Body': {
-                        'Text': {
-                            'Data': body_message
-                        }
-                    }
+        if 'Item' in response:
+            response = dynamodb.delete_item(
+                TableName="TRM_MeetingRoom_Booking",
+                Key={
+                    'booking_code': {'S': booking_code},
+                    'booking_date': {'S': booking_date}
                 }
             )
-
+            email_response = sendEmail(body_message)
             return {
                 "status": 200,
-                "delete_body": json.dumps("data deleted successfully"),
+                "delete_body": json.dumps("Booking deleted successfully"),
                 'email_body': json.dumps(email_response)
             }
         else:
             return {
                 "status": 400,
-                "body": json.dumps("data failed to delete")
+                "body": json.dumps("Booking not found")
             }
     except Exception as e:
         return {
