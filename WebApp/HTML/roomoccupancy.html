@@ -6,6 +6,7 @@
   <title>TRM Room Occupancy</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="roombooking.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header class="bg-primary text-white py-3">
@@ -14,15 +15,22 @@
       </div>
     </header>
     <main class="container-fluid my-4">
-      <div id="occupancySummary" style="display: none;">
-        <h2>Room Occupancy</h2>
-        <p id="occupancyPercentage"></p>
-        <p id="occupancyStatus"></p>
+      <div class="row">
+        <div class="col-md-6">
+          <h2>Room Occupancy</h2>
+            <div id="occupancyGraph">
+            </div>
+        </div>
       </div>
-      
+
+
+        <div id="chartContainer">
+          <canvas id="occupancyChart"></canvas>
+        </div>
     </main>
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-     
+        <script src="../JS/roomoccupancy.js"></script>
+  </body>
  </html>
