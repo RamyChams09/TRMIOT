@@ -52,8 +52,12 @@ int  reMap(int analogValue)
 }
 
 
-// Get current date/time, format is YYYY-MM-DD.HH:mm:ss
-const std::string currentDateTime() {
+/**
+* Get current date/time, format is YYYY-MM-DD / HH:mm:ss
+*/
+
+const std::string currentDateTime() 
+{
   configTime(TIME_ZONE * 3600, 0 * 3600, "pool.ntp.org", "time.nist.gov");
   time_t     now = time(0);
   struct tm  tstruct;
@@ -61,36 +65,57 @@ const std::string currentDateTime() {
   char       buff[80];
   //tstruct = *localtime(&now);
 
-  strftime(buff, sizeof(buff), "%Y-%m-%d.%X", &tstruct);
+  strftime(buff, sizeof(buff), "%Y-%m-%d / %X", &tstruct);
   //Serial.println(asctime(&tstruct));
-
   return buff;
 }
 
 
+
 /**
- * Sends data from ESP32 to AWS every 10 secs
+* Return the unique CHIP-ID of ESP32
+*/
+String getDeviceId()
+{
+  char ssid[30];
+  
+  uint64_t chipid = ESP.getEfuseMac(); // The chip ID is essentially its MAC address(length: 6 bytes).
+  uint16_t chip = (uint16_t)(chipid >> 32);
+
+  snprintf(ssid, sizeof(ssid), "TRM-%04X%08X", chip, (uint32_t)chipid);
+
+  return ssid;
+}
+
+
+
+/**
+* Sends data from ESP32 to AWS every 10 secs
 */
 void publishAuto(void)
 {
-    StaticJsonDocument<200> doc;
-    doc[currentDateTime()] = String(reMap(analogRead(LRD)));
-    //Handle JSON and Send to Client
-    char jsonBuffer[512];
-    serializeJson(doc, jsonBuffer); 
-    client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
+  StaticJsonDocument<200> doc;
+  doc["DeviceID"] = getDeviceId();
+  doc["Date/Time:"] = currentDateTime();
+  doc["LRD Sensor Value:"] = String(reMap(analogRead(LRD)));
+  //Handle JSON and Send to Client
+  char jsonBuffer[512];
+  serializeJson(doc, jsonBuffer); 
+  client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
 
 }
 
 /**
- * Sends data from ESP32 to AWS
+* Sends data from ESP32 to AWS
 */
 void publishPerRequest(String sensorCommand)
 {
   if(sensorCommand == "1")
   {
-    StaticJsonDocument<200> doc;
-    doc[currentDateTime()] = String(reMap(analogRead(LRD)));
+    StaticJsonDocument<200> doc; 
+    doc["DeviceID"] = getDeviceId();
+    doc["Date/Time:"] = currentDateTime();
+    doc["LRD Sensor Value:"] = String(reMap(analogRead(LRD)));
     //Handle JSON and Send to Client
     char jsonBuffer[512];
     serializeJson(doc, jsonBuffer); 
@@ -104,8 +129,9 @@ void publishPerRequest(String sensorCommand)
 }
 
 
+
 /**
- * Receive Data from AWS to ESP32
+* Receive Data from AWS to ESP32
 */
 void receiveMessage(char *topic, byte *payload, unsigned int length)
 {
@@ -131,32 +157,32 @@ void receiveMessage(char *topic, byte *payload, unsigned int length)
 
 
 /**
- * Connects to the WIFI
+* Connects to the WIFI
 */
 void connectToWiFi()
 {
-    Serial.println("Connecting to WiFi...");
-    WiFi.mode(WIFI_STA); //Lets you use existing WiFi
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD); //Starts connection
+  Serial.println("Connecting to WiFi...");
+  WiFi.mode(WIFI_STA); //Lets you use existing WiFi
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD); //Starts connection
 
-    unsigned long startAttemptTime = millis(); //Returns how much time has passed since the board executed.
+  unsigned long startAttemptTime = millis(); //Returns how much time has passed since the board executed.
 
-    while(WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < WIFI_TIMEOUT_MS)
-    {
-        Serial.print(".");
-        delay(100);
-    }
+  while(WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < WIFI_TIMEOUT_MS)
+  {
+    Serial.print(".");
+    delay(100);
+  }
 
-    if(WiFi.status() != WL_CONNECTED)
-    {
-        Serial.println("Connection to WiFi is failed!");
-        // We can add here if we want to re-try to connect WiFi.
-    }
-    else
-    {
-        Serial.print("Connected to: ");
-        Serial.println(WiFi.localIP());
-    }
+  if(WiFi.status() != WL_CONNECTED)
+  {
+    Serial.println("Connection to WiFi is failed!");
+    // We can add here if we want to re-try to connect WiFi.
+  }
+  else
+  {
+    Serial.print("Connected to: ");
+    Serial.println(WiFi.localIP());
+  }
 }
 
 
@@ -202,7 +228,8 @@ void connectToAWS()
 
 
 
-void setup() {
+void setup() 
+{
   Serial.begin(115200);
   connectToWiFi();
   delay(5000);
@@ -211,16 +238,14 @@ void setup() {
 
 
 
-void loop() {
-
-client.loop();
-
-if (millis() - lastMillis > 10000)
+void loop() 
 {
-  lastMillis = millis();
-  publishAuto();
-}
+  client.loop();
 
-
+  if (millis() - lastMillis > 10000)
+  {
+    lastMillis = millis();
+    publishAuto();
+  }
 }
 
