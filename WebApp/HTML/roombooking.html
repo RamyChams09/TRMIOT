@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!--
+  <style>
+    .timebtn{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+  -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TRM Room Booking</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="roombooking.css">
+  <link rel="stylesheet" href="../CSS/roombooking.css">
+  <script src="../JS/roombooking.js"></script>
+ 
 </head>
+
 <body>
   <header class="bg-primary text-white py-3">
     <div class="container">
@@ -16,10 +28,8 @@
 
   <main class="container-fluid my-4">
     <div class="row">
-      <!-- Booking Summary -->
-      <div class="col-md-6">
-      <!-- Room booking -->
-      <div class="col-md-6">
+      <!--Room booking-->
+      <div class="col-md-3 col-sm-12">
         <h2>Book a Room</h2>
         <form action="#" id="bookingForm">
           <div class="form-group">
@@ -47,20 +57,51 @@
           </div>
 
           <button onclick="accessAPI()" type="submit" class="btn btn-primary">Book Now</button>
+          <a href="roomoccupancy.html" class="btn btn-primary">View Room Occupancy</a>
+
         </form>
       </div>
+
+         <!--Booking Summary-->
+         <div class="col-md-9 col-sm-12">
+          <div class="booking-summary">
+            <h2 class="timebtn">Booking Summary</h2>
+            <div class="timebtn">
+              <button id="previousBtn" disabled>Previous</button>&nbsp;&nbsp;
+              <span id="dateDisplay"></span>&nbsp;&nbsp;
+              <button id="nextBtn">Next</button>
+            </div>
+            <div class="booking-list">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Rooms</th>
+                    <th>Booked Dates</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="room-cell">Room 1</td>
+                    <td class="date-cell"></td>
+                  </tr>
+                  <tr>
+                    <td class="room-cell">Room 2</td>
+                    <td class="date-cell"></td>
+                  </tr>
+                  <!-- Additional booking rows can be dynamically added here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+     
+
     </div>
   </main>
 
-  <footer class="bg-dark text-white py-3">
-    <div class="container">
-      <p>&copy; 2023 TRM Room Booking. All rights reserved.</p>
-    </div>
-  </footer>
-
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="roomboooking.js"></script>
+ 
 </body>
 </html>
 
@@ -124,6 +165,6 @@
     */
   </script>
 
-  
+  <script src="../JS/dateDisplay.js"></script>
 </body>
 </html>
