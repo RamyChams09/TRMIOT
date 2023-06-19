@@ -4,6 +4,8 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
 
 (function scopeWrapper($) {
     var signinUrl = "signin.html";
+    var verifyURL = "verify.html";
+    var roombookingURL = "roombooking.html";
 
     var poolData = {
         UserPoolId: _config.cognito.userPoolId,
@@ -117,7 +119,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         signin(email, password,
             function signinSuccess() {
                 console.log('Successfully Logged In');
-                window.location.href = 'roombooking.html';
+                window.location.href = roombookingURL;
             },
             function signinError(err) {
                 alert(err);
@@ -135,7 +137,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             console.log('user name is ' + cognitoUser.getUsername());
             var confirmation = ('Registration successful. Please check your email inbox or spam folder for your verification code.');
             if (confirmation) {
-                window.location.href = 'verify.html';
+                window.location.href = verifyURL;
             }
         };
         var onFailure = function registerFailure(err) {
@@ -158,8 +160,10 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             function verifySuccess(result) {
                 console.log('call result: ' + result);
                 console.log('Successfully verified');
-                alert('Verification successful. You will now be redirected to the login page.');
-                window.location.href = signinUrl;
+                //alert('Verification successful. You will now be redirected to the login page.');
+                //window.location.href = signinUrl;
+                alert('Verification successful. You will now be redirected to the booking page.');
+                window.location.href = roombookingURL;
             },
             function verifyError(err) {
                 alert(err);
