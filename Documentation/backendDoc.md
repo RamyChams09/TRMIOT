@@ -29,7 +29,8 @@
         - AWSLambdaBasicExecutionRole-8653ab0f-9a33-4848-b058-b926101e04c0, DynamoDB_Delete-Update_Item, SESFullAccess
         
     C) TRM_getRoomVacancy
-        - AWSLambdaBasicExecutionRole-02040bd4-28c8-4a34-8676-d0c80f0ca52c, AWSLambdaSNSTopicDestinationExecutionRole-d1d0e6aa-7f49-4fa8-b7b7-1554989d1c27, TRM_Lambda_Get_Data
+        - AWSLambdaBasicExecutionRole-02040bd4-28c8-4a34-8676-d0c80f0ca52c, 
+          AWSLambdaSNSTopicDestinationExecutionRole-d1d0e6aa-7f49-4fa8-b7b7-1554989d1c27, TRM_Lambda_Get_Data
 
    ## 4) APIs definition
 
@@ -51,19 +52,24 @@
 
      Lambda > create functions
 
-     A) TRM_postRoomBooking - when triggered, the function posts booking details into DynamoDB and sends an email notifaction through SES to an end user
+     A) TRM_postRoomBooking - when triggered, the function posts booking details into DynamoDB and sends an email notifaction 
+        through SES to an end user
 
-     B) TRM_deleteBooking - when triggered, the function deletes booking details in DynamoDb and send an email notification through SES to an end user
+     B) TRM_deleteBooking - when triggered, the function deletes booking details in DynamoDb and send an email notification 
+        through SES to an end user
 
-     C) TRM_getRoomVacancy - when triggered, the function retrieves data from DynamoDB and sends it to frotend in order to display conference room vacancies
+     C) TRM_getRoomVacancy - when triggered, the function retrieves data from DynamoDB and sends it to frotend in order to 
+        display conference room vacancies
    
-     D) TRM_UpdateBooking - when triggered, the function will update the booking details in DynamonDB and send an email notification through SES to an end user
+     D) TRM_UpdateBooking - when triggered, the function will update the booking details in DynamonDB and send an email 
+        notification through SES to an end user
 
   ## 6) DynamoDB table definition
 
      DynamoDB > create table
 
-     A) TRM_MeetingRoom_Booking - the table stores booking information such as the booking code, date, time, employee ID and the meeting room name
+     A) TRM_MeetingRoom_Booking - the table stores booking information such as the booking code, date, time, employee ID 
+        and the meeting room name
       - Partition Key: booking_code
       - Sort Key: booking_date
 
