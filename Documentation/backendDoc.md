@@ -18,7 +18,7 @@
 
   ## 3) IAM role definition
 
-    ### IAM > Roles > Create Role
+    IAM > Roles > Create Role
 
     In order to establish the connection between Lambda and other AWS components, the following IAM roles were defined:
 
@@ -49,7 +49,7 @@
   
    ## 5) Lambda Function definition
 
-    Lambda > create functiona
+     Lambda > create functions
 
      A) TRM_postRoomBooking - when triggered, the function posts booking details into DynamoDB and sends an email notifaction through SES to an end user
 
@@ -61,10 +61,11 @@
 
   ## 6) DynamoDB table definition
 
-    DynamoDB > create table
+     DynamoDB > create table
 
      A) TRM_MeetingRoom_Booking - the table stores booking information such as the booking code, date, time, employee ID and the meeting room name
       - Partition Key: booking_code
+      - Sort Key: booking_date
 
      B) UserList - the table stores the user information such as user names and email addresses
       - Partition Key: User Name
@@ -77,7 +78,7 @@
     SES > Email verification
 
     All functionalities are enabled through Lambda functions.
- 
+    
  
 ## Data Flow
 
