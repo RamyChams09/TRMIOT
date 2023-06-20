@@ -69,9 +69,6 @@
 
      B) UserList - the table stores the user information such as user names and email addresses
       - Partition Key: User Name
-    
-     C) Sensors - to be continued
-
 
   ## 7) Notification workflow using SES
   
