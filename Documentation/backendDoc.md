@@ -18,7 +18,7 @@
 
   ## 3) IAM role definition
 
-    IAM > Roles > Create Role
+    ### IAM > Roles > Create Role
 
     In order to establish the connection between Lambda and other AWS components, the following IAM roles were defined:
 
@@ -33,12 +33,21 @@
 
    ## 4) APIs definition
 
-    API Gateway > Create API
+    API Gateway > Create API 
 
     A) TRM_RoomBooking_API - Rest API, connects frontend with the room booking Lambda functions
-    B)
+    B) Methods: Post, Delete, Get, Put
+
+    API Gateway > Create Authorizers
+    
+    A) Authorizers: TRM-api-authorizer - connects frontend with the cognito for verify User
+
+    API Gateway > Create Stages
+
+    A) Dev: Post, Delete, Get, Put
+    B) Invoke URL: https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/ - connects frontend for check the Token
   
-   5) Lambda Function definition
+   ## 5) Lambda Function definition
 
     Lambda > create functiona
 
@@ -50,7 +59,7 @@
    
      D) TRM_UpdateBooking - when triggered, the function will update the booking details in DynamonDB and send an email notification through SES to an end user
 
-  6) DynamoDB table definition
+  ## 6) DynamoDB table definition
 
     DynamoDB > create table
 
@@ -63,13 +72,13 @@
      C) Sensors - to be continued
 
 
-  7) Notification workflow using SES
+  ## 7) Notification workflow using SES
   
     SES > Email verification
 
     All functionalities are enabled through Lambda functions.
  
  
-Data Flow
+## Data Flow
 
     - add the flow diagram and describe it
