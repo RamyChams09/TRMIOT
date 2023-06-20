@@ -1,11 +1,11 @@
-Process
+# Process
 
-  1) Cloud settings - region, budget
+  ## 1) Cloud settings - region, budget
 
     - we defined the resource budget - AWS Console > Billing Dasboard > Budget
     - we defined the region for implementation as per customer's request - Region > Frankfurt
 
-  2) AWS component definition
+  ## 2) AWS component definition
   
     - as per customer's request, we selected the following AWS components: Lambda, SES, DynamoDB, IAM, S3, API Gateway
 
@@ -16,7 +16,7 @@ Process
     S3 - simple storage service
     API Gateway - fully managed services for API management 
 
-  3) IAM role definition
+  ## 3) IAM role definition
 
     IAM > Roles > Create Role
 
@@ -31,7 +31,7 @@ Process
     C) TRM_getRoomVacancy
         - AWSLambdaBasicExecutionRole-02040bd4-28c8-4a34-8676-d0c80f0ca52c, AWSLambdaSNSTopicDestinationExecutionRole-d1d0e6aa-7f49-4fa8-b7b7-1554989d1c27, TRM_Lambda_Get_Data
 
-   4) APIs definition
+   ## 4) APIs definition
 
     API Gateway > Create API
 
