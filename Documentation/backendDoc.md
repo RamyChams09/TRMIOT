@@ -79,4 +79,8 @@
  
 # Data Flow
 
-    - add the flow diagram and describe it
+  ## Architecture Diagram
+
+  <img src="./Images/architecture.PNG" title="Architecture Diagram" width="1000"/>
+
+    - description Diagram
