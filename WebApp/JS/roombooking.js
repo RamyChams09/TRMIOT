@@ -31,11 +31,17 @@
 
       console.log(postData)
 
+      // Get the Cognito authentication token
+      // Get the JWT token from the session object
+      var jwtToken = session.getIdToken().jwtToken;
+
+
       fetch(apiUrl, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
-          // new Header with the cognito authentication token 
+          'Content-Type': 'application/json',
+          //Header with the cognito authentication token 
+          'Authorization': jwtToken
         },
         body: JSON.stringify(postData)
       })
