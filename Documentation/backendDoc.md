@@ -41,12 +41,12 @@
 
     API Gateway > Create Authorizers
     
-    A) Authorizers: TRM-api-authorizer - connects frontend with the cognito for verify User
+    A) Authorizers: TRM-api-authorizer - after verify in cognito, the authotizer checks the User ID authentification, befor calling the API 
 
     API Gateway > Create Stages
 
     A) Dev: Post, Delete, Get, Put
-    B) Invoke URL: https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/ - connects frontend for check the Token
+    B) Invoke URL: https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/ - connects frontend for check the Token for authentification
   
    ## 5) Lambda Function definition
 
