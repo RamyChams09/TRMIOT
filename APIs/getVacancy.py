@@ -1,5 +1,11 @@
 import boto3
 import json
+# import variabl
+
+from formatRoom import formatRoom
+
+
+# from getCurrentDate import dateFormat
 
 
 # Todo: Expand to meet requirements!!!!
@@ -14,28 +20,33 @@ def lambda_handler(event, context):
     """
 
     # Get the table name and key from the event data
-    table_name = event['table']
-    key = event['key']
+    booking_date_V = event['booking_date']
+    #   booking_date_V = dateFormat()
 
-    print(key)
+    # Create a DynamoDB client
+    dynamodb = boto3.client('dynamodb')
+    table = 'TRM_MeetingRoom_Booking'
 
     try:
-        # Create a DynamoDB client
-        dynamo = boto3.client('dynamodb')
+        filter_expression = '#booking_date = :booking_date'
+        expression_attribute_names = {'#booking_date': 'booking_date'}
+        expression_attribute_values = {':booking_date': {'S': booking_date_V}}
 
         # Retrieve the item from DynamoDB
-        response = dynamo.get_item(
-            TableName=table_name,
-            Key=key
+        response = dynamodb.scan(
+            TableName=table,
+            FilterExpression=filter_expression,
+            ExpressionAttributeNames=expression_attribute_names,
+            ExpressionAttributeValues=expression_attribute_values
         )
 
-        # Check if item exists
-        if 'Item' in response:
-            item = response['Item']
-            for attribute_name, attribute_value in item.items():
-                print(f'{attribute_name}: {attribute_value}')
-        else:
-            print('Item not found')
+        meetingroom_data = []
+
+        for item in response['Items']:
+            meetingroomID = item['meetingroomID']['S']
+            meetingroom_data.append(item)
+
+        return formatRoom(meetingroom_data)
 
     except Exception as e:
         print(f'Error: {str(e)}')

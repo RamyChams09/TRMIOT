@@ -5,6 +5,7 @@ import boto3
 def lambda_handler(event, context):
     # Receive DELETE data from the API
     booking_code = event["booking_code"]
+    booking_date = event["booking_date"]
 
     # defining response email
     to_address = event["to_address"]
@@ -31,7 +32,8 @@ def lambda_handler(event, context):
     try:
         delete_response = table_name.delete_item(
             Key={
-                'booking_code': booking_code
+                'booking_code': {'S': booking_code},
+                'booking_date': {'S': booking_date},
             }
         )
 
