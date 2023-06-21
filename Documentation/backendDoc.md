@@ -83,10 +83,30 @@
     All functionalities are enabled through Lambda functions.
     
  
-# Data Flow
+# Architecture
 
   ## Architecture Diagram
 
   <img src="./Images/architecture.PNG" title="Architecture Diagram" width="1000"/>
 
-    - description Diagram
+  ## Data Flow
+
+    A) User accesses the web application using internal VPN connection through their mobile phone or corporate computer. 
+    B) The web Application is hosted on AWS Amplify. 
+    C) Before the user gets access to the booking system, the user is authenticated via AWS Cognito which then allows the web application to make a call to the API through AWS API Gateway. 
+    D) The API call triggers the AWS Lambda responsible for the room booking. 
+    E) If successful, the room is booked and the booking information is sent to the AWS DynamoDB, a E-mail notification is sent to the user with the booking information through SES.
+    F) The sensor data flows through IoT Core to S3 Bucket, where the data is saved in json format
+    G) Data Analytics in charts in IoT Analytics (todo)
+    H) Cloud Watch (todo)
+
+    1. booked room
+
+    The AWS Lambda also sends information to AWS IoT Core which in turn automates settings such as Temperature, lighting, and booking display in the booked room. 
+    
+    2. delete roombooking
+
+    3. update roombooking
+
+  
+The AWS Lambda also sends information to AWS IoT Core which in turn automates settings such as Temperature, lighting, and booking display in the booked room. 
