@@ -67,13 +67,18 @@ function bookRoom() {
             },
             body: JSON.stringify(postData),
           })
-          .then(function (data) {
-            console.log(data.text());
-            // Update the booking summary UI with the new data
-          })
-          .catch(function (error) {
-            console.error('Error:', error);
-          });
+            .then(function (data) {
+                  data.json()
+                      .then(function (response) {
+                          console.log(response);
+                      })
+                      .catch(function (e) {
+                          console.log(e);
+                      });
+              })
+            .catch(function (error) {
+              console.error('Error:', error);
+            });
         
           });
     
