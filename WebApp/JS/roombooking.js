@@ -57,33 +57,62 @@ function bookRoom() {
     });
     authToken.then(function setAuthToken(token) {
       console.log(token);
-
+  
+        // Post Function
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': token,
+            },
+            body: JSON.stringify(postData),
+          })
+          .then(function (data) {
+            console.log(data.text());
+            // Update the booking summary UI with the new data
+          })
+          .catch(function (error) {
+            console.error('Error:', error);
+          });
+        
+          });
+    
+        /* 
+          // Get Function
       fetch(apiUrl, {
-          method: 'POST',
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': token,
           },
-          body: JSON.stringify(postData),
         })
         .then(function (data) {
-          console.log(data);
+          console.log(data.text());
           // Update the booking summary UI with the new data
         })
         .catch(function (error) {
           console.error('Error:', error);
-        });
+        
       
         });
-  }
+  })
 
-    
+  // Delete Function
+  fetch(apiUrl, {
+    method: 'DELETE',
+  })
+    .then(function (response) {
+      if (response.ok) {
+        console.log('Booking canceled.');
+        updateBookingSummary();
+      } else {
+        throw new Error('Error: ' + response.status);
+      }
+    })
+    .catch(function (error) {
+      console.error('Error:', error);
+    });
 
-function getUserPool() {
-  var poolData = {
-    UserPoolId: 'eu-central-1_lpgDFIdQ1', // Replace with your Cognito User Pool ID
-    ClientId: '709eu8fla6cpc05b71hgebg8f5', // Replace with your Cognito App Client ID
-  };
-  var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-  return userPool;
+
+*/
 }
