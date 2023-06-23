@@ -6,7 +6,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
     var signinUrl = "signin.html";
     var verifyURL = "verify.html";
     var roombookingURL = "roombooking.html";
-    var resetPasswordURL = "resetPassword.html";
+    var resetPasswordURL = "resetpassword.html";
 
     var poolData = {
         UserPoolId: _config.cognito.userPoolId,
