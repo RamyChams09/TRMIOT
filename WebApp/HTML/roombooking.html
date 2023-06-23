@@ -1,21 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!--
-  <style>
-    .timebtn{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
-  -->
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TRM Room Booking</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="../CSS/roombooking.css">
-  <script src="../JS/roombooking.js"></script>
+ <script src="../JS/roombooking.js"></script> 
  
 </head>
 
@@ -56,7 +48,7 @@
             <input type="time" id="end_time" class="form-control" required>
           </div>
 
-          <button onclick="accessAPI()" type="submit" class="btn btn-primary">Book Now</button>
+          <button onclick="bookRoom()" type="submit" class="btn btn-primary">Book Now</button>
           <a href="roomoccupancy.html" class="btn btn-primary">View Room Occupancy</a>
 
         </form>
@@ -101,70 +93,9 @@
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
- 
-</body>
-</html>
+  <script src="../JS/dateDisplaybooking.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js/dist/amazon-cognito-identity.min.js"></script>
 
-  
-  <script>
-    //const form = document.querySelector('form')
-    //form.addEventListener('submit', accessAPI);
-    
-    //var roomID = document.getElementById('roomSelect').value;
-    
-    /*
-    function accessAPI() {
-      var apiUrl = 'https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/';
-      
-      var roomID = document.getElementById('roomSelect');
-      var selected_room = roomID.options[roomID.selectedIndex].value;
-      var booking_date = document.getElementById('date').value;
-      var start_time = document.getElementById('start_time').value;
-      var end_time = document.getElementById('end_time').value;
-
-       // Validate if the selected date and time are in the future
-  var currentTime = new Date().getTime();
-  var selectedDateTime = new Date(`${booking_date}T${start_time}`).getTime();
-  
-  if (selectedDateTime < currentTime) {
-    alert('Please select a future date and time.');
-    return;
-  }
-
-      var postData = {
-        'meetingroomID': selected_room,
-        'booking_date': booking_date,
-        'start_time': start_time,
-        'end_time': end_time,
-        'employeeID': 'Jessica',
-        'to_address': 'stephen.aliemeke@capgemini.com',
-        'subject': 'Booking Confirmation',
-        'body': 'Congratulations you have booked as below:',
-        'from_address': 'ronja.pill@capgemini.com'   
-      }
-
-      console.log(postData)
-
-      fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(postData)
-      })
-        .then(function(response) {
-          return response.json();
-        })
-          .then(function(data) {
-            console.log(data);
-          })
-          .catch(function(error) {
-            console.error('Error:', error);
-          });
-    }
-    */
-  </script>
-
-  <script src="../JS/dateDisplay.js"></script>
 </body>
 </html>
