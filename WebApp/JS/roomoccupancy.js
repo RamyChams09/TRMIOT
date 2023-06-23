@@ -16,12 +16,14 @@ document.addEventListener('DOMContentLoaded', function() {
         label: 'Room 1',
         data: room1Occupancy,
         borderColor: '#3498DB',
+        borderWidth: 5, // Set the line width
         fill: false
       },
       {
         label: 'Room 2',
         data: room2Occupancy,
         borderColor: '#45B8AC',
+        borderWidth: 5, // Set the line width
         fill: false
       }]
     },
