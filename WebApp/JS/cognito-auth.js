@@ -6,6 +6,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
     var signinUrl = "signin.html";
     var verifyURL = "verify.html";
     var roombookingURL = "roombooking.html";
+    var resetPasswordURL = "resetPassword.html";
 
     var poolData = {
         UserPoolId: _config.cognito.userPoolId,
@@ -48,6 +49,8 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             resolve(null);
         }
     });
+
+    TRM_RoomBooking_API.createNewPasswordForCognitoUser = createNewPasswordForCognitoUser;
 
 
     /*
@@ -102,6 +105,42 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         });
     }
 
+    //---------------------------------------------------------------------------------------
+    
+    function createNewPasswordForCognitoUser(email){
+        var cognitoUser = createCognitoUser(email);
+
+        cognitoUser.forgotPassword({
+            onSuccess: function(){
+                console.log("Successfully initiated password resetting");
+                window.location.href = resetPasswordURL;
+            },
+            onFailure: function(err){
+                alert(err.message || JSON.stringify(err));
+            }
+        });
+    }
+    
+    /*
+    function createSignInWithNewPassword(){
+        var cognitoUser = createCognitoUser();
+
+        cognitoUser.forgotPassword({
+            onSuccess: function(result){
+                console.log("Successfully reset the password");
+                window.location.href = roombookingURL;
+            },
+            onFailure: function(err){
+                alert(err.message || JSON.stringify(err));
+            }
+        });
+    }
+    */
+    
+
+    //----------------------------------------------------------------------------------------
+
+
     /*
      *  Event Handlers
      */
@@ -110,8 +149,62 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         $('#signinForm').submit(handleSignin);
         $('#registrationForm').submit(handleRegister);
         $('#verifyForm').submit(handleVerify);
+        $('#forgotPasswordForm').submit(handleForgotPassword);
+        $('#resetPasswordForm').submit(handleResetPassword);
     });
 
+//----------------------------------------------------------------------------------------
+    function handleForgotPassword(event) {
+        var email = $('#emailInputSignin').val();
+        event.preventDefault();
+        TRM_RoomBooking_API.createNewPasswordForCognitoUser(email);
+    }
+
+    function handleResetPassword(event){
+        event.preventDefault();
+
+        var email = $('#emailInputSignin').val();
+        var code = $('#codeInputVerify').val();
+        var password = $('#passwordInputRegister').val();
+        var confirmPassword = $('#password2InputRegister').val();
+
+        if(password !== confirmPassword){
+            alert('Passwords do not match');
+            return;
+        }
+        
+        var cognitoUser = createCognitoUser(email);
+        cognitoUser.CognitoAuth.confirmPasswordReset(email, code, password, function onSuccess(){
+            alert('Successfully reset password');
+            window.location.href = roombookingURL;
+        }, function onFailure(err){
+            alert(err.message || JSON.stringify(err));
+        });
+    }
+
+
+
+
+
+    function signin(email, password, onSuccess, onFailure) {
+        var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
+            Username: email,
+            Password: password
+        });
+
+        var cognitoUser = createCognitoUser(email);
+        cognitoUser.authenticateUser(authenticationDetails, {
+            onSuccess: onSuccess,
+            onFailure: onFailure
+        });
+    }
+
+
+
+
+
+
+//---------------------------------------------------------------------------------------------
     function handleSignin(event) {
         var email = $('#emailInputSignin').val();
         var password = $('#passwordInputSignin').val();
@@ -160,8 +253,6 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             function verifySuccess(result) {
                 console.log('call result: ' + result);
                 console.log('Successfully verified');
-                //alert('Verification successful. You will now be redirected to the login page.');
-                //window.location.href = signinUrl;
                 alert('Verification successful. You will now be redirected to the booking page.');
                 window.location.href = roombookingURL;
             },
