@@ -6,6 +6,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
     var signinUrl = "signin.html";
     var verifyURL = "verify.html";
     var roombookingURL = "roombooking.html";
+    var resetPasswordURL = "resetPassword.html";
 
     var poolData = {
         UserPoolId: _config.cognito.userPoolId,
@@ -49,7 +50,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         }
     });
 
-
+    
     /*
      * Cognito User Pool functions
      */
@@ -101,6 +102,39 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             Pool: userPool
         });
     }
+    
+    function requestCodeToResetPassword(email){
+        var cognitoUser = createCognitoUser(email);
+
+        cognitoUser.forgotPassword({
+            onSuccess: function(){
+                console.log("Successfully initiated password resetting");
+                window.location.href = resetPasswordURL;
+            },
+            onFailure: function(err){
+                alert(err.message || JSON.stringify(err));
+            }
+        });
+    }
+
+    TRM_RoomBooking_API.requestCodeToResetPassword = requestCodeToResetPassword;
+
+    function resetPassword(email, code, password){
+        var cognitoUser = createCognitoUser(email);
+
+        cognitoUser.confirmPassword(code, password, {
+            onSuccess: function(){
+                console.log("Successfully reset the password");
+                window.location.href = roombookingURL;
+            },
+            onFailure: function(err){
+                alert(err.message || JSON.stringify(err));
+            }
+        });
+    }
+
+    TRM_RoomBooking_API.resetPassword = resetPassword;
+    
 
     /*
      *  Event Handlers
@@ -110,7 +144,44 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         $('#signinForm').submit(handleSignin);
         $('#registrationForm').submit(handleRegister);
         $('#verifyForm').submit(handleVerify);
+        $('#forgotPasswordForm').submit(handleForgotPassword);
+        $('#resetPasswordForm').submit(handleResetPassword);
     });
+
+
+    function handleForgotPassword(event) {
+        var email = $('#emailInputSignin').val();
+        event.preventDefault();
+        TRM_RoomBooking_API.requestCodeToResetPassword(email);
+    }
+
+    function handleResetPassword(event){
+        var email = $('#emailInputSignin').val();
+        var code = $('#codeInputVerify').val();
+        var password = $('#passwordInputRegister').val();
+        var confirmPassword = $('#password2InputRegister').val();
+
+        event.preventDefault();
+
+        if(password !== confirmPassword){
+            alert('Passwords do not match');
+            return;
+        }
+        TRM_RoomBooking_API.resetPassword(email, code, password);
+    }
+
+    function signin(email, password, onSuccess, onFailure) {
+        var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
+            Username: email,
+            Password: password
+        });
+
+        var cognitoUser = createCognitoUser(email);
+        cognitoUser.authenticateUser(authenticationDetails, {
+            onSuccess: onSuccess,
+            onFailure: onFailure
+        });
+    }
 
     function handleSignin(event) {
         var email = $('#emailInputSignin').val();
@@ -160,8 +231,6 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             function verifySuccess(result) {
                 console.log('call result: ' + result);
                 console.log('Successfully verified');
-                //alert('Verification successful. You will now be redirected to the login page.');
-                //window.location.href = signinUrl;
                 alert('Verification successful. You will now be redirected to the booking page.');
                 window.location.href = roombookingURL;
             },
