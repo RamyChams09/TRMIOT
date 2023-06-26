@@ -5,9 +5,10 @@
 #include <WiFiClientSecure.h>
 #include <ArduinoJson.h>
 #include <PubSubClient.h>
-
+#include <vector>
 
 #include "secrets.hpp"
+
 
 //Define PINS
 #define LRD 32
@@ -24,14 +25,14 @@
 
 //Variables
 unsigned long lastMillis = 0;
-
+std::vector<int> sensorValues;
 
 //Instances
 WiFiClientSecure net;
 PubSubClient client(net);
 
 
- 
+
 /**
 *Re-Map the value of 12-bit Analog Input Value while maintaining the ratio
 *Using Simple Linear Conversion Algorithm
@@ -53,22 +54,41 @@ int  reMap(int analogValue)
 
 
 /**
-* Get current date/time, format is YYYY-MM-DD / HH:mm:ss
+* Get current date/time, format is HH:mm:ss
+* First default value is 02.00.00. When you use this function, you have to handle default value.
 */
-
-const std::string currentDateTime() 
+const std::string getCurrentTime() 
 {
-  configTime(TIME_ZONE * 3600, 0 * 3600, "pool.ntp.org", "time.nist.gov");
-  time_t     now = time(0);
+  configTime(TIME_ZONE * 3600, 0 * 3600, "pool.ntp.org");
+  time_t     now = time(nullptr);
   struct tm  tstruct;
-  gmtime_r   (&now, &tstruct);
   char       buff[80];
-  //tstruct = *localtime(&now);
+  tstruct = *localtime(&now);
 
-  strftime(buff, sizeof(buff), "%Y-%m-%d / %X", &tstruct);
-  //Serial.println(asctime(&tstruct));
+  //strftime(buff, sizeof(buff), "%Y-%m-%d / %X", &tstruct);
+  strftime(buff, sizeof(buff), "%X", &tstruct);
   return buff;
 }
+
+
+
+/**
+* Get current date/time, format is YYYY-MM-DD
+* First default value is 1970-01-01. When you use this function, you have to handle default value.
+*/
+const std::string getCurrentDate() 
+{
+  configTime(TIME_ZONE * 3600, 0 * 3600, "pool.ntp.org");
+  time_t     now = time(nullptr);
+  struct tm  tstruct;
+  char       buff[80];
+  tstruct = *localtime(&now);
+
+  strftime(buff, sizeof(buff), "%Y-%m-%d", &tstruct);
+
+  return buff;
+}
+
 
 
 
@@ -89,15 +109,22 @@ String getDeviceId()
 
 
 
+
 /**
-* Sends data from ESP32 to AWS every 10 secs
+* Sends data from ESP32 to AWS
 */
 void publishAuto(void)
 {
   StaticJsonDocument<200> doc;
-  doc["DeviceID"] = getDeviceId();
-  doc["Date/Time:"] = currentDateTime();
-  doc["LRD Sensor Value:"] = String(reMap(analogRead(LRD)));
+  doc["DeviceID:"] = getDeviceId();
+  doc["Date:"] = getCurrentDate();
+  doc["Time:"] = getCurrentTime();
+  doc["LRD Average Sensor Value:"] = "";
+  doc["Requested LRD Sensor Value:"] = "";
+
+  if(doc["Date/Time:"] == "1970-01-01")
+    return;
+
   //Handle JSON and Send to Client
   char jsonBuffer[512];
   serializeJson(doc, jsonBuffer); 
@@ -105,27 +132,76 @@ void publishAuto(void)
 
 }
 
+
+
 /**
-* Sends data from ESP32 to AWS
+* Saves the sensor values into a vector.
+* This function publishes average sensor value of last 6 sensor values.
+* Since sensor sends every 10 seconds its value, average value will be sent every 1 min.
+*/
+void publishAverage(int value)
+{
+  if(sensorValues.size() == 6)
+  {
+    int sum {0};
+    for(auto sensorValue : sensorValues)
+    {
+      sum += sensorValue;
+    }
+
+    float averageValue = sum / 6;
+    //Publish average value
+    StaticJsonDocument<200> doc;
+    doc["DeviceID:"] = getDeviceId();
+    doc["Date:"] = getCurrentDate();
+    doc["Time:"] = getCurrentTime();
+    doc["LRD Average Sensor Value:"] = String(averageValue);
+    doc["Requested LRD Sensor Value:"] = "";
+
+    if(doc["Date:"] == "1970-01-01")
+      return;
+
+    //Handle JSON and Send to Client
+    char jsonBuffer[512];
+    serializeJson(doc, jsonBuffer); 
+    client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
+    //Reset Values
+    sensorValues.clear();
+    averageValue = 0;
+  }
+  else
+    sensorValues.push_back(value);
+}
+
+
+
+/**
+* Sends data from ESP32 to AWS when it is requested per command
 */
 void publishPerRequest(String sensorCommand)
 {
   if(sensorCommand == "1")
   {
     StaticJsonDocument<200> doc; 
-    doc["DeviceID"] = getDeviceId();
-    doc["Date/Time:"] = currentDateTime();
-    doc["LRD Sensor Value:"] = String(reMap(analogRead(LRD)));
+    doc["DeviceID:"] = getDeviceId();
+    doc["Date:"] = getCurrentDate();
+    doc["Time:"] = getCurrentTime();
+    doc["LRD Average Sensor Value:"] = "";
+    doc["Requested LRD Sensor Value:"] = String(reMap(analogRead(LRD)));
+
+    if(doc["Date:"] == "1970-01-01")
+      return;
     //Handle JSON and Send to Client
     char jsonBuffer[512];
-    serializeJson(doc, jsonBuffer); 
+    serializeJson(doc, jsonBuffer);
     client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
   }
+  //ADD IF MORE COMMANDS NEEDS TOBE HANDLED
   else
   {
     Serial.println("Not defined Command!");
   }
-  //ADD IF MORE COMMANDS NEEDS TOBE HANDLED
+  
 }
 
 
@@ -141,19 +217,21 @@ void receiveMessage(char *topic, byte *payload, unsigned int length)
 
   StaticJsonDocument<200> doc;
   deserializeJson(doc,payload);
-  String receivedSensorCommand = doc["Sensor Command"];
+  String receivedSensorCommand = doc["Sensor Command:"];
   
   //Give sensor command to do something
   if(receivedSensorCommand == "1")
   {
     Serial.println(reMap(analogRead(LRD)));
     publishPerRequest(receivedSensorCommand);
+    //ADD IF MORE COMMANDS NEEDS TOBE HANDLED
   }
   else
   {
     Serial.print("Undefined sensor command has been received!");
   }
 }
+
 
 
 /**
@@ -245,7 +323,8 @@ void loop()
   if (millis() - lastMillis > 10000)
   {
     lastMillis = millis();
-    publishAuto();
+    publishAverage(reMap(analogRead(LRD)));
   }
+
 }
 
