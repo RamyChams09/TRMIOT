@@ -125,7 +125,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         cognitoUser.confirmPassword(code, password, {
             onSuccess: function(){
                 console.log("Successfully reset the password");
-                window.location.href = roombookingURL;
+                //window.location.href = roombookingURL;
             },
             onFailure: function(err){
                 alert(err.message || JSON.stringify(err));
@@ -148,27 +148,6 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         $('#resetPasswordForm').submit(handleResetPassword);
     });
 
-
-    function handleForgotPassword(event) {
-        var email = $('#emailInputSignin').val();
-        event.preventDefault();
-        TRM_RoomBooking_API.requestCodeToResetPassword(email);
-    }
-
-    function handleResetPassword(event){
-        var email = $('#emailInputSignin').val();
-        var code = $('#codeInputVerify').val();
-        var password = $('#passwordInputRegister').val();
-        var confirmPassword = $('#password2InputRegister').val();
-
-        event.preventDefault();
-
-        if(password !== confirmPassword){
-            alert('Passwords do not match');
-            return;
-        }
-        TRM_RoomBooking_API.resetPassword(email, code, password);
-    }
 
     function signin(email, password, onSuccess, onFailure) {
         var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
@@ -235,6 +214,37 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
                 window.location.href = roombookingURL;
             },
             function verifyError(err) {
+                alert(err);
+            }
+        );
+    }
+
+    function handleForgotPassword(event) {
+        var email = $('#emailInputSignin').val();
+        event.preventDefault();
+        TRM_RoomBooking_API.requestCodeToResetPassword(email);
+    }
+
+    function handleResetPassword(event){
+        var email = $('#emailInputSignin').val();
+        var code = $('#codeInputVerify').val();
+        var password = $('#passwordInputRegister').val();
+        var confirmPassword = $('#password2InputRegister').val();
+
+        event.preventDefault();
+
+        if(password !== confirmPassword){
+            alert('Passwords do not match');
+            return;
+        }
+        TRM_RoomBooking_API.resetPassword(email, code, password);
+
+        signin(email, password,
+            function signinSuccess() {
+                console.log('Successfully Logged In');
+                window.location.href = roombookingURL;
+            },
+            function signinError(err) {
                 alert(err);
             }
         );
