@@ -62,5 +62,3 @@ function getFunction(date) {
   // Your logic here to handle the getFunction() call
   console.log('Calling getFunction() for date:', date);
 }
-
-
