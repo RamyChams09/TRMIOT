@@ -18,7 +18,6 @@
 
   ## 3) IAM role definition
 
-    IAM > Roles > Create Role
 
     In order to establish the connection between Lambda and other AWS components, the following IAM roles were defined:
 
@@ -34,34 +33,29 @@
 
    ## 4) APIs definition
 
-    API Gateway > Create API 
 
     A) TRM_RoomBooking_API - Rest API, connects frontend with the room booking Lambda functions
     B) Methods: Post, Delete, Get, Put
 
-    API Gateway > Create Authorizers
     
     A) Authorizers: TRM-api-authorizer - after verify in cognito, the authotizer checks the User ID authentification, 
        befor calling the API 
 
-    API Gateway > Create Stages
 
     A) Dev: Post, Delete, Get, Put
     B) Invoke URL: https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/ - connects frontend for check the Token 
        for authentification
 
-| Methode  | Endpoint | Description | Response Body 1 | Response Body 2 | Responde Body 3 |
-| -------- | -------- | ----------- | --------------- | --------------- | --------------- |
-| Delete   | //tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/' | Request to delete booking |
-| Put  | //tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/' | Request to update existing booking | Response { "statusCode": 200, "headers": {  "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control Allow-Methods": "*" }, "body": "\"Booking has been updated and email sent.\"" } | Response { "statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"This booking clashes with existing booking.\"" } | 
-
-| Get   | //tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/' | Request to retrieve booking data |
-| Post  | //tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/' | Request to post new booking |
+| Methode  | Endpoint | Description | Response Body 1 | Response Body 2 | Response Body 3 | Response Body 4 | Response Body 5 | Response Body 5 |
+| -------- | -------- | ----------- | --------------- | --------------- | --------------- | --------------- | --------------- | --------------- |
+| Delete   | /Dev/' | Request to delete booking | Response {"statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking not found.\"" } | Response {"statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking not found.\"" } | Response {"statusCode": 200, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking has been deleted and email sent.\"" } | Response {"statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking not found.\"" } | Response {"statusCode": 500, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Error.\"" } | 
+| Put  | /Dev/' | Request to update existing booking | Response { "statusCode": 200, "headers": {  "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control Allow-Methods": "*" }, "body": "\"Booking has been updated and email sent.\"" } | Response { "statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"This booking clashes with existing booking.\"" } | Response { "statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Unable to update booking, please check booking details.\"" } | Response { "statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"data failed to update\"" } | Response { "statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking not found, please enter a valid booking code.\"" } | Response { "statusCode": 500, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Error.\"" } | 
+| Get   | /Dev/' | Request to retrieve booking data | { "statusCode": "200", "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"{\\n  \\\"2\\\": [\\n   {\\n      \\\"start_time\\\": \\\"19:47\\\",\\n      \\\"end_time\\\": \\\"20:47\\\"\\n    }\\n  ]\\n}\"" }
+| Post  | /Dev/' | Request to post new booking |
 
   
    ## 5) Lambda Function definition
 
-     Lambda > create functions
 
      A) TRM_postRoomBooking - when triggered, the function posts booking details into DynamoDB and sends an email notifaction 
         through SES to an end user
@@ -77,7 +71,6 @@
 
   ## 6) DynamoDB table definition
 
-     DynamoDB > create table
 
      A) TRM_MeetingRoom_Booking - the table stores booking information such as the booking code, date, time, employee ID 
         and the meeting room name
@@ -89,7 +82,6 @@
 
   ## 7) Notification workflow using SES
   
-    SES > Email verification
 
     All functionalities are enabled through Lambda functions.
     
