@@ -20,7 +20,7 @@ function bookRoom() {
     'booking_date': booking_date,
     'start_time': start_time,
     'end_time': end_time,
-    'employeeID': 'Jessica',
+    // 'employeeID': 'Jessica',
   };
 
   console.log(postData);
@@ -73,6 +73,7 @@ function bookRoom() {
           response.json()
             .then(function (responseData) {
               console.log(responseData);
+              alert(JSON.parse(responseData));
               // Update the booking summary UI with the new data
             })
             .catch(function (e) {
@@ -99,7 +100,8 @@ function bookRoom() {
           response.text()
             .then(function (responseData) {
               console.log(responseData);
-              // Update the booking summary UI with the new data
+              var parsedData = JSON.parse(responseData);
+              // Use the parsedData for further processing
             })
             .catch(function (e) {
               console.log(e);
@@ -112,8 +114,66 @@ function bookRoom() {
         console.error('Error:', error);
       });
 
-      
+    });
+
+  }
+
+
+      /*
       // Delete Function
+      function DeleteBooking() {
+        var apiUrl = 'https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/';
+        
+        var roomID = document.getElementById('roomSelect').value;
+        var booking_date = document.getElementById('date').value;
+        var start_time = document.getElementById('start_time').value;
+        var end_time = document.getElementById('end_time').value;
+      
+      
+        var postData = {
+          'meetingroomID': roomID,
+          'booking_date': booking_date,
+          'start_time': start_time,
+          'end_time': end_time,
+          // 'employeeID': 'Jessica',
+        };
+      
+        console.log(postData);
+      
+        var poolData = {
+          UserPoolId: 'eu-central-1_lpgDFIdQ1', // Replace with your Cognito User Pool ID
+          ClientId: '709eu8fla6cpc05b71hgebg8f5', // Replace with your Cognito App Client ID
+        };
+      
+        var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+        console.log(`our user pool: ${userPool}`)
+      
+        if (typeof AWSCognito !== 'undefined') {
+          AWSCognito.config.region = 'eu-central-1';
+        }
+      
+        var authToken = new Promise(function fetchCurrentAuthToken(resolve, reject) {
+          var cognitoUser = userPool.getCurrentUser();
+      
+          if (cognitoUser) {
+            cognitoUser.getSession(function sessionCallback(err, session) {
+              if (err) {
+                reject(err);
+              } else if (!session.isValid()) {
+                resolve(null);
+              } else {
+                resolve(session.getIdToken().getJwtToken());
+              }
+            });
+          } else {
+            console.log("we have no user")
+            resolve(null);
+          }
+        });
+      
+        authToken.then(function setAuthToken(token) {
+          console.log(token);
+      
       fetch(apiUrl, {
         method: 'DELETE',
         headers: {
@@ -132,7 +192,12 @@ function bookRoom() {
         .catch(function (error) {
           console.error('Error:', error);
         });
-    
-  });
-}
+
+      });
+
+    }
+
+    */
+
+        
 
