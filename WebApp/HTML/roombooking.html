@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../CSS/roombooking.css">
 </head>
 
-<body >
+<body onload="OnloadBooking()">
   <header class="bg-primary text-white py-3">
     <div class="container">
       <h1>TRM Room Booking</h1>
@@ -83,7 +83,7 @@
               </table>
             </div>
 
-            <button type="submit" class="btn btn-primary">Cancel Booking</button>
+            <button onclick="DeleteBooking()" type="submit" class="btn btn-primary">Delete Booking</button>
           </div>
 
      
