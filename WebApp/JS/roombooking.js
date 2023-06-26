@@ -1,6 +1,6 @@
 function bookRoom() {
   var apiUrl = 'https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/';
-
+  
   var roomID = document.getElementById('roomSelect').value;
   var booking_date = document.getElementById('date').value;
   var start_time = document.getElementById('start_time').value;
@@ -38,52 +38,101 @@ function bookRoom() {
   }
 
   var authToken = new Promise(function fetchCurrentAuthToken(resolve, reject) {
-      var cognitoUser = userPool.getCurrentUser();
+    var cognitoUser = userPool.getCurrentUser();
 
-      if (cognitoUser) {
-          cognitoUser.getSession(function sessionCallback(err, session) {
-              if (err) {
-                  reject(err);
-              } else if (!session.isValid()) {
-                  resolve(null);
-              } else {
-                  resolve(session.getIdToken().getJwtToken());
-              }
-          });
-      } else {
-          console.log("we have no user")
+    if (cognitoUser) {
+      cognitoUser.getSession(function sessionCallback(err, session) {
+        if (err) {
+          reject(err);
+        } else if (!session.isValid()) {
           resolve(null);
-      }
-    });
-    authToken.then(function setAuthToken(token) {
-      console.log(token);
+        } else {
+          resolve(session.getIdToken().getJwtToken());
+        }
+      });
+    } else {
+      console.log("we have no user")
+      resolve(null);
+    }
+  });
 
+  authToken.then(function setAuthToken(token) {
+    console.log(token);
+
+    // Post Function
+    fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+      body: JSON.stringify(postData),
+    })
+      .then(function (response) {
+        if (response.ok) {
+          response.json()
+            .then(function (responseData) {
+              console.log(responseData);
+              // Update the booking summary UI with the new data
+            })
+            .catch(function (e) {
+              console.log(e);
+            });
+        } else {
+          throw new Error('Unable to create booking, please check booking details.');
+        }
+      })
+      .catch(function (error) {
+        console.error('Error:', error);
+      });
+
+    // Get Function
+    fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+    })
+      .then(function (response) {
+        if (response.ok) {
+          response.text()
+            .then(function (responseData) {
+              console.log(responseData);
+              // Update the booking summary UI with the new data
+            })
+            .catch(function (e) {
+              console.log(e);
+            });
+        } else {
+          throw new Error('Unable to fetch booking data.');
+        }
+      })
+      .catch(function (error) {
+        console.error('Error:', error);
+      });
+
+      
+      // Delete Function
       fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': token,
-          },
-          body: JSON.stringify(postData),
-        })
-        .then(function (data) {
-          console.log(data);
-          // Update the booking summary UI with the new data
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token,
+        },
+      })
+        .then(function (response) {
+          if (response.ok) {
+            console.log('Booking canceled. Please refresh the page');
+            // Update the booking summary UI or perform any other necessary actions
+          } else {
+            throw new Error('Unable to cancel booking.');
+          }
         })
         .catch(function (error) {
           console.error('Error:', error);
         });
-      
-        });
-  }
-
     
-
-function getUserPool() {
-  var poolData = {
-    UserPoolId: 'eu-central-1_lpgDFIdQ1', // Replace with your Cognito User Pool ID
-    ClientId: '709eu8fla6cpc05b71hgebg8f5', // Replace with your Cognito App Client ID
-  };
-  var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-  return userPool;
+  });
 }
+
