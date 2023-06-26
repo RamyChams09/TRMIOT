@@ -49,6 +49,15 @@
     A) Dev: Post, Delete, Get, Put
     B) Invoke URL: https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/ - connects frontend for check the Token 
        for authentification
+
+| Methode  | Endpoint | Description | Response Body 1 | Response Body 2 | Responde Body 3 |
+| -------- | -------- | ----------- | --------------- | --------------- | --------------- |
+| Delete   | //tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/' | Request to delete booking |
+| Put  | //tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/' | Request to update existing booking | Response { "statusCode": 200, "headers": {  "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control Allow-Methods": "*" }, "body": "\"Booking has been updated and email sent.\"" } | Response { "statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"This booking clashes with existing booking.\"" } | 
+
+| Get   | //tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/' | Request to retrieve booking data |
+| Post  | //tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/' | Request to post new booking |
+
   
    ## 5) Lambda Function definition
 
