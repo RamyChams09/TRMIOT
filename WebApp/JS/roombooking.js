@@ -94,7 +94,7 @@ function bookRoom() {
 
 
     // GET FUNCTION
-    function OnloadBooking() {
+    function GetBooking() {
       var apiUrl = 'https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/';
       
       var roomID = document.getElementById('roomSelect').value;
@@ -154,51 +154,67 @@ function bookRoom() {
     
       authToken.then(function setAuthToken(token) {
         console.log(token);
-
-    fetch(apiUrl, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': token,
-      },
-    })
-      .then(function (response) {
-        if (response.ok) {
-          response.json()
-            .then(function (responseData) {
     
-              
-               // Function to display booking data in the table    Use the parsedData for further processing
-
-              var bookingsToday = JSON.parse(responseData)["26-06-2023"];
-              console.log(bookingsToday);
-              var table = document.getElementById('myTable')
-
-              for (var i = 0; i < bookingsToday.length; i++) {
-                var row = `<tr>
-                  <td>${bookingsToday[i].room_ID}</td>
-                  <td>${bookingsToday[i].book_code}</td>
-                  <td>${bookingsToday[i].start_time}</td>
-                  <td>${bookingsToday[i].end_time}</td>
-                  <td>${bookingsToday[i].booked_by_me}</td>
-                  </tr>`
-                table.innerHTML += row
-              }
-            })
-            .catch(function (e) {
-              console.log(e);
-            });
-        } else {
-          throw new Error('Unable to fetch booking data.');
-        }
-      })
-      .catch(function (error) {
-        console.error('Error:', error);
+        fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+          },
+        })
+          .then(function (response) {
+            if (response.ok) {
+              response.json()
+                .then(function (responseData) {
+                  var parsedData = JSON.parse(responseData);
+                  var room1Bookings = parsedData['26-06-2023'].filter(function (booking) {
+                    return booking.room_ID === 'Room1';
+                  });
+                  var room2Bookings = parsedData['26-06-2023'].filter(function (booking) {
+                    return booking.room_ID === 'Room2';
+                  });
+    
+                  var room1Table = document.getElementById('room1Table').getElementsByTagName('tbody')[0];
+                  var room2Table = document.getElementById('room2Table').getElementsByTagName('tbody')[0];
+    
+                  room1Table.innerHTML = '';
+                  room2Table.innerHTML = '';
+    
+                  for (var i = 0; i < room1Bookings.length; i++) {
+                    var row = `<tr>
+                      <td>${room1Bookings[i].room_ID}</td>
+                      <td>${room1Bookings[i].book_code}</td>
+                      <td>${room1Bookings[i].start_time}</td>
+                      <td>${room1Bookings[i].end_time}</td>
+                      <td>${room1Bookings[i].booked_by_me}</td>
+                    </tr>`;
+                    room1Table.innerHTML += row;
+                  }
+    
+                  for (var j = 0; j < room2Bookings.length; j++) {
+                    var row = `<tr>
+                      <td>${room2Bookings[j].room_ID}</td>
+                      <td>${room2Bookings[j].book_code}</td>
+                      <td>${room2Bookings[j].start_time}</td>
+                      <td>${room2Bookings[j].end_time}</td>
+                      <td>${room2Bookings[j].booked_by_me}</td>
+                    </tr>`;
+                    room2Table.innerHTML += row;
+                  }
+                })
+                .catch(function (e) {
+                  console.log(e);
+                });
+            } else {
+              throw new Error('Unable to fetch booking data.');
+            }
+          })
+          .catch(function (error) {
+            console.error('Error:', error);
+          });
       });
-
-    });
-
-  }
+    }
+    
     
 
 
