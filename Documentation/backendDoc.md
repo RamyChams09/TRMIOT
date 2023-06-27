@@ -42,7 +42,6 @@
 | Methode  | Endpoint | Description | Response Body 1 | Response Body 2 | Response Body 3 | Response Body 4 | Response Body 5 | Response Body 5 |
 | -------- | -------- | ----------- | --------------- | --------------- | --------------- | --------------- | --------------- | --------------- |
 | Delete   | /Dev/' | Request to delete booking | Response {"statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking not found.\"" } | Response {"statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking not found.\"" } | Response {"statusCode": 200, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking has been deleted and email sent.\"" } | Response {"statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking not found.\"" } | Response {"statusCode": 500, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Error.\"" } | 
-| Put  | /Dev/' | Request to update existing booking | Response { "statusCode": 200, "headers": {  "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control Allow-Methods": "*" }, "body": "\"Booking has been updated and email sent.\"" } | Response { "statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"This booking clashes with existing booking.\"" } | Response { "statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Unable to update booking, please check booking details.\"" } | Response { "statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"data failed to update\"" } | Response { "statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking not found, please enter a valid booking code.\"" } | Response { "statusCode": 500, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Error.\"" } | 
 | Get   | /Dev/' | Request to retrieve booking data | { "statusCode": "200", "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"{\\n  \\\"2\\\": [\\n   {\\n      \\\"start_time\\\": \\\"19:47\\\",\\n      \\\"end_time\\\": \\\"20:47\\\"\\n    }\\n  ]\\n}\"" }
 | Post  | /Dev/' | Request to post new booking |
 
@@ -59,9 +58,7 @@
      C) TRM_getVacancy - when triggered, the function retrieves data from DynamoDB and sends it to frotend in order to 
         display conference room vacancies
    
-     D) TRM_UpdateBooking - when triggered, the function will update the booking details in DynamonDB and send an email 
-        notification through SES to an end user
-
+    
   ## 6) DynamoDB table definition
 
 
