@@ -6,7 +6,7 @@ var dateDisplay = document.getElementById('dateDisplay');
 // Initialize the current date
 var currentDate = new Date();
 
-// Display the current date
+// Display the current date and day
 displayDate();
 
 // Event listener for the Next button
@@ -23,11 +23,15 @@ previousBtn.addEventListener('click', function() {
   displayDate();
 });
 
-// Function to display the current date
+// Function to display the current date and day
 function displayDate() {
   // Format the date as DD-MM-YYYY
   var formattedDate = formatDate(currentDate);
   dateDisplay.textContent = formattedDate;
+
+  // Get the day of the week
+  var dayOfWeek = getDayOfWeek(currentDate);
+  dateDisplay.textContent += ' (' + dayOfWeek + ')';
 
   // Enable the Next button
   nextBtn.disabled = false;
@@ -58,6 +62,13 @@ function formatDate(date) {
   month = month < 10 ? '0' + month : month;
 
   return day + '-' + month + '-' + year;
+}
+
+// Function to get the day of the week
+function getDayOfWeek(date) {
+  var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var dayIndex = date.getDay();
+  return daysOfWeek[dayIndex];
 }
 
 // Function to be called on button click
