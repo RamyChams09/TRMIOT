@@ -20,10 +20,8 @@ function bookRoom() {
     'booking_date': booking_date,
     'start_time': start_time,
     'end_time': end_time,
-    // 'employeeID': 'Jessica',
+    
   };
-
-  console.log(postData);
 
   var poolData = {
     UserPoolId: 'eu-central-1_lpgDFIdQ1', // Replace with your Cognito User Pool ID
@@ -31,7 +29,7 @@ function bookRoom() {
   };
 
   var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-  console.log(`our user pool: ${userPool}`)
+
 
   if (typeof AWSCognito !== 'undefined') {
     AWSCognito.config.region = 'eu-central-1';
@@ -57,7 +55,7 @@ function bookRoom() {
   });
 
   authToken.then(function setAuthToken(token) {
-    console.log(token);
+  
 
     // POST FUNCTION
     fetch(apiUrl, {
@@ -69,19 +67,18 @@ function bookRoom() {
       body: JSON.stringify(postData),
     })
       .then(function (response) {
-        if (response.ok) {
           response.json()
             .then(function (responseData) {
               console.log(responseData);
-              alert(JSON.parse(responseData));
-              // Update the booking summary UI with the new data
+              if (response.ok) {
+                alert("Booking successful. Please refresh the page to see your booking in the summary");
+              } else {
+                alert(responseData);
+              }
             })
             .catch(function (e) {
               console.log(e);
             });
-        } else {
-          throw new Error('Unable to create booking, please check booking details.');
-        }
       })
       .catch(function (error) {
         console.error('Error:', error);
@@ -96,7 +93,7 @@ function bookRoom() {
     // GET FUNCTION
     function GetBooking() {
       var apiUrl = 'https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/';
-      
+          
       var roomID = document.getElementById('roomSelect').value;
       var booking_date = document.getElementById('date').value;
       var start_time = document.getElementById('start_time').value;
@@ -166,40 +163,27 @@ function bookRoom() {
             if (response.ok) {
               response.json()
                 .then(function (responseData) {
-                  var parsedData = JSON.parse(responseData);
-                  var room1Bookings = parsedData['26-06-2023'].filter(function (booking) {
-                    return booking.room_ID === 'Room1';
-                  });
-                  var room2Bookings = parsedData['26-06-2023'].filter(function (booking) {
-                    return booking.room_ID === 'Room2';
-                  });
+                  // Function to display booking data in the tables
+                  var bookingsToday = JSON.parse(responseData)["27-06-2023"];
+                  console.log(bookingsToday);
     
-                  var room1Table = document.getElementById('room1Table').getElementsByTagName('tbody')[0];
-                  var room2Table = document.getElementById('room2Table').getElementsByTagName('tbody')[0];
+                  // Get references to the room 1 and room 2 tables
+                  var room1Table = document.getElementById('room1Table');
+                  var room2Table = document.getElementById('room2Table');
     
-                  room1Table.innerHTML = '';
-                  room2Table.innerHTML = '';
-    
-                  for (var i = 0; i < room1Bookings.length; i++) {
+                  for (var i = 0; i < bookingsToday.length; i++) {
                     var row = `<tr>
-                      <td>${room1Bookings[i].room_ID}</td>
-                      <td>${room1Bookings[i].book_code}</td>
-                      <td>${room1Bookings[i].start_time}</td>
-                      <td>${room1Bookings[i].end_time}</td>
-                      <td>${room1Bookings[i].booked_by_me}</td>
-                    </tr>`;
-                    room1Table.innerHTML += row;
-                  }
+                      <td>${bookingsToday[i].start_time}</td>
+                      <td>${bookingsToday[i].end_time}</td>
+                      <td>${bookingsToday[i].booked_by_me}</td>
+                      </tr>`;
     
-                  for (var j = 0; j < room2Bookings.length; j++) {
-                    var row = `<tr>
-                      <td>${room2Bookings[j].room_ID}</td>
-                      <td>${room2Bookings[j].book_code}</td>
-                      <td>${room2Bookings[j].start_time}</td>
-                      <td>${room2Bookings[j].end_time}</td>
-                      <td>${room2Bookings[j].booked_by_me}</td>
-                    </tr>`;
-                    room2Table.innerHTML += row;
+                    // Add the row to the respective table based on room ID
+                    if (bookingsToday[i].room_ID === '1') {
+                      room1Table.innerHTML += row;
+                    } else if (bookingsToday[i].room_ID === '2') {
+                      room2Table.innerHTML += row;
+                    }
                   }
                 })
                 .catch(function (e) {
@@ -214,6 +198,7 @@ function bookRoom() {
           });
       });
     }
+    
     
     
 

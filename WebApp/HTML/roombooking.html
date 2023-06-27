@@ -53,6 +53,8 @@
       </div>
 
         <!--Booking Summary-->
+
+        <!--Booking Summary-->
 <div class="col-md-9 col-sm-12">
   <div class="booking-summary">
     <h2 class="timebtn">Booking Summary</h2>
@@ -62,18 +64,32 @@
       <button id="nextBtn">Next</button>
     </div>
     <div class="booking-list">
+      <h3>Room 1 Bookings</h3>
       <table class="table table-striped">
-        <tr class="bg-info">
-          <th>Room ID</th>
-          <th>Booking code</th>
-          <th>Start time</th>
-          <th>End time</th>
-          <th>Booked by me?</th>
-        </tr>
+        <thead>
+          <tr class="bg-info">
+            <th>Start time</th>
+            <th>End time</th>
+            <th>Booked by me?</th>
+          </tr>
+        </thead>
         <tbody id="room1Table"></tbody>
+      </table>
+      <h3>Room 2 Bookings</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr class="bg-info">
+            <th>Start time</th>
+            <th>End time</th>
+            <th>Booked by me?</th>
+          </tr>
+        </thead>
         <tbody id="room2Table"></tbody>
       </table>
     </div>
+  </div>
+</div>
+
 
     <button onclick="DeleteBooking()" type="submit" class="btn btn-primary">Delete Booking</button>
   </div>
