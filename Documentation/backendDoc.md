@@ -36,20 +36,14 @@
 
     A) TRM_RoomBooking_API - Rest API, connects frontend with the room booking Lambda functions
     B) Methods: Post, Delete, Get, Put
-
-    
-    A) Authorizers: TRM-api-authorizer - after verify in cognito, the authotizer checks the User ID authentification, 
-       befor calling the API 
-
-
-    A) Dev: Post, Delete, Get, Put
-    B) Invoke URL: https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/ - connects frontend for check the Token 
+    C) Authorizers: TRM-api-authorizer - after verification in Cognito, the authotizer checks the User ID authentification 
+       and then calls the API 
+    D) Invoke URL: https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/ - connects with frontend to check the Token 
        for authentification
 
 | Methode  | Endpoint | Description | Response Body 1 | Response Body 2 | Response Body 3 | Response Body 4 | Response Body 5 | Response Body 5 |
 | -------- | -------- | ----------- | --------------- | --------------- | --------------- | --------------- | --------------- | --------------- |
 | Delete   | /Dev/' | Request to delete booking | Response {"statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking not found.\"" } | Response {"statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking not found.\"" } | Response {"statusCode": 200, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking has been deleted and email sent.\"" } | Response {"statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking not found.\"" } | Response {"statusCode": 500, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Error.\"" } | 
-| Put  | /Dev/' | Request to update existing booking | Response { "statusCode": 200, "headers": {  "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control Allow-Methods": "*" }, "body": "\"Booking has been updated and email sent.\"" } | Response { "statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"This booking clashes with existing booking.\"" } | Response { "statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Unable to update booking, please check booking details.\"" } | Response { "statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"data failed to update\"" } | Response { "statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking not found, please enter a valid booking code.\"" } | Response { "statusCode": 500, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Error.\"" } | 
 | Get   | /Dev/' | Request to retrieve booking data | { "statusCode": "200", "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"{\\n  \\\"2\\\": [\\n   {\\n      \\\"start_time\\\": \\\"19:47\\\",\\n      \\\"end_time\\\": \\\"20:47\\\"\\n    }\\n  ]\\n}\"" }
 | Post  | /Dev/' | Request to post new booking |
 
@@ -63,63 +57,46 @@
      B) TRM_deleteBooking - when triggered, the function deletes booking details in DynamoDb and send an email notification 
         through SES to an end user
 
-     C) TRM_getRoomVacancy - when triggered, the function retrieves data from DynamoDB and sends it to frotend in order to 
+     C) TRM_getVacancy - when triggered, the function retrieves data from DynamoDB and sends it to frotend in order to 
         display conference room vacancies
    
-     D) TRM_UpdateBooking - when triggered, the function will update the booking details in DynamonDB and send an email 
-        notification through SES to an end user
 
   ## 6) DynamoDB table definition
 
 
-     A) TRM_MeetingRoom_Booking - the table stores booking information such as the booking code, date, time, employee ID 
-        and the meeting room name
+     A) TRM_MeetingRoom_Booking - the table stores booking information such as the booking code, booking date, start time, 
+        end time, meeting room, employee ID 
+
       - Partition Key: booking_code
       - Sort Key: booking_date
-
-     B) UserList - the table stores the user information such as user names and email addresses
-      - Partition Key: User Name
 
   ## 7) Notification workflow using SES
   
 
-    All functionalities are enabled through Lambda functions.
+    A) All functionalities are enabled through Lambda functions
+    B) Users receive email notifications when completing the action of creating, updating and deleting their bookings 
     
  
 # Architecture
 
   ## Architecture Diagram
 
-  <img src="./Images/ArchitectureDiagram.PNG" title="Architecture Diagram" width="1000"/>
+  <img src="./Images/Architecture_Diagram.PNG" title="Architecture Diagram" width="1000"/>
 
   ## Data Flow
 
-    A) User accesses the web application using internal VPN connection through their mobile phone or corporate computer. 
-    B) The web Application is hosted on AWS Amplify. 
-    C) Before the user gets access to the booking system, the user is authenticated via AWS Cognito which then allows the web 
-       application to make a call to the API through AWS API Gateway. 
-    D) The API call triggers the AWS Lambda. 
-    E) If successful, the room is booked and the booking information is sent to the AWS DynamoDB, a E-mail notification is sent to the 
-       user with the booking information through SES.
-    F) The sensor data flows through IoT Core to S3 Bucket, where the data is saved in json format
-    G) Data Analytics in charts (todo)
-    H) Cloud Watch (todo)
 
-    1. booked room
+    1. Create a room booking
 
-    The API Gateway calls the Lambda Function TRM_postRoomBooking. The data are stored in the DynamoDB. The user get an email notification with the meeting information.
-
-    The AWS Lambda also sends information to AWS IoT Core which in turn automates settings such as Temperature, lighting, and booking 
-    display in the booked room. 
+    The API Gateway calls the Lambda Function TRM_postRoomBooking. The data are stored in the DynamoDB. The user get an email 
+    notification with the meeting information.
     
-    2. delete roombooking
+    2. Deleting a room roombooking
 
-    The API Gateway calls the Lambda Function TRM_deleteBooking. The stored Data from the booking of the Meetingroom are delete in the DynamoDB. The user get an email notification with the deleted information.
+    The API Gateway calls the Lambda Function TRM_deleteBooking. The stored Data from the booking of the Meetingroom are delete 
+    in the DynamoDB. The user get an email notification with the deleted information.
 
-    3. update roombooking
-
-    The API Gateway calls the Lambda Function TRM_updateBooking. The stored Data from the booking of the Meetingroom are delete in the DynamoDB and are new stored with the same bookingcode and the updated booking information. The user get an email notification with the updated information.
-
+    
     
 
   

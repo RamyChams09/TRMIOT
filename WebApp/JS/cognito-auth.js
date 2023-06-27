@@ -3,7 +3,7 @@
 var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
 
 (function scopeWrapper($) {
-    var signinUrl = "signin.html";
+    var signinURL = "signin.html";
     var verifyURL = "verify.html";
     var roombookingURL = "roombooking.html";
     var resetPasswordURL = "resetpassword.html";
@@ -60,6 +60,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             Name: 'email',
             Value: email
         };
+
         var attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
 
         userPool.signUp(email, password, [attributeEmail], null,
@@ -125,7 +126,6 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         cognitoUser.confirmPassword(code, password, {
             onSuccess: function(){
                 console.log("Successfully reset the password");
-                //window.location.href = roombookingURL;
             },
             onFailure: function(err){
                 alert(err.message || JSON.stringify(err));
@@ -165,7 +165,9 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
     function handleSignin(event) {
         var email = $('#emailInputSignin').val();
         var password = $('#passwordInputSignin').val();
+
         event.preventDefault();
+
         signin(email, password,
             function signinSuccess() {
                 console.log('Successfully Logged In');
@@ -190,9 +192,11 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
                 window.location.href = verifyURL;
             }
         };
+
         var onFailure = function registerFailure(err) {
             alert(err);
         };
+
         event.preventDefault();
 
         if (password === password2) {
@@ -205,15 +209,27 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
     function handleVerify(event) {
         var email = $('#emailInputVerify').val();
         var code = $('#codeInputVerify').val();
+
         event.preventDefault();
+
         verify(email, code,
             function verifySuccess(result) {
                 console.log('call result: ' + result);
                 console.log('Successfully verified');
-                alert('Verification successful. You will now be redirected to the booking page.');
-                window.location.href = roombookingURL;
+                alert('Verification successful. You will now be redirected to the sign in page.');
+                window.location.href = signinURL;
             },
             function verifyError(err) {
+                alert(err);
+            }
+        );
+
+        signin(email, newPassword,
+            function signinSuccess() {
+                console.log('Successfully Logged In');
+                window.location.href = roombookingURL;
+            },
+            function signinError(err) {
                 alert(err);
             }
         );
