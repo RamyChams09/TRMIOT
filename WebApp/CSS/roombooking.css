@@ -1,9 +1,4 @@
 
-.container{
-  justify-content: center;
-  width: 50%;
-}
-
 body {
   display: flex;
   flex-direction: column;
