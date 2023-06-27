@@ -81,7 +81,7 @@
 
   ## Architecture Diagram
 
-  <img src="./Images/ArchitectureDiagram.PNG" title="Architecture Diagram" width="1000"/>
+  <img src="./Images/Architecture_Diagram.PNG" title="Architecture Diagram" width="1000"/>
 
   ## Data Flow
 
