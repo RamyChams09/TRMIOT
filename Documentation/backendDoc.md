@@ -64,8 +64,8 @@
   ## 6) DynamoDB table definition
 
 
-     A) TRM_MeetingRoom_Booking - the table stores booking information such as the booking code, booking date, start time, end time,  
-        meeting room, employee ID 
+     A) TRM_MeetingRoom_Booking - the table stores booking information such as the booking code, booking date, start time, 
+        end time, meeting room, employee ID 
 
       - Partition Key: booking_code
       - Sort Key: booking_date
