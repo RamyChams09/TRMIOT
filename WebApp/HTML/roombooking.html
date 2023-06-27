@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../CSS/roombooking.css">
 </head>
 
-<body >
+<body onload="GetBooking()">
   <header class="bg-primary text-white py-3">
     <div class="container">
       <h1>TRM Room Booking</h1>
@@ -52,39 +52,49 @@
         </form>
       </div>
 
-         <!--Booking Summary-->
-         <div class="col-md-9 col-sm-12">
-          <div class="booking-summary">
-            <h2 class="timebtn">Booking Summary</h2>
-            <div class="timebtn">
-              <button id="previousBtn" disabled>Previous</button>&nbsp;&nbsp;
-              <span id="dateDisplay"></span>&nbsp;&nbsp;
-              <button id="nextBtn">Next</button>
-            </div>
-            <div class="booking-list">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Rooms</th>
-                    <th>Booked Dates</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="room-cell">Room 1</td>
-                    <td class="date-cell"></td>
-                  </tr>
-                  <tr>
-                    <td class="room-cell">Room 2</td>
-                    <td class="date-cell"></td>
-                  </tr>
-                  <!-- Additional booking rows can be dynamically added here -->
-                </tbody>
-              </table>
-            </div>
+        <!--Booking Summary-->
 
-            <button type="submit" class="btn btn-primary">Cancel Booking</button>
-          </div>
+        <!--Booking Summary-->
+<div class="col-md-9 col-sm-12">
+  <div class="booking-summary">
+    <h2 class="timebtn">Booking Summary</h2>
+    <div class="timebtn">
+      <button id="previousBtn" disabled>Previous</button>&nbsp;&nbsp;
+      <span id="dateDisplay"></span>&nbsp;&nbsp;
+      <button id="nextBtn">Next</button>
+    </div>
+    <div class="booking-list">
+      <h3>Room 1 Bookings</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr class="bg-info">
+            <th>Start time</th>
+            <th>End time</th>
+            <th>Booked by me?</th>
+          </tr>
+        </thead>
+        <tbody id="room1Table"></tbody>
+      </table>
+      <h3>Room 2 Bookings</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr class="bg-info">
+            <th>Start time</th>
+            <th>End time</th>
+            <th>Booked by me?</th>
+          </tr>
+        </thead>
+        <tbody id="room2Table"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+    <button onclick="DeleteBooking()" type="submit" class="btn btn-primary">Delete Booking</button>
+  </div>
+</div>
+
 
      
 
