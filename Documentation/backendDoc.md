@@ -94,10 +94,7 @@
 
     The API Gateway calls the Lambda Function TRM_deleteBooking. The stored Data from the booking of the Meetingroom are delete in the DynamoDB. The user get an email notification with the deleted information.
 
-    3. update roombooking - CHECK IF IMPLEMENTED
-
-    The API Gateway calls the Lambda Function TRM_updateBooking. The stored Data from the booking of the Meetingroom are delete in the DynamoDB and are new stored with the same bookingcode and the updated booking information. The user get an email notification with the updated information.
-
+    
     
 
   
