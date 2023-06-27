@@ -59,7 +59,7 @@ function bookRoom() {
   authToken.then(function setAuthToken(token) {
     console.log(token);
 
-    // Post Function
+    // POST FUNCTION
     fetch(apiUrl, {
       method: 'POST',
       headers: {
@@ -93,8 +93,7 @@ function bookRoom() {
 
 
 
-    // Get Function
-
+    // GET FUNCTION
     function OnloadBooking() {
       var apiUrl = 'https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/';
       
@@ -165,11 +164,26 @@ function bookRoom() {
     })
       .then(function (response) {
         if (response.ok) {
-          response.text()
+          response.json()
             .then(function (responseData) {
-              console.log(responseData);
-              var parsedData = JSON.parse(responseData);
-              // Use the parsedData for further processing
+    
+              
+               // Function to display booking data in the table    Use the parsedData for further processing
+
+              var bookingsToday = JSON.parse(responseData)["26-06-2023"];
+              console.log(bookingsToday);
+              var table = document.getElementById('myTable')
+
+              for (var i = 0; i < bookingsToday.length; i++) {
+                var row = `<tr>
+                  <td>${bookingsToday[i].room_ID}</td>
+                  <td>${bookingsToday[i].book_code}</td>
+                  <td>${bookingsToday[i].start_time}</td>
+                  <td>${bookingsToday[i].end_time}</td>
+                  <td>${bookingsToday[i].booked_by_me}</td>
+                  </tr>`
+                table.innerHTML += row
+              }
             })
             .catch(function (e) {
               console.log(e);
@@ -184,9 +198,8 @@ function bookRoom() {
 
     });
 
-    
-
   }
+    
 
 
       /*

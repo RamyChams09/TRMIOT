@@ -62,25 +62,19 @@
               <button id="nextBtn">Next</button>
             </div>
             <div class="booking-list">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Rooms</th>
-                    <th>Booked Dates</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="room-cell">Room 1</td>
-                    <td class="date-cell"></td>
-                  </tr>
-                  <tr>
-                    <td class="room-cell">Room 2</td>
-                    <td class="date-cell"></td>
-                  </tr>
-                  <!-- Additional booking rows can be dynamically added here -->
-                </tbody>
+              <table class="table table-striped">
+                <tr class="bg-info">
+                  <th>Room ID</th>
+                  <th>Booking code</th>
+                  <th>Start time</th>
+                  <th>End time</th>
+                   <th>Booked by me?</th>
+                </tr>
+  
+                <tbody id="myTable"></tbody>
+  
               </table>
+  
             </div>
 
             <button onclick="DeleteBooking()" type="submit" class="btn btn-primary">Delete Booking</button>
