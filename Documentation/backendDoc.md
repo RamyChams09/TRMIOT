@@ -36,8 +36,10 @@
 
     A) TRM_RoomBooking_API - Rest API, connects frontend with the room booking Lambda functions
     B) Methods: Post, Delete, Get, Put
-    C) Authorizers: TRM-api-authorizer - after verification in Cognito, the authotizer checks the User ID authentification and then calls the API 
-    D) Invoke URL: https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/ - connects with frontend to check the Token for authentification
+    C) Authorizers: TRM-api-authorizer - after verification in Cognito, the authotizer checks the User ID authentification 
+       and then calls the API 
+    D) Invoke URL: https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/ - connects with frontend to check the Token 
+       for authentification
 
 | Methode  | Endpoint | Description | Response Body 1 | Response Body 2 | Response Body 3 | Response Body 4 | Response Body 5 | Response Body 5 |
 | -------- | -------- | ----------- | --------------- | --------------- | --------------- | --------------- | --------------- | --------------- |
@@ -62,7 +64,8 @@
   ## 6) DynamoDB table definition
 
 
-     A) TRM_MeetingRoom_Booking - the table stores booking information such as the booking code, booking date, start time, end time,  meeting room, employee ID 
+     A) TRM_MeetingRoom_Booking - the table stores booking information such as the booking code, booking date, start time, end time,  
+        meeting room, employee ID 
 
       - Partition Key: booking_code
       - Sort Key: booking_date
@@ -85,14 +88,13 @@
 
     1. Create a room booking
 
-    The API Gateway calls the Lambda Function TRM_postRoomBooking. The data are stored in the DynamoDB. The user get an email notification with the meeting information.
-
-    The AWS Lambda also sends information to AWS IoT Core which in turn automates settings such as Temperature, lighting, and booking 
-    display in the booked room. 
+    The API Gateway calls the Lambda Function TRM_postRoomBooking. The data are stored in the DynamoDB. The user get an email 
+    notification with the meeting information.
     
     2. Deleting a room roombooking
 
-    The API Gateway calls the Lambda Function TRM_deleteBooking. The stored Data from the booking of the Meetingroom are delete in the DynamoDB. The user get an email notification with the deleted information.
+    The API Gateway calls the Lambda Function TRM_deleteBooking. The stored Data from the booking of the Meetingroom are delete 
+    in the DynamoDB. The user get an email notification with the deleted information.
 
     
     
