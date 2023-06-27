@@ -10,7 +10,7 @@
     - as per customer's request, we selected the following AWS components: Lambda, SES, DynamoDB, IAM, S3, API Gateway
 
     Lambda - an event-driven serverless computing platform
-    Simple Email Service (SES) - emnail platform enbaling sending and receiving of emails in HTML format
+    Simple Email Service (SES) - email platform enbaling sending and receiving of emails in HTML format
     DynamoDB - fully managed NoSQL database offering autoscalling and encryption At Rest features
     Identitiy and Access Management (IAM) - central management platform for AWS resource user access
     S3 - simple storage service
