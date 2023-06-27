@@ -5,39 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TRM Room Occupancy</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./CSS/index.css">
-    <style>
-      body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: #B0CFDE; /* Set the background color to LightSteelBlue */
-      }
-
-      header {
-        background-color: #007bff; /* Set the background color of the header bar to blue */
-        color: white;
-        padding: 10px;
-        width: 100%;
-        text-align: center;
-      }
-
-      .container {
-        max-width: 1200px;
-      }
-
-      .timebtn {
-        text-align: center;
-      }
-
-      canvas {
-        display: block;
-        margin: 40px auto;
-        width: 100%;
-        max-width: 1200px;
-        background-color: #FDFEFE; /* Set the background color of the graph to white */
-      }
-    </style>
+    <link rel="stylesheet" href="../CSS/roomoccupancy.css">
   </head>
   <body>
 
@@ -47,7 +15,7 @@
       </div>
     </header>
 
-    <!--Booking Summary-->
+   <!--Booking Summary-->
     <div class="col-md-9 col-sm-12">
       <div class="booking-summary">
         <h2 class="timebtn">Occupancy History</h2>
@@ -59,11 +27,18 @@
       </div>
     </div>
 
+    <!-- Button to go back to the room booking page -->
+    <div class="back-button">
+      <button id="backButton" onclick="goToBookingPage()">Go Back to Booking</button>
+    </div>
+
     <canvas id="occupancyChart"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js/dist/amazon-cognito-identity.min.js"></script>
     <script src="../JS/roomoccupancy.js"></script>
     <script src="../JS/dateDisplayOccupancy.js"> </script>
+    <script src="../HTML/roombooking.html"> </script>
   </body>
 </html>
