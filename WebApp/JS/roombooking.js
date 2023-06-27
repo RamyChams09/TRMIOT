@@ -105,7 +105,6 @@ function bookRoom() {
           'booking_date': booking_date,
           'start_time': start_time,
           'end_time': end_time,
-          // 'employeeID': 'Jessica',
         };
       
         console.log(postData);
