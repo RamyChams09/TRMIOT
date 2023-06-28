@@ -44,11 +44,7 @@
 
 | Resource | Method | Endpoint |Request parameter | Description | Response Body 1 | Response Body 2 | Response Body 3 | Response Body 4 | Response Body 5 |
 | -------- | -------- | -------- | ----------- | ----------- | --------------- | --------------- | --------------- | --------------- | --------------- |
-| deletebooking | POST   | /Dev/' |       "meetingroomID": "1",
-        "booking_date": "2023-06-27",
-        "start_time": "15:55",
-        "end_time": "16:55"
-    }',| Request to delete booking | Response {"statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking not found.\"" } | Response {"statusCode": 200, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking has been deleted and email sent.\"" } | Response {"statusCode": 500, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Error.\"" } |
+| deletebooking | POST   | /Dev/' |       "meetingroomID": "", "booking_date": "", "start_time": "", "end_time": ""}'| Request to delete booking | Response {"statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking not found.\"" } | Response {"statusCode": 200, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Booking has been deleted and email sent.\"" } | Response {"statusCode": 500, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Error.\"" } |
 | getoccupancy| GET  | /Dev/' | Request to retrieve booking data | Response { "statusCode": "200", "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"{\\n  \\\"2\\\": [\\n   {\\n      \\\"start_time\\\": \\\"19:47\\\",\\n      \\\"end_time\\\": \\\"20:47\\\"\\n    }\\n  ]\\n}\"" }
 | POST  | /Dev/' | Request to post new booking | Response {"statusCode": 200, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"New booking made and email sent.\"" } | Response {"statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"data failed to post\"" } | Response {"statusCode": 500, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Error.\"" } | Response {"statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"This booking clashes with existing booking.\"" } | Response {"statusCode": 400, "headers": { "Access-Control-Allow-Headers": "*", "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "*" }, "body": "\"Unable to create booking, please check booking details.\"" } |
 
@@ -93,20 +89,16 @@
 
     1. Create a room booking
 
-    The API Gateway calls the Lambda Function TRM_postRoomBooking. The data is stored in the DynamoDB. The user gets an email 
-    notification with the booking information.
+    The API Gateway calls the Lambda Function TRM_postRoomBooking after authenticating the user against the session. The data is processed and the function checks the ddatabase for existing bookings, if   existing booking is found, the post request is rejected and if not, the booking is made and data is stored in the DynamoDB. The user gets an email notification with the booking information.
     
-    2. Deleting a room roombooking
+    2. Deleting a room booking
 
-    The API Gateway calls the Lambda Function TRM_deleteBooking. The stored data from the booking of the meeting room is deleted 
-    in the DynamoDB. The user gets an email notification with the booking cancelation confirmation.
+    The API Gateway calls the Lambda Function TRM_deleteBooking. The data is checked to make sure the signed in user is the owner of the booking, If the user is confirmed as the owner then the booking is deleted and the stored data is deleted from the Database and the user gets an email notification with the booking cancelation.
 
     3. Retrieve room vaccancy
 
-    The API Gateway calls the Lambda Function TRM_getVacancy. The booking data is retrieved from the DynamoDB and sent to 
-    frontend in order to display the vaccancy data.
+    The API Gateway calls the Lambda Function TRM_getVacancy. All booking with a specified date is retrieved from the Database and sent as a response.
 
-    
-    
+    4. Retrieve room occupancy
 
-  
+    The API Gateway calls the Lambda Function TRM_getOccupancy. The function retrieves the stored sensor reading from the S3 bucket, processes the data into an array ready for plotting and returns it in a response.
