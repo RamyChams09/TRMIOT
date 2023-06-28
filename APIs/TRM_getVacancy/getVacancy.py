@@ -1,13 +1,17 @@
 import boto3
 import json
-# import variabl
+# import variable
 
 from formatRoom import formatRoom
+from returnMessage import create_response
+
+
 # from getCurrentDate import dateFormat
 
 
 # Todo: Expand to meet requirements!!!!
 def lambda_handler(event, context):
+    print(event)
     """
     Function to retrieve item from DynamoDB
     :param event: The event passed to the Lambda function
@@ -18,33 +22,32 @@ def lambda_handler(event, context):
     """
 
     # Get the table name and key from the event data
-    booking_date_V = event['booking_date']
+    # booking_date_V = event['booking_date']
     #   booking_date_V = dateFormat()
 
     # Create a DynamoDB client
     dynamodb = boto3.client('dynamodb')
     table = 'TRM_MeetingRoom_Booking'
 
-    try:
-        filter_expression = '#booking_date = :booking_date'
-        expression_attribute_names = {'#booking_date': 'booking_date'}
-        expression_attribute_values = {':booking_date': {'S': booking_date_V}}
+    # Get the employee ID of the booking creator (assuming it's passed in the event data)
+    userEmail = event.get('requestContext', {})
+    employeeID = userEmail['authorizer']['claims']['email']
+    print(employeeID)
 
-        # Retrieve the item from DynamoDB
-        response = dynamodb.scan(
-            TableName=table,
-            FilterExpression=filter_expression,
-            ExpressionAttributeNames=expression_attribute_names,
-            ExpressionAttributeValues=expression_attribute_values
-        )
+    try:
+        # Retrieve the items from DynamoDB
+        response = dynamodb.scan(TableName=table)
+        items = response['Items']
+        print(items)
 
         meetingroom_data = []
 
-        for item in response['Items']:
-            meetingroomID = item['meetingroomID']['S']
+        for item in items:
             meetingroom_data.append(item)
 
-        return formatRoom(meetingroom_data)
+        # Format the data and pass the employee ID
+        response = formatRoom(meetingroom_data, employeeID)
+        return create_response(200, response)
 
     except Exception as e:
-        print(f'Error: {str(e)}')
+        print(500, f'Error: {str(e)}')
