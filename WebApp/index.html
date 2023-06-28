@@ -1,34 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TRM Room Booking - Sign In</title>
-  <!-- Add Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-  <div class="container">
-    <h1 class="mt-5">User Sign In</h1>
-    <form id="signinForm" class="mt-4">
-      <div class="form-group">
-        <label for="e-mail">E-mail:</label>
-        <input type="text" id="e-mail" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <a href="forgotpassword.html" id="forgotPasswordLink">Forgot Password?</a>
-      </div>
-      <button type="submit" class="btn btn-primary">Sign In</button>
-    </form>
-  </div>
+  <head>
 
-  <!-- Add Bootstrap JS and jQuery -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="app.js"></script>
-</body>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TRM Room Booking</title>
+
+    <!-- Add Bootstrap and CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" src="./CSS/index.css">
+
+  </head>
+
+  <body>
+    
+    <header class="bg-primary text-white py-3">
+      <div class="container">
+        <h1>TRM Room Booking</h1>
+      </div>
+    </header>
+
+    <div class="container">
+      <h1 class="mt-5">Sign in or register first</h1>
+      
+      <div class="form-group">
+        <div>
+          <button onclick="window.location.href='./HTML/signin.html'" class="btn btn-primary">Sign in</button>
+          <button onclick="window.location.href='./HTML/register.html'" class="btn btn-primary">Register</button>
+        </div>
+      </div>
+    </div>
+
+  </body>
 </html>

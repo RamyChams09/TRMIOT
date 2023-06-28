@@ -3,8 +3,6 @@ import json
 # import variabl
 
 from formatRoom import formatRoom
-
-
 # from getCurrentDate import dateFormat
 
 
