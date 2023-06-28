@@ -10,7 +10,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #B0CFDE;
+    background-image: url("../trmLogo.png");
+    background-color:black;
     font-family: Arial, sans-serif;
     font-size: 16px;
     line-height: 1.5;
@@ -54,6 +55,7 @@
   button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+    color: black;
   }
   
   /* Date and Day Display */
@@ -74,7 +76,7 @@
     margin: 40px auto;
     width: 100%;
     max-width: 1200px;
-    background-color: #FDFEFE;
+    background-color:rgba(200, 203, 206, 0.9);
   }
   
   /* Go Back To Booking Button */
@@ -82,6 +84,10 @@
     position: absolute;
     top: 20px;
     left: 20px;
-    background-color: #ffffff;
-    color: black;
+    background-color: blue;
+    color: white;
+  }
+
+  .timebtn {
+    color: white;
   }

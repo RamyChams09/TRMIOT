@@ -70,7 +70,7 @@ main {
   font-size: 16px; /* Adjust the font size */
   border: none; /* Remove the border */
   margin-top: 17px;
-  margin-right: 50px;
+  margin-left: 30px;
 }
 .view-room-booking-btn:hover {
   background-color: #0056b3; /* Set the background color on hover */
@@ -96,6 +96,7 @@ main {
   padding: 10px 20px; /* Adjust the padding */
   font-size: 16px; /* Adjust the font size */
   border: none; /* Remove the border */
+  margin-left: 20px;
 }
 
 .delete-booking-btn:hover {
