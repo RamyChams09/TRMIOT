@@ -1,6 +1,6 @@
-body {
+/*body {
   background-color: black;
-}
+}*/
   
 .container {
   max-width: 470px;
@@ -21,6 +21,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: black;
   background-image: url("../../Documentation/Images/trm-logo.png");
   background-repeat: no-repeat;
   background-size: cover;
