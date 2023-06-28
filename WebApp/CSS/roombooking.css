@@ -1,14 +1,4 @@
 
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: black;
-}
-
-main {
-  flex: 1;
-}
 /* room booking */ 
 .container{
   justify-content: center;
@@ -19,10 +9,11 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-image: url("../../Documentation/Images/trmLogo.png");
+  background-image: url("../CSS/trmLogo.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  background-color: black;
   color: #fff; /* Set the default text color to white */
 }
 
