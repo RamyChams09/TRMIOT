@@ -1,3 +1,3 @@
-BODY = 'Dear user,\nplease see booking status update below:'
-SUBJECT = 'Booking cancellation'
+BODY = 'Dear user,\nHereby we confirm your booking as below:'
+SUBJECT = 'Booking Confirmation'
 FROM_ADDRESS = 'ronja.pill@capgemini.com'
