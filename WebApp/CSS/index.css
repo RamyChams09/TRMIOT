@@ -1,10 +1,43 @@
-body {
-  background-color: #ffffff;
-}
   
 .container {
   max-width: 470px;
   margin: 0 auto;
   padding-top: 100px;
+  justify-content: center;
+  width: 60%;
 }
+
+.modal-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100% - 100px);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-image: url("../trmLogo.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: black;
+  color: #fff; /* Set the default text color to white */
+}
+
+#forgotPasswordLink {
+  color: #fff;
+}
+
+#btn {
+  margin-top: 20px;
+}
+
+#btn-register {
+  margin-left: 20px;
+}
+
+
+
   

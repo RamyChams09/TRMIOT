@@ -1,18 +1,4 @@
 
-.container{
-  justify-content: center;
-  width: 50%;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-main {
-  flex: 1;
-}
 /* room booking */ 
 .container{
   justify-content: center;
@@ -23,69 +9,96 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-image: url("../trmLogo.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: black;
+  color: #fff; /* Set the default text color to white */
 }
 
-/* Summary roombooking */ 
+/* Summary roombooking and the whole Page */ 
 main {
   flex: 1;
 }
-
 .booking-summary {
-  background-color: #c8cbce;
+  background-color: rgba(200, 203, 206, 0.8); /* Adjust the background color and transparency */
   padding: 20px;
   height: 100%;
   justify-content: center;
+  color: #000; /* Set the text color inside the booking summary */
 }
-
 .booking-summary h2 {
   font-size: 20px;
   font-weight: bold;
+  color: #000; /* Set the heading color inside the booking summary */
+  text-align: center;
 }
-
-.booking-list {
-  margin-top: 20px;
-  height: calc(100% - 50px);
-  overflow-y: auto;
-}
-
-.booking-list .booking-item {
-  margin-bottom: 10px;
-}
-
-.booking-list .booking-item .booking-details {
-  font-size: 14px;
-}
-
-.timebtn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Add table styles */
 .booking-summary table {
   border-collapse: collapse;
   width: 100%;
 }
-
 .booking-summary th,
 .booking-summary td {
   border: 1px solid black;
   padding: 8px;
 }
-
-.booking-summary th {
-  background-color: #f2f2f2;
+.booking-list {
+  margin-top: 20px;
+  height: calc(100% - 50px);
+  overflow-y: auto;
+}
+.booking-list .booking-item {
+  margin-bottom: 10px;
+}
+.booking-list .booking-item .booking-details {
+  font-size: 14px;
+  color: #000; /* Set the text color inside the booking list */
 }
 
-.booking-summary td {
-  background-color: #ffffff;
+/*Date Display*/
+.timebtn {
+  display: flex;
+  justify-content: center;
 }
 
-.booking-summary td.room-cell {
-  width: 10%;
+/* View room Occupany */
+.view-room-booking-btn {
+  background-color: #007bff;; /* Set the background color */
+  color: #fff; /* Set the text color */
+  padding: 10px 20px; /* Adjust the padding */
+  font-size: 16px; /* Adjust the font size */
+  border: none; /* Remove the border */
+  margin-top: 17px;
+  margin-right: 50px;
+}
+.view-room-booking-btn:hover {
+  background-color: #0056b3; /* Set the background color on hover */
 }
 
-.booking-summary td.dates-cell {
-  width: 90%;
+
+/*Book Now Button*/
+.book-now-btn {
+  background-color: #007bff; /* Set the background color */
+  color: #fff; /* Set the text color */
+  padding: 10px 20px; /* Adjust the padding */
+  font-size: 16px; /* Adjust the font size */
+  border: none; /* Remove the border */
 }
+.book-now-btn:hover {
+  background-color: #0056b3; /* Set the background color on hover */
+}
+
+/*Delete Booking Button*/
+.delete-booking-btn {
+  background-color: #007bff; /* Set the background color */
+  color: #fff; /* Set the text color */
+  padding: 10px 20px; /* Adjust the padding */
+  font-size: 16px; /* Adjust the font size */
+  border: none; /* Remove the border */
+}
+
+.delete-booking-btn:hover {
+  background-color: #0056b3; /* Set the background color on hover */
+}
+
