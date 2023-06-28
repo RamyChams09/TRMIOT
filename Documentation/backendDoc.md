@@ -33,7 +33,8 @@
           AWSLambdaSNSTopicDestinationExecutionRole-d1d0e6aa-7f49-4fa8-b7b7-1554989d1c27, TRM_Lambda_Get_Data
 
     D) TRM_getOccupancy
-      - permissions: AWSLambdaBasicExecutionRole-1adafbce-f18f-41b4-a9ce-615088a6f0c2, AWSLambdaS3ExecutionRole-092957d3-3dba-44fc-b032-8d5e1dab817d, AWSConfigRulesExecutionRole
+      - permissions: AWSLambdaBasicExecutionRole-1adafbce-f18f-41b4-a9ce-615088a6f0c2, 
+        AWSLambdaS3ExecutionRole-092957d3-3dba-44fc-b032-8d5e1dab817d, AWSConfigRulesExecutionRole
 
    ## 4) APIs definition
 
@@ -61,10 +62,11 @@
      B) TRM_deleteBooking - when triggered, the function deletes booking details in DynamoDb and send an email notification 
         through SES to an end user
 
-     C) TRM_getVacancy - when triggered, the function retrieves data from DynamoDB and sends it to frotend in order to 
+     C) TRM_getVacancy - when triggered, the function retrieves data from DynamoDB and sends it to frontend in order to 
         display conference room vacancies
 
-     D) TRM_getOccupancy - when triggered, the function retrieves data from S3 Bucket und sends it to the frontend in order to display the room occupancy
+     D) TRM_getOccupancy - when triggered, the function retrieves data from S3 Bucket und sends it to the frontend in order 
+        to display the room occupancy
    
 
   ## 6) DynamoDB table definition

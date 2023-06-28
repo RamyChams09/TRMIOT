@@ -70,8 +70,17 @@
     font-style: italic;
   }
   
-  /* Chart */
-  canvas#occupancyChart {
+  /* Chart 1*/
+  canvas#occupancyChart1 {
+    display: block;
+    margin: 40px auto;
+    width: 100%;
+    max-width: 1200px;
+    background-color: #FDFEFE;
+  }
+
+  /* Chart 2*/
+  canvas#occupancyChart2 {
     display: block;
     margin: 40px auto;
     width: 100%;
