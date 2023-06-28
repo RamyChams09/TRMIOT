@@ -90,7 +90,7 @@ function bookRoom() {
 
 
 
-// Delete Function
+// DELETE FUNCTION
 function DeleteBooking() {
   var apiUrl = 'https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/deletebooking';
 
@@ -146,7 +146,7 @@ function DeleteBooking() {
   authToken.then(function setAuthToken(token) {
 
     fetch(apiUrl, {
-      method: 'POST',
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': token,
