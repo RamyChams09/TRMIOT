@@ -1,11 +1,4 @@
 
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: black;
-}
-
 main {
   flex: 1;
 }
@@ -19,10 +12,11 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-image: url("../../Documentation/Images/trm-logo.png");
+  background-image: url("../CSS/trm-logo.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  background-color: black;
   color: #fff; /* Set the default text color to white */
 }
 
