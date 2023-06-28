@@ -9,11 +9,11 @@ def lambda_handler(event, context):
     datestamp = event['Date:']
     timestamp = event['Time:']
     avr_sensor_value = event["LRD Average Sensor Value:"]
-    requested_sensor_value = event["Requested LRD Sensor Value:"]
+    # requested_sensor_value = event["Requested LRD Sensor Value:"]
 
 
     # Check if there is incorrect or missing event
-    if 'DeviceID:' not in event or 'Date:' not in event or 'Time:' not in event or 'LRD Average Sensor Value:' not in event or 'Requested LRD Sensor Value:' not in event:
+    if 'DeviceID:' not in event or 'Date:' not in event or 'Time:' not in event or 'LRD Average Sensor Value:' not in event: # or 'Requested LRD Sensor Value:' not in event:
         return {
             "statusCode": 500,
             "body": "Incorrect or missing event data"
@@ -85,8 +85,8 @@ def lambda_handler(event, context):
             'DeviceID:': device_id,
             'Date:': datestamp,
             'Time:': timestamp,
-            'LRD Average Sensor Value:': avr_sensor_value,
-            'Requested LRD Sensor Value:': requested_sensor_value
+            'LRD Average Sensor Value:': avr_sensor_value
+            # 'Requested LRD Sensor Value:': requested_sensor_value
             
         }])
         new_data = pd.concat([existing_data, new_data], ignore_index=True)
@@ -97,8 +97,8 @@ def lambda_handler(event, context):
             'DeviceID:': device_id,
             'Date:': datestamp,
             'Time:': timestamp,
-            'LRD Average Sensor Value:': avr_sensor_value,
-            'Requested LRD Sensor Value:': requested_sensor_value
+            'LRD Average Sensor Value:': avr_sensor_value
+            # 'Requested LRD Sensor Value:': requested_sensor_value
         }])
 
     # Write the Parquet file 

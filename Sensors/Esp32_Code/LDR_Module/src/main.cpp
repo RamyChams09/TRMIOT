@@ -65,7 +65,6 @@ const std::string getCurrentTime()
   char       buff[80];
   tstruct = *localtime(&now);
 
-  //strftime(buff, sizeof(buff), "%Y-%m-%d / %X", &tstruct);
   strftime(buff, sizeof(buff), "%X", &tstruct);
   return buff;
 }
@@ -113,14 +112,14 @@ String getDeviceId()
 /**
 * Sends data from ESP32 to AWS
 */
-void publishAuto(void)
+void publish(void)
 {
   StaticJsonDocument<200> doc;
   doc["DeviceID:"] = getDeviceId();
   doc["Date:"] = getCurrentDate();
   doc["Time:"] = getCurrentTime();
   doc["LRD Average Sensor Value:"] = "";
-  doc["Requested LRD Sensor Value:"] = "";
+  //doc["Requested LRD Sensor Value:"] = "";
 
   if(doc["Date/Time:"] == "1970-01-01")
     return;
@@ -156,7 +155,7 @@ void publishAverage(int value)
     doc["Date:"] = getCurrentDate();
     doc["Time:"] = getCurrentTime();
     doc["LRD Average Sensor Value:"] = String(averageValue);
-    doc["Requested LRD Sensor Value:"] = "";
+    //doc["Requested LRD Sensor Value:"] = "";
 
     if(doc["Date:"] == "1970-01-01")
       return;
@@ -187,7 +186,7 @@ void publishPerRequest(String sensorCommand)
     doc["Date:"] = getCurrentDate();
     doc["Time:"] = getCurrentTime();
     doc["LRD Average Sensor Value:"] = "";
-    doc["Requested LRD Sensor Value:"] = String(reMap(analogRead(LRD)));
+    //doc["Requested LRD Sensor Value:"] = String(reMap(analogRead(LRD)));
 
     if(doc["Date:"] == "1970-01-01")
       return;
@@ -201,7 +200,6 @@ void publishPerRequest(String sensorCommand)
   {
     Serial.println("Not defined Command!");
   }
-  
 }
 
 
@@ -223,7 +221,7 @@ void receiveMessage(char *topic, byte *payload, unsigned int length)
   if(receivedSensorCommand == "1")
   {
     Serial.println(reMap(analogRead(LRD)));
-    publishPerRequest(receivedSensorCommand);
+    //publishPerRequest(receivedSensorCommand);
     //ADD IF MORE COMMANDS NEEDS TOBE HANDLED
   }
   else
