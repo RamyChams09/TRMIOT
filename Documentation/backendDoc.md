@@ -25,7 +25,8 @@
         - permissions: AWSLambdaBasicExecutionRole-2741c49f-eb05-4f23-8fbb-a56fe62f5cee, SESFullAccess, DynamoDB-Putitem
         
     B) TRM_deleteBooking-role-z0itjt76
-        - permissions: AWSLambdaBasicExecutionRole-8653ab0f-9a33-4848-b058-b926101e04c0, DynamoDB_Delete-Update_Item, SESFullAccess
+        - permissions: AWSLambdaBasicExecutionRole-8653ab0f-9a33-4848-b058-b926101e04c0, DynamoDB_Delete-Update_Item, 
+          SESFullAccess
         
     C) TRM_getRoomVacancy
         - permissions: AWSLambdaBasicExecutionRole-02040bd4-28c8-4a34-8676-d0c80f0ca52c, 
@@ -98,7 +99,8 @@
 
     3. Retrieve room vaccancy
 
-    The API Gateway calls the Lambda Function TRM_getVacancy. The booking data is retrieved from the DynamoDB and sent to frontend in order to display the vaccancy data.
+    The API Gateway calls the Lambda Function TRM_getVacancy. The booking data is retrieved from the DynamoDB and sent to frontend 
+    in order to display the vaccancy data.
 
     
     
