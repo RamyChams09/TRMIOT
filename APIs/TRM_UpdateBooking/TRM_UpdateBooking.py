@@ -1,7 +1,7 @@
 import json
 import boto3
 
-import variable
+import variables
 
 
 def lambda_handler(event, context):

@@ -1,9 +1,9 @@
 import boto3
 import variables
 
-def sendEmail(body_message):
+def sendEmail(body_message, employeeID):
     # Receive the email Attributes from the API
-    to_address = 'ramy.chamseddin-el-saghir@capgemini.com'
+    # to_address = 'ramy.chamseddin-el-saghir@capgemini.com'
 
     # load the ses client
     client = boto3.client('ses')
@@ -13,7 +13,7 @@ def sendEmail(body_message):
         Destination={
             'ToAddresses':
                 [
-                    to_address
+                    employeeID
                 ]
 
         },
