@@ -39,11 +39,11 @@ HTML files to sign-in, book rooms and see the occupancy of the rooms. The sites 
 
 - Forgot Password
 
-    <img src="./Images/forgotPassword.png" title="Screenshot" width="500"/>
+    <img src="./Images/forgotpassword.png" title="Screenshot" width="500"/>
 
 - Reset Password
 
-    <img src="./Images/resetPassword.png" title="Screenshot" width="500"/>
+    <img src="./Images/resetpassword.png" title="Screenshot" width="500"/>
 
 - Room Booking
 
