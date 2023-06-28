@@ -99,8 +99,8 @@
 
     3. Retrieve room vaccancy
 
-    The API Gateway calls the Lambda Function TRM_getVacancy. The booking data is retrieved from the DynamoDB and sent to frontend 
-    in order to display the vaccancy data.
+    The API Gateway calls the Lambda Function TRM_getVacancy. The booking data is retrieved from the DynamoDB and sent to 
+    frontend in order to display the vaccancy data.
 
     
     
