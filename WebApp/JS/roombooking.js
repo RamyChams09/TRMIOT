@@ -146,7 +146,7 @@ function DeleteBooking() {
   authToken.then(function setAuthToken(token) {
 
     fetch(apiUrl, {
-      method: 'DELETE',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': token,
