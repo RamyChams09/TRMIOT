@@ -31,7 +31,7 @@ Lambda > create functions
 
 # Architecture
 
-
+ <img src="./Images/diagramSensor.png" title="Screenshot" width="500"/>
 
 # Dataflow
 
