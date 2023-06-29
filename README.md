@@ -8,7 +8,7 @@ We also retrieve sensor data to analyse the room occupancy.
 
 ## Architecture Diagram
 <img src="Documentation/Images/ArchitectureDiagram.PNG" title="Screenshot" width="600"/>
-</br></br>
+
 
 ## Documentations
 [Frontend](/Documentation/frontendDoc.md)
