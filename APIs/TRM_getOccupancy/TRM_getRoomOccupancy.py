@@ -45,19 +45,13 @@ def lambda_handler(event, context):
             }
             return create_response(200, response)
         else:
-            response = {
-                'statusCode': 500,
-                'body': {
-                    'message': f'File not found'
-                }
-            }
-            return response
+            return create_response(404, 'File not found.')
 
     except Exception as e:
-        response = {
-            'statusCode': 500,
-            'body': {
-                'message': f'Error processing Parquet file: {str(e)}'
-            }
-        }
-        return response
+        # response = {
+        #     'statusCode': 500,
+        #     'body': {
+        #         'message': f'Error processing Parquet file: {str(e)}'
+        #     }
+        # }
+        return create_response(500, f'Error processing Parquet file: {str(e)}')
