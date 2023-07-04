@@ -20,23 +20,23 @@ def lambda_handler(event, context):
         }
         return response
 
-    prefix = 'sensor-data'
     room_id = param['room_id']
     date = param['date']
     suffix = '.parquet'
-    s3_object_key = f"{bucket_name}/{prefix}/{room_id}/{date}{suffix}"
     s3fs = fs.S3FileSystem()
 
+    # Construct the S3 object key for the specific room and date
+    s3_object_key = f"{bucket_name}/sensor-data/{room_id}/{date}{suffix}"
+
     try:
-        parquet_data = pq.ParquetDataset(
-            s3_object_key,
-            filesystem=s3fs
-        ).read()
-        if parquet_data:
+        # Read the Parquet file
+        parquet_data = pq.ParquetDataset(s3_object_key, filesystem=s3fs).read()
+
+        if len(parquet_data) > 0:
             columns = parquet_data.column_names
             output = {column: np.array(parquet_data[column]).tolist() for column in columns}
-            time = output["Time:"]
-            occupancy = output["LRD Average Sensor Value:"]
+            time = output.get("Time:", [])
+            occupancy = output.get("LRD Average Sensor Value:", [])
             occupancy_to_int = [int(float(x)) if x else 0 for x in occupancy]
 
             response = {
@@ -45,13 +45,9 @@ def lambda_handler(event, context):
             }
             return create_response(200, response)
         else:
-            return create_response(404, 'File not found.')
+            return create_response(404, 'no data was found.')
 
+    except FileNotFoundError:
+        return create_response(404, 'no data was found.')
     except Exception as e:
-        # response = {
-        #     'statusCode': 500,
-        #     'body': {
-        #         'message': f'Error processing Parquet file: {str(e)}'
-        #     }
-        # }
         return create_response(500, f'Error processing Parquet file: {str(e)}')
