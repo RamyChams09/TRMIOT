@@ -1,5 +1,23 @@
 venv
 getMethod.py
-secrets.hpp
+
+#sensor Libraries
 packages
-.vscode/
+#sensor Sensitive Data
+secrets.hpp
+
+#Local .terraform directories
+**/.terraform/*
+
+#.pem files
+*.pem
+
+#.hcl files from Terraform v0.14 and newer
+*.hcl
+
+#.tfplan files
+*.tfplan
+
+#.tfstate files
+*.tfstate
+*.tfstate.*
