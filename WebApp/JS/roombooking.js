@@ -191,7 +191,7 @@ function signOut() {
 
   // Redirect to the login page after signing out
   window.location.href = 'login.html'; // Replace 'login.html' with the URL of your login page
-}
+
 
 // Attach the signOut function to the form submit event
 document.getElementById('signOutForm').addEventListener('submit', function (event) {
