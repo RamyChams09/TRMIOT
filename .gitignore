@@ -1,5 +1,6 @@
 venv
 getMethod.py
+.vscode/
 
 #sensor Libraries
 packages

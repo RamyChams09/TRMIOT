@@ -177,30 +177,9 @@ function DeleteBooking() {
 
 }
 
-document.getElementById('logoutButton').addEventListener('click', function() {
-  signOut();
-});
 
-function signOut() {
-  // Add the sign-out logic here
-  // For example, you can use the AWS SDK or any other authentication library to handle the sign-out process
-  // Once the sign-out is complete, you can redirect the user to the desired page using window.location.href
-  // Example: window.location.href = 'login.html';
-  alert('User signed out');
-}
-
-  // Redirect to the login page after signing out
-  window.location.href = 'login.html'; // Replace 'login.html' with the URL of your login page
-
-
-// Attach the signOut function to the form submit event
-document.getElementById('signOutForm').addEventListener('submit', function (event) {
-  event.preventDefault(); // Prevent the default form submission behavior
-  signOut(); // Call the signOut function
-});
-
-  function updateBooking() {
-    var apiUrl = 'https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/updatebooking';
+function updateBooking() {
+var apiUrl = 'https://tgjdqpmdj0.execute-api.eu-central-1.amazonaws.com/Dev/updatebooking';
 
     var roomID = document.getElementById('roomSelect').value;
     var booking_date = document.getElementById('date').value;
@@ -209,74 +188,74 @@ document.getElementById('signOutForm').addEventListener('submit', function (even
     var booking_code = document.getElementById('booking_code').value;
 
     if (booking_code === undefined || booking_code === '') {
-      alert('Please write the correct booking code');
-      return;
+        alert('Please write the correct booking code');
+        return;
     }
 
     var postData = {
-      'meetingroomID': roomID,
-      'booking_date': booking_date,
-      'start_time': start_time,
-      'end_time': end_time,
-      'booking_code': booking_code,
-      'to_address': '<email-address>', // Replace with the email address to send the update notification
+        'meetingroomID': roomID,
+        'booking_date': booking_date,
+        'start_time': start_time,
+        'end_time': end_time,
+        'booking_code': booking_code,
+        'to_address': '<email-address>', // Replace with the email address to send the update notification
     };
 
     var poolData = {
-      UserPoolId: 'eu-central-1_lpgDFIdQ1', // Replace with your Cognito User Pool ID
-      ClientId: '709eu8fla6cpc05b71hgebg8f5', // Replace with your Cognito App Client ID
+        UserPoolId: 'eu-central-1_lpgDFIdQ1', // Replace with your Cognito User Pool ID
+        ClientId: '709eu8fla6cpc05b71hgebg8f5', // Replace with your Cognito App Client ID
     };
 
     var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
     if (typeof AWSCognito !== 'undefined') {
-      AWSCognito.config.region = 'eu-central-1';
+        AWSCognito.config.region = 'eu-central-1';
     }
 
     var authToken = new Promise(function fetchCurrentAuthToken(resolve, reject) {
-      var cognitoUser = userPool.getCurrentUser();
+        var cognitoUser = userPool.getCurrentUser();
 
-      if (cognitoUser) {
-        cognitoUser.getSession(function sessionCallback(err, session) {
-          if (err) {
+        if (cognitoUser) {
+            cognitoUser.getSession(function sessionCallback(err, session) {
+        if (err) {
             reject(err);
-          } else if (!session.isValid()) {
+        } else if (!session.isValid()) {
             resolve(null);
-          } else {
+        } else {
             resolve(session.getIdToken().getJwtToken());
-          }
-        });
-      } else {
-        console.log("we have no user");
-        resolve(null);
-      }
+        }
     });
+    } else {
+    console.log("we have no user");
+    resolve(null);
+    }
+});
 
-    authToken.then(function setAuthToken(token) {
-      fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token,
-        },
-        body: JSON.stringify(postData),
-      })
-        .then(function (response) {
-          response.json()
-            .then(function (responseData) {
-              console.log(responseData);
-              if (response.ok) {
-                alert("Booking update successful. Please refresh the page to see the change");
-              } else {
-                alert(responseData);
-              }
-            })
-            .catch(function (e) {
-              console.log(e);
-            });
+authToken.then(function setAuthToken(token) {
+    fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+    },
+    body: JSON.stringify(postData),
+    })
+    .then(function (response) {
+        response.json()
+        .then(function (responseData) {
+            console.log(responseData);
+            if (response.ok) {
+            alert("Booking update successful. Please refresh the page to see the change");
+            } else {
+            alert(responseData);
+            }
         })
-        .catch(function (error) {
-          console.error('Error:', error);
+        .catch(function (e) {
+            console.log(e);
         });
+    })
+    .catch(function (error) {
+        console.error('Error:', error);
     });
-  }
+});
+}
