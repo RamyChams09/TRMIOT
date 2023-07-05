@@ -2,3 +2,4 @@ venv
 getMethod.py
 secrets.hpp
 packages
+.vscode/

@@ -1,148 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TRM Room Booking</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../CSS/roombooking.css">
-</head>
 
-<body class="background-image">
-  <main class="container-fluid my-4">
-    <div class="row">
-      <!--Room booking-->
-      <div class="col-md-3 col-sm-12">
-        <h2>Book a Room</h2>
-        <form action="#" id="bookingForm">
-          <div class="form-group">
-            <label for="roomSelect">Select Room:</label>
-            <select id="roomSelect" class="form-control">
-              <option value="1">Room 1</option>
-              <option value="2">Room 2</option>
-              <!-- Add more room options -->
-            </select>
-          </div>
+    <head>
 
-          <div class="form-group">
-            <label for="date">Booking Date:</label>
-            <input type="date" id="date" class="form-control" required>
-          </div>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TRM Room Booking</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../CSS/roombooking.css">
 
-          <div class="form-group">
-            <label for="start_time">Start Time:</label>
-            <select id="start_time" class="form-control" required>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="end_time">End Time:</label>
-            <select id="end_time" class="form-control" required>
-            </select>
-          </div>
-
-          <!--DELETE FORM-->
-          <div class="form-group">
-            <label for="booking_code">Booking code: (only add it for updating or deleting bookings)</label>
-            <input type="text" id="booking_code" class="form-control">
-          </div>
+    </head>
 
 
-          <!--The Buttons-->
-          <div class="button-container">
-            <button onclick="bookRoom()" type="submit" class="btn btn-primary book-now-btn">Book Now</button>
-            <button type="submit" class="btn btn-primary update-booking-btn" onclick="updateBooking-btn">Update Booking</button>
-            <button onclick="DeleteBooking()" type="submit" class="btn btn-primary delete-booking-btn">Delete Booking</button>
-          </div>
-          <a href="roomoccupancy.html" class="btn btn-primary view-room-booking-btn">View Room Occupancy</a>
-        </form>
-      </div>
+    <body class="background-image">
+    
+       
 
-      <!--Logout Button-->
-      <div class="logout-container">
-        <button id="logoutButton" class="btn btn-primary logout-button">Sign out</button>
-      </div>
+        <main class="container-fluid my-4">
+            
+            <div class="row">
+                
+                    <!--<input type="button" class="btn btn-primary book-now-btn" value="Sign out">-->
+                    <!--<button onclick="logOut()" type="submit" id="logOutButton" class="btn btn-primary book-now-btn">Sign Out</button>-->
+                    <input type="submit" class="btn btn-primary book-now-btn" value="Sign out" onclick="logOut()">
 
-      <!--Booking Summary-->
-      <div class="col-md-9 col-sm-12">
-        <div class="booking-summary">
-          <h2 class="timebtn">Booking Summary</h2>
-          <div class="timebtn">
-            <button id="previousBtn" disabled>Previous</button>&nbsp;&nbsp;
-            <span id="dateDisplay"></span>&nbsp;&nbsp;
-            <button id="nextBtn">Next</button>
-          </div>
-          <div class="booking-list">
-            <h3>Room 1</h3>
-            <table class="table table-striped">
-              <thead>
-                <tr class="bg-info">
-                  <th>Booking code</th>
-                  <th>Start time</th>
-                  <th>End time</th>
-                </tr>
-              </thead>
-              <tbody id="room1Table"></tbody>
-            </table>
-            <h3>Room 2</h3>
-            <table class="table table-striped">
-              <thead>
-                <tr class="bg-info">
-                  <th>Booking code</th>
-                  <th>Start time</th>
-                  <th>End time</th>
-                </tr>
-              </thead>
-              <tbody id="room2Table"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
+                <!--Room booking-->
+                <div class="col-md-3 col-sm-12">
+                    <h2>Book a Room</h2>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js/dist/amazon-cognito-identity.min.js"></script>
-  <script src="../JS/dateDisplaybooking.js"></script>
-  <script src="../JS/roombooking.js"></script>
+                    <form action="#" id="bookingForm">
+                        <div class="form-group">
+                            <label for="roomSelect">Select Room:</label>
+                            <select id="roomSelect" class="form-control">
+                                <option value="1">Room 1</option>
+                                <option value="2">Room 2</option>
+                            </select>
+                        </div>
 
-  <script>
-    // Generate time options with 15-minute intervals in the 24-hour format
-    function generateTimeOptions() {
-      const startSelect = document.getElementById('start_time');
-      const endSelect = document.getElementById('end_time');
+                        <div class="form-group">
+                            <label for="date">Booking Date:</label>
+                            <input type="date" id="date" class="form-control" required>
+                        </div>
 
-      const startTime = new Date();
-      startTime.setHours(0, 0, 0, 0);
+                        <div class="form-group">
+                            <label for="start_time">Start Time:</label>
+                            <input type="time" id="start_time" class="form-control" required>
+                        </div>
 
-      const endTime = new Date();
-      endTime.setHours(23, 45, 0, 0);
+                        <div class="form-group">
+                            <label for="end_time">End Time:</label>
+                            <input type="time" id="end_time" class="form-control" required>
+                        </div>
 
-      const interval = 15 * 60 * 1000; // 15 minutes in milliseconds
+                        <!--DELETE FORM-->
+                        <div class="form-group">
+                            <label for="booking_code">Booking code: (only add it for deleting bookings)</label>
+                            <input type="text" id="booking_code" class="form-control">
+                        </div>
 
-      while (startTime <= endTime) {
-        const timeString = startTime.toLocaleTimeString('en-US', {
-          hour: '2-digit',
-          minute: '2-digit',
-        });
+                    
+                        <!--Buttons-->
+                        <button onclick="bookRoom()" type="submit" class="btn btn-primary book-now-btn">Book Now</button>
+                        <button onclick="DeleteBooking()" type="submit" class="btn btn-primary delete-booking-btn">Delete Booking</button>
+                        <a href="roomoccupancy.html" class="btn btn-primary view-room-booking-btn">View Room Occupancy</a>
+                    
+                    </form>
+                </div>
 
-        const option = document.createElement('option');
-        option.value = timeString;
-        option.textContent = timeString;
+                <!--Booking Summary-->
+                <div class="col-md-9 col-sm-12">
+                <div class="booking-summary">
+                    <h2 class="timebtn">Booking Summary</h2>
+                    <div class="timebtn">
+                    <button id="previousBtn" disabled>Previous</button>&nbsp;&nbsp;
+                    <span id="dateDisplay"></span>&nbsp;&nbsp;
+                    <button id="nextBtn">Next</button>
+                    </div>
+                    <div class="booking-list">
+                    <h3>Room 1</h3>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr class="bg-info">
+                            <th>Booking code</th>
+                            <th>Start time</th>
+                            <th>End time</th>
+                            <th>Booked by me?</th>
+                        </tr>
+                        </thead>
+                        <tbody id="room1Table"></tbody>
+                    </table>
+                    <h3>Room 2</h3>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr class="bg-info">
+                            <th>Booking code</th>
+                            <th>Start time</th>
+                            <th>End time</th>
+                            <th>Booked by me?</th>
+                        </tr>
+                        </thead>
+                        <tbody id="room2Table"></tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </main>
 
-        startSelect.appendChild(option.cloneNode(true));
-        endSelect.appendChild(option);
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
 
-        startTime.setTime(startTime.getTime() + interval);
-      }
-    }
+        <script src="../JS/config.js"></script>
+        <script src="../JS/aws-cognito-sdk.min.js"></script>
+        <script src="../JS/amazon-cognito-identity.min.js"></script>
+        <script src="../JS/cognito-auth.js"></script>
 
-    // Call the function to generate time options on page load
-    generateTimeOptions();
-  </script>
-</body>
+        <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js/dist/amazon-cognito-identity.min.js"></script>
+        <script src="../JS/dateDisplaybooking.js"></script>
+        <script src="../JS/roombooking.js"></script>
+
+    </body>
 
 </html>
