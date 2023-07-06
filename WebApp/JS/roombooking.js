@@ -42,38 +42,46 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         }
     });
 
-function generateTimeIntervals() {
-  var startTimeSelect = document.getElementById('start_time');
-  var endTimeSelect = document.getElementById('end_time');
+    function generateTimeIntervals() {
+        var startTimeSelect = document.getElementById('start_time');
+        var endTimeSelect = document.getElementById('end_time');
 
-  startTimeSelect.innerHTML = ''; // Clear the options
-  endTimeSelect.innerHTML = ''; // Clear the options
+        startTimeSelect.innerHTML = ''; // Clear the options
+        endTimeSelect.innerHTML = ''; // Clear the options
 
-  var startTime = new Date().setHours(0, 0, 0, 0); // Start time at 00:00 (midnight)
-  var endTime = new Date().setHours(23, 45, 0, 0); // End time at 23:45
+        var startTime = new Date().setHours(0, 0, 0, 0); // Start time at 00:00 (midnight)
+        var endTime = new Date().setHours(23, 45, 0, 0); // End time at 23:45
 
-  var currentTime = startTime;
-  while (currentTime <= endTime) {
-    var timeOption = new Date(currentTime).toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false // Use 24-hour format
-    });
+        var currentTime = startTime;
 
-    var optionElement = document.createElement('option');
-    optionElement.value = timeOption;
-    optionElement.text = timeOption;
+        while (currentTime <= endTime) {
+            var timeValue = new Date(currentTime).toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false // Use 24-hour format
+            });
+ 
+            var timeParts = timeValue.split(':');
 
-    startTimeSelect.appendChild(optionElement);
-    endTimeSelect.appendChild(optionElement.cloneNode(true)); // Add the same option to end time
+            if(timeParts[0] === '24'){
+                timeParts[0] = '00';
+            }
 
-    currentTime += 15 * 60 * 1000; // Add 15 minutes to the current time
-  }
-}
+            var formattedTime = timeParts.join(':');
 
-// Call the function to generate time intervals on page load
-generateTimeIntervals();
+            var optionElement = document.createElement('option');
+            optionElement.value = formattedTime;
+            optionElement.text = formattedTime;
 
+            startTimeSelect.appendChild(optionElement);
+            endTimeSelect.appendChild(optionElement.cloneNode(true)); // Add the same option to end time
+
+            currentTime += 15 * 60 * 1000; // Add 15 minutes to the current time
+        }
+    }
+
+    // Call the function to generate time intervals on page load
+    generateTimeIntervals();
 
 
     // Booking
@@ -129,6 +137,7 @@ generateTimeIntervals();
             });
         });
     }
+
 
     // Delete Booking
     TRM_RoomBooking_API.deleteBooking = function deleteBooking() {
@@ -235,4 +244,3 @@ generateTimeIntervals();
         });
     }
 }(jQuery));
-
