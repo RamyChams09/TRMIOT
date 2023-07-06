@@ -20,8 +20,6 @@
         <main class="container-fluid my-4">
             
             <div class="row">
-                
-                <input type="submit" class="btn btn-primary book-now-btn" id="signOutButton" value="Sign out" onclick="TRM_RoomBooking_API.signOut()">
 
                 <!--Room booking-->
                 <div class="col-md-3 col-sm-12">
@@ -42,13 +40,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="start_time">Start Time:</label>
-                            <input type="time" id="start_time" class="form-control" required>
+                          <label for="start_time">Start Time:</label>
+                          <select id="start_time" class="form-control" required></select>
                         </div>
 
                         <div class="form-group">
-                            <label for="end_time">End Time:</label>
-                            <input type="time" id="end_time" class="form-control" required>
+                          <label for="end_time">End Time:</label>
+                          <select id="end_time" class="form-control" required></select>
                         </div>
 
                         <!--DELETE FORM-->
@@ -60,20 +58,23 @@
                     
                         <!--Buttons-->
                         <button onclick="TRM_RoomBooking_API.bookRoom()" type="submit" class="btn btn-primary book-now-btn">Book Now</button>
+                        <button onclick="TRM_RoomBooking_API.updateBooking()" type="submit" class="btn btn-primary update-booking-btn">Update Booking</button>
                         <button onclick="TRM_RoomBooking_API.deleteBooking()" type="submit" class="btn btn-primary delete-booking-btn">Delete Booking</button>
                         <a href="roomoccupancy.html" class="btn btn-primary view-room-booking-btn">View Room Occupancy</a>
                     
                     </form>
                 </div>
-
+                <div class="logout-container">
+                       <input type="submit" class="btn btn-primary book-now-btn" id="signOutButton" value="Sign out" onclick="TRM_RoomBooking_API.signOut()">
+                </div>
                 <!--Booking Summary-->
                 <div class="col-md-9 col-sm-12">
                 <div class="booking-summary">
                     <h2 class="timebtn">Booking Summary</h2>
                     <div class="timebtn">
-                    <button id="previousBtn" disabled>Previous</button>&nbsp;&nbsp;
-                    <span id="dateDisplay"></span>&nbsp;&nbsp;
-                    <button id="nextBtn">Next</button>
+                        <button id="previousBtn" disabled>Previous</button>&nbsp;&nbsp;
+                        <span id="dateDisplay"></span>&nbsp;&nbsp;
+                        <button id="nextBtn">Next</button>
                     </div>
                     <div class="booking-list">
                     <h3>Room 1</h3>
@@ -117,6 +118,7 @@
         <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js/dist/amazon-cognito-identity.min.js"></script>
         <script src="../JS/dateDisplaybooking.js"></script>
         <script src="../JS/roombooking.js"></script>
+
 
     </body>
 
