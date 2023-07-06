@@ -42,6 +42,39 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         }
     });
 
+function generateTimeIntervals() {
+  var startTimeSelect = document.getElementById('start_time');
+  var endTimeSelect = document.getElementById('end_time');
+
+  startTimeSelect.innerHTML = ''; // Clear the options
+  endTimeSelect.innerHTML = ''; // Clear the options
+
+  var startTime = new Date().setHours(0, 0, 0, 0); // Start time at 00:00 (midnight)
+  var endTime = new Date().setHours(23, 45, 0, 0); // End time at 23:45
+
+  var currentTime = startTime;
+  while (currentTime <= endTime) {
+    var timeOption = new Date(currentTime).toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false // Use 24-hour format
+    });
+
+    var optionElement = document.createElement('option');
+    optionElement.value = timeOption;
+    optionElement.text = timeOption;
+
+    startTimeSelect.appendChild(optionElement);
+    endTimeSelect.appendChild(optionElement.cloneNode(true)); // Add the same option to end time
+
+    currentTime += 15 * 60 * 1000; // Add 15 minutes to the current time
+  }
+}
+
+// Call the function to generate time intervals on page load
+generateTimeIntervals();
+
+
 
     // Booking
     TRM_RoomBooking_API.bookRoom = function bookRoom() {
@@ -96,7 +129,6 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             });
         });
     }
-
 
     // Delete Booking
     TRM_RoomBooking_API.deleteBooking = function deleteBooking() {
@@ -203,3 +235,4 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         });
     }
 }(jQuery));
+
