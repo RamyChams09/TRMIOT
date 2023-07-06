@@ -53,14 +53,14 @@
 
                         <!--DELETE FORM-->
                         <div class="form-group">
-                            <label for="booking_code">Booking code: (only add it for deleting bookings)</label>
+                            <label for="booking_code">Booking code: (only add to delete a booking)</label>
                             <input type="text" id="booking_code" class="form-control">
                         </div>
 
                     
                         <!--Buttons-->
-                        <button onclick="bookRoom()" type="submit" class="btn btn-primary book-now-btn">Book Now</button>
-                        <button onclick="DeleteBooking()" type="submit" class="btn btn-primary delete-booking-btn">Delete Booking</button>
+                        <button onclick="TRM_RoomBooking_API.bookRoom()" type="submit" class="btn btn-primary book-now-btn">Book Now</button>
+                        <button onclick="TRM_RoomBooking_API.deleteBooking()" type="submit" class="btn btn-primary delete-booking-btn">Delete Booking</button>
                         <a href="roomoccupancy.html" class="btn btn-primary view-room-booking-btn">View Room Occupancy</a>
                     
                     </form>
