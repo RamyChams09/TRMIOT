@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
     <head>
 
         <meta charset="UTF-8">
@@ -12,15 +11,11 @@
 
     </head>
 
-
     <body class="background-image">
     
-       
-
         <main class="container-fluid my-4">
             
             <div class="row">
-
                 <!--Room booking-->
                 <div class="col-md-3 col-sm-12">
                     <h2>Book a Room</h2>
@@ -40,13 +35,13 @@
                         </div>
 
                         <div class="form-group">
-                          <label for="start_time">Start Time:</label>
-                          <select id="start_time" class="form-control" required></select>
+                            <label for="start_time">Start Time:</label>
+                            <select id="start_time" class="form-control" required></select>
                         </div>
 
                         <div class="form-group">
-                          <label for="end_time">End Time:</label>
-                          <select id="end_time" class="form-control" required></select>
+                            <label for="end_time">End Time:</label>
+                            <select id="end_time" class="form-control" required></select>
                         </div>
 
                         <!--DELETE FORM-->
@@ -65,7 +60,7 @@
                     </form>
                 </div>
                 <div class="logout-container">
-                       <input type="submit" class="btn btn-primary book-now-btn" id="signOutButton" value="Sign out" onclick="TRM_RoomBooking_API.signOut()">
+                    <input type="submit" class="btn btn-primary book-now-btn" id="signOutButton" value="Sign out" onclick="TRM_RoomBooking_API.signOut()">
                 </div>
                 <!--Booking Summary-->
                 <div class="col-md-9 col-sm-12">
@@ -84,7 +79,6 @@
                             <th>Booking code</th>
                             <th>Start time</th>
                             <th>End time</th>
-                            <th>Booked by me?</th>
                         </tr>
                         </thead>
                         <tbody id="room1Table"></tbody>
@@ -96,7 +90,6 @@
                             <th>Booking code</th>
                             <th>Start time</th>
                             <th>End time</th>
-                            <th>Booked by me?</th>
                         </tr>
                         </thead>
                         <tbody id="room2Table"></tbody>
@@ -118,7 +111,6 @@
         <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js/dist/amazon-cognito-identity.min.js"></script>
         <script src="../JS/dateDisplaybooking.js"></script>
         <script src="../JS/roombooking.js"></script>
-
 
     </body>
 
