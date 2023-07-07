@@ -86,7 +86,7 @@ function GetBooking(formattedDate) {
         }
       });
     } else {
-      console.log("we have no user")
+      console.log("There is no user")
       resolve(null);
     }
   });
@@ -127,8 +127,7 @@ function GetBooking(formattedDate) {
                 }
                 row += `
                     <td>${bookingsToday[i].start_time}</td>
-                    <td>${bookingsToday[i].end_time}</td>
-                    <td>${bookingsToday[i].booked_by_me}</td>
+                    <td>${bookingsToday[i].end_time}</td>                    
                   </tr>`;
 
                 // Add the row to the respective table based on room ID
