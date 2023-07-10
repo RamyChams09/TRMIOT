@@ -30,6 +30,11 @@ body {
   color: #fff;
 }
 
+.btn {
+    background-color:#9b0909;
+    border-color: white;
+}
+
 #btn {
   margin-top: 20px;
 }
