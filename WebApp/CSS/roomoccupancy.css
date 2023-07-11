@@ -104,6 +104,7 @@
     background-color: #6e0505;
     border-color: white;
     color:white;
+    transition: background-color 0.3s ease;
   }
 
   #backButton {
