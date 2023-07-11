@@ -108,7 +108,6 @@ function GetBooking(formattedDate) {
             var userstatus = document.getElementById("userstatus");
             dis = bookingsToday[0]['user_status'];
             var responseHTML = dis;
-            console.log(dis)
             userstatus.innerHTML = responseHTML;
 
             // Get references to the room 1 and room 2 tables
