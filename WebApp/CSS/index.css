@@ -31,8 +31,13 @@ body {
 }
 
 .btn {
-    background-color:#9b0909;
+    background-color: #6e0505;
     border-color: white;
+}
+
+.btn:hover{
+  background-color:#8b0808; /* Set the background color on hover */
+  border-color: white;
 }
 
 #btn {
