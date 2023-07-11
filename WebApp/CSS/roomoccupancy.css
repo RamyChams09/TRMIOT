@@ -11,6 +11,9 @@
     flex-direction: column;
     align-items: center;
     background-image: url("../trmLogo.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     background-color:black;
     font-family: Arial, sans-serif;
     font-size: 16px;
@@ -46,10 +49,15 @@
     padding: 10px 20px;
     font-size: 16px;
     color: white;
-    background-color: #007bff;
-    border: none;
+    background-color: #6e0505;
+    border-color: white;
     border-radius: 5px;
     cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #8b0808;; /* Set the background color on hover */
+    border-color: white;
   }
   
   button:disabled {
@@ -93,8 +101,14 @@
     position: absolute;
     top: 20px;
     left: 20px;
-    background-color: #007bff;
+    background-color: #6e0505;
+    border-color: white;
     color:white;
+  }
+
+  #backButton {
+    background-color: #8b0808; /* Set the background color on hover */
+    border-color: white;
   }
 
   .timebtn {
