@@ -49,8 +49,8 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         startTimeSelect.innerHTML = ''; // Clear the options
         endTimeSelect.innerHTML = ''; // Clear the options
 
-        var startTime = new Date().setHours(0, 0, 0, 0); // Start time at 00:00 (midnight)
-        var endTime = new Date().setHours(23, 45, 0, 0); // End time at 23:45
+        var startTime = new Date().setHours(0, 0, 0, 0);
+        var endTime = new Date().setHours(24, 0, 0, 0);
 
         var currentTime = startTime;
 
@@ -58,7 +58,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             var timeValue = new Date(currentTime).toLocaleTimeString('en-US', {
                 hour: '2-digit',
                 minute: '2-digit',
-                hour12: false // Use 24-hour format
+                hour12: false
             });
  
             var timeParts = timeValue.split(':');
@@ -76,8 +76,11 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             startTimeSelect.appendChild(optionElement);
             endTimeSelect.appendChild(optionElement.cloneNode(true)); // Add the same option to end time
 
-            currentTime += 15 * 60 * 1000; // Add 15 minutes to the current time
+            currentTime += 30 * 60 * 1000; // Add 15 minutes to the current time
         }
+        // Default values
+        startTimeSelect.value = '07:00';
+        endTimeSelect.value = '20:00';
     }
 
     // Call the function to generate time intervals on page load
