@@ -86,15 +86,9 @@ main {
 }
 
 .logout-container input[type="submit"] {
-  background-color: #6e0505;
+  background-color: #6e0505 !important;
   color: #fff;
-  border-color: white;
-  transition: background-color 0.3s ease;
-}
-
-.logout-container input[type="submit"]:hover {
-  background-color: #8b0808;
-  border-color: white;
+  border-color: white !important;
 }
 
 /* Book Now Button, Update Booking Button, Delete Booking Button, View room Occupancy btn */
@@ -106,17 +100,9 @@ main {
   margin: 10px 5px;
   padding: 10px 20px;
   color: #fff;
-  background-color: #6e0505;
-  border-color: white;
+  background-color: #6e0505 !important;
+  border-color: white !important;
   transition: background-color 0.3s ease;
-}
-
-.book-now-btn:hover,
-.update-booking-btn:hover,
-.delete-booking-btn:hover,
-.view-room-booking-btn:hover {
-  background-color: #8b0808;
-  border-color: white;
 }
 
 .btn-length {
