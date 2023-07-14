@@ -121,7 +121,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
                     // Function to display booking data in the tables
                     var bookingsToday = JSON.parse(responseData)[formattedDate];
                     var userstatus = document.getElementById("userstatus");
-                    dis = bookingsToday[0]['user_status'];
+                    var dis = bookingsToday[0]['user_status'];
                     var responseHTML = dis;
                     userstatus.innerHTML = responseHTML;
 
