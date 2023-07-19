@@ -1,53 +1,41 @@
 .container {
-  max-width: 470px;
-  margin: 0 auto;
-  padding-top: 100px;
-  justify-content: center;
-  width: 60%;
+    max-width: 470px;
 }
 
-.modal-dialog {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: calc(100% - 100px);
+.background {
+    position: absolute;
+    min-width: 90vH;
+    min-height: 90vH;
+    background-image: url('../trmLogo.png');
+    background-size: cover;
+    margin-left: -6.5vH;
+    opacity: 0.2;
+    z-index: -1;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: black;
-  color: #fff;
+    display: flex;
+    padding-top: 30px;
+    min-height: 80vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgb(23, 27, 36);
+    color: #fff;
 }
 
-#logo {
-    min-height: 80vh;
-    opacity: 0.5;
-  }
-
 #forgotPasswordLink {
-  color: #fff;
+    color: #fff;
 }
 
 .btn {
-    background-color: #6e0505;
+    background-color: #273a57;
     border-color: white;
-    transition: background-color 0.3s ease;
+    color: #fff;
+    min-width: 5cm;
+    margin: 10px 5px;
 }
 
 .btn:hover{
-  background-color:#8b0808; /* Set the background color on hover */
-  border-color: white;
-}
-
-.btn-primary {
-    background-color: #9b0909 !important;
-    border-color: white !important;
-}
-
-#btn-register {
-  margin-left: 20px;
+    background-color:#1b283c;
+    color: #fff;
 }
