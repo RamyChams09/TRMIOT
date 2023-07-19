@@ -76,7 +76,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             startTimeSelect.appendChild(optionElement);
             endTimeSelect.appendChild(optionElement.cloneNode(true)); // Add the same option to end time
 
-            currentTime += 30 * 60 * 1000; // Add 15 minutes to the current time
+            currentTime += 30 * 60 * 1000; // Add 30 minutes to the current time
         }
         // Default values
         startTimeSelect.value = '07:00';

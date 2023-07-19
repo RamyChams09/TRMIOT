@@ -122,7 +122,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
                     var bookingsToday = JSON.parse(responseData)[formattedDate];
                     var userstatus = document.getElementById("userstatus");
                     var dis = bookingsToday[0]['user_status'];
-                    var responseHTML = dis;
+                    var responseHTML = "Welcome: " + dis;
                     userstatus.innerHTML = responseHTML;
 
                     // Get references to the room tables

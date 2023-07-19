@@ -1,117 +1,58 @@
-/* Reset default styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Global styles */
-  body {
+.background {
+    position: absolute;
+    min-width: 100vH;
+    min-height: 100vH;
+    background-image: url("../trmLogo.png");
+    background-size: cover;
+    opacity: 0.2;
+}
+
+body {
     display: flex;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color:rgb(23, 27, 36);
+    color: #fff;
     flex-direction: column;
     align-items: center;
-    background-image: url("../trmLogo.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-color:black;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
     line-height: 1.5;
-  }
-  
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
-  }
-  
-  /* Header */
-  header {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    width: 100%;
-    text-align: center;
-  }
-  
-  /* Booking Summary */
-  .booking-summary {
+}
+
+.occupancy-container {
     margin-top: 20px;
-  }
-  
-  .timebtn {
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
-  button {
+}
+
+.btn {
     padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    background-color: #6e0505;
-    border-color: white;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+    background-color: #273a57;
+    border-color: #fff;
+    color: #fff;
+}
 
-  button:hover {
-    background-color: #8b0808;; /* Set the background color on hover */
-    border-color: white;
-  }
-  
-  button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-    color: black;
-  }
-  
-  /* Date and Day Display */
-  .date-display {
-    text-align: center;
-    margin-bottom: 10px;
-    font-weight: bold;
-  }
-  
-  .day-display {
-    text-align: center;
-    font-style: italic;
-  }
-  
-  /* Chart 1*/
-  canvas#occupancyChart1 {
-    display: block;
-    margin: 40px auto;
-    width: 100%;
-    max-width: 1200px;
-    background-color: #FDFEFE;
-  }
+.btn:hover {
+    background-color: #1b283c;
+    border-color: #fff;
+    color: #fff;
+}
 
-  /* Chart 2*/
-  canvas#occupancyChart2 {
-    display: block;
-    margin: 40px auto;
-    width: 100%;
-    max-width: 1200px;
-    background-color: #FDFEFE;
-  }
-  
-  /* Go Back To Booking Button */
-  #backButton {
+#backButton {
     position: absolute;
     top: 20px;
     left: 20px;
-    background-color: #6e0505;
-    border-color: white;
-    color:white;
-    transition: background-color 0.3s ease;
-  }
+}
 
-  #backButton {
-    background-color: #8b0808; /* Set the background color on hover */
-    border-color: white;
-  }
+.canvas {
+    display: block;
+    margin: 40px auto;
+    width: 100%;
+    max-width: 1200px;
+    background-color: #fdfefe;
+}
 
-  .timebtn {
-    color: white;
-  }
+.dateday {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    gap: 20px;
+}
