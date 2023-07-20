@@ -1,38 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRM Room Occupancy</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../CSS/roomoccupancy.css">
-  </head>
-  <body class="background-image">
-   <!--Booking Summary-->
-    <div class="col-md-9 col-sm-12">
-      <div class="booking-summary">
-        <h2 class="timebtn">Occupancy History</h2>
-        <div class="timebtn">
-          <button id="previousBtn">Previous</button>&nbsp;&nbsp;
-          <span id="dateDisplay"></span>&nbsp;&nbsp;
-          <button id="nextBtn" disabled>Next</button>
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>TRM Room Occupancy</title>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../CSS/roomoccupancy.css">
+
+    </head>
+
+    <body>
+
+        <div class="background"></div>
+        <div class="col-md-9 col-sm-12">
+            <div class="occupancy-container">
+                <h2 class="dateday">Occupancy History</h2>
+                <div class="dateday">
+                    <button class="btn" id="previousBtn">Previous</button>
+                    <span id="dateDisplay"></span>
+                    <button class="btn" id="nextBtn" disabled>Next</button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Button to go back to the room booking page -->
-    <div class="back-button">
-      <button id="backButton" onclick="goToBookingPage()">Back to Booking</button>
-    </div>
+        <div>
+            <button onclick="window.location.href='./roombooking.html'" class="btn" id="backButton">Back to booking page</button>
+        </div>
 
-    <canvas id="occupancyChart1"></canvas>
-    <canvas id="occupancyChart2"></canvas>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js/dist/amazon-cognito-identity.min.js"></script>
-    <script src="../JS/roomoccupancy.js"></script>
-    <script src="../JS/dateDisplayOccupancy.js"> </script>
-    <script src="../HTML/roombooking.html"> </script>
-  </body>
+        <canvas class="canvas" id="occupancyChart1"></canvas>
+        <canvas class="canvas" id="occupancyChart2"></canvas>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1"></script>
+        <script src="../JS/jquery-3.1.0.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="../JS/amazon-cognito-identity.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js/dist/amazon-cognito-identity.min.js"></script>
+        <script src="../JS/roomoccupancy.js"></script>
+        <script src="../JS/dateDisplayOccupancy.js"> </script>
+    
+    </body>
 </html>
