@@ -9,8 +9,6 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         ClientId: _config.cognito.userPoolClientId
     };
 
-    var userPool;
-
     if (!(_config.cognito.userPoolId &&
         _config.cognito.userPoolClientId &&
         _config.cognito.region)) {
@@ -18,7 +16,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
       return;
     }
 
-    userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+    var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
     if (typeof AWSCognito !== 'undefined') {
         AWSCognito.config.region = _config.cognito.region;
@@ -46,8 +44,8 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         var startTimeSelect = document.getElementById('start_time');
         var endTimeSelect = document.getElementById('end_time');
 
-        startTimeSelect.innerHTML = ''; // Clear the options
-        endTimeSelect.innerHTML = ''; // Clear the options
+        startTimeSelect.innerHTML = '';
+        endTimeSelect.innerHTML = '';
 
         var startTime = new Date().setHours(0, 0, 0, 0);
         var endTime = new Date().setHours(24, 0, 0, 0);
@@ -83,9 +81,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         endTimeSelect.value = '20:00';
     }
 
-    // Call the function to generate time intervals on page load
     generateTimeIntervals();
-
 
     // Booking
     TRM_RoomBooking_API.bookRoom = function bookRoom() {
@@ -138,9 +134,8 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             .catch(function (error) {
                 console.error('Error:', error);
             });
-        });
+        });//displayDate();
     }
-
 
     // Delete Booking
     TRM_RoomBooking_API.deleteBooking = function deleteBooking() {
@@ -152,7 +147,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         var booking_code = document.getElementById('booking_code').value;
     
         if (booking_code === undefined || booking_code === '') {
-        alert('Please write the booking code');
+        alert('Please write the correct booking code');
         return;
         }
     
@@ -193,7 +188,6 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             });
         });
     }
-
 
     // Update booking
     TRM_RoomBooking_API.updateBooking = function updateBooking() {
