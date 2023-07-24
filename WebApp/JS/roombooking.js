@@ -214,7 +214,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
     
         TRM_RoomBooking_API.authToken.then(function setAuthToken(token) {
             fetch(_config.api.invokeUrl + "/updatebooking", {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': token

@@ -71,12 +71,11 @@ body {
     position: absolute;
     top: 15px;
     right: 72px;
-    bottom: 900px;
     gap: 20px;
 }
 
 #signOutButton {
-    background-color: #273a57;
+    background-color: #880808;
     color: #fff;
     border-color: #fff !important;
 }
@@ -86,7 +85,7 @@ body {
 }
 
 #signOutButton:hover {
-    background-color:#1b283c;
+    background-color:#AA4A44;
     color: #fff;
 }
 
