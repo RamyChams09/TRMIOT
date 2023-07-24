@@ -96,7 +96,12 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             // Function to display booking data in the tables
             var bookingsToday = JSON.parse(responseData)[formattedDate];
             var userstatus = document.getElementById("userstatus");
-            var dis = bookingsToday[0]['user_status'];
+            var dis = "";
+
+            if (bookingsToday && bookingsToday.length > 0) {
+                dis = bookingsToday[0]['user_status'];
+            }
+
             var responseHTML = "Welcome: " + dis;
             userstatus.innerHTML = responseHTML;
 
@@ -123,7 +128,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
 
                     row += `
                         <td>${bookingsToday[i].start_time}</td>
-                        <td>${bookingsToday[i].end_time}</td>                    
+                        <td>${bookingsToday[i].end_time}</td>
                         </tr>`;
 
                     // Add the row to the respective table based on room ID
@@ -134,7 +139,14 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
                     }
                 }
             }
-        } catch (error) {
+            else {
+            // Display a message when there are no bookings for the selected date
+            var noBookingsRow = `<tr><td colspan="3">No bookings for the selected date.</td></tr>`;
+            room1Table.innerHTML = noBookingsRow;
+            room2Table.innerHTML = noBookingsRow;
+            }
+        }
+        catch (error) {
             console.error('Error:', error);
         }
     }
