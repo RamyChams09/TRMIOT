@@ -197,24 +197,24 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         var start_time = document.getElementById('start_time').value;
         var end_time = document.getElementById('end_time').value;
         var booking_code = document.getElementById('booking_code').value;
-
+    
         if (booking_code === undefined || booking_code === '') {
             alert('Please write the correct booking code');
             return;
         }
-
+    
         var postData = {
             'meetingroomID': roomID,
             'booking_date': booking_date,
             'start_time': start_time,
             'end_time': end_time,
             'booking_code': booking_code,
-            'to_address': '<email-address>',
+            'to_address': '<email-address>'
         };
     
         TRM_RoomBooking_API.authToken.then(function setAuthToken(token) {
             fetch(_config.api.invokeUrl + "/updatebooking", {
-                method: 'PUT',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': token
