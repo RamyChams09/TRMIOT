@@ -152,11 +152,8 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         }
     
         var postData = {
-        'meetingroomID': roomID,
         'booking_date': booking_date,
-        'start_time': start_time,
-        'end_time': end_time,
-        'booking_code': booking_code,
+        'booking_code': booking_code
         };
    
         TRM_RoomBooking_API.authToken.then(function setAuthToken(token) {
