@@ -134,7 +134,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             .catch(function (error) {
                 console.error('Error:', error);
             });
-        });//displayDate();
+        });
     }
 
     // Delete Booking
@@ -147,8 +147,8 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         var booking_code = document.getElementById('booking_code').value;
     
         if (booking_code === undefined || booking_code === '') {
-        alert('Please write the correct booking code');
-        return;
+            alert('Please write the correct booking code');
+            return;
         }
     
         var postData = {

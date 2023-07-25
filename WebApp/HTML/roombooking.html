@@ -13,96 +13,89 @@
 
     <body>
         <div class="background"></div>
-            <main class="container-fluid my-4">
-                <div class="row">
-                    <div class="col-md-3 col-sm-12">
-                        <div class="room-booking">
-                            <h2>Book a Room</h2>
+        <main class="container-fluid my-4">
+            <div class="row">
+                <div class="col-md-3 col-sm-12">
+                    <div class="room-booking">
+                        <h2>Book a Room</h2>
 
-                            <form action="#" id="bookingForm">
-                                <div class="form-group">
-                                    <label for="roomSelect">Select Room:</label>
-                                    <select id="roomSelect" class="form-control">
-                                        <option value="1">Room 1</option>
-                                        <option value="2">Room 2</option>
-                                    </select>
-                                </div>
+                        <form action="#" id="bookingForm">
+                            <div class="form-group">
+                                <label for="roomSelect">Select Room:</label>
+                                <select id="roomSelect" class="form-control">
+                                    <option value="1">Room 1</option>
+                                    <option value="2">Room 2</option>
+                                </select>
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="date">Booking Date:</label>
-                                    <input type="date" id="date" class="form-control" required>
-                                </div>
+                            <div class="form-group">
+                                <label for="date">Booking Date:</label>
+                                <input type="date" id="date" class="form-control" required>
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="start_time">Start Time:</label>
-                                    <select id="start_time" class="form-control" required></select>
-                                </div>
+                            <div class="form-group">
+                                <label for="start_time">Start Time:</label>
+                                <select id="start_time" class="form-control" required></select>
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="end_time">End Time:</label>
-                                    <select id="end_time" class="form-control" required></select>
-                                </div>
+                            <div class="form-group">
+                                <label for="end_time">End Time:</label>
+                                <select id="end_time" class="form-control" required></select>
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="booking_code">Booking code: (only add to delete a booking)</label>
-                                    <input type="text" id="booking_code" class="form-control">
-                                </div>
+                            <div class="form-group">
+                                <label for="booking_code">Booking code: (only add to delete a booking)</label>
+                                <input type="text" id="booking_code" class="form-control">
+                            </div>
 
-                                <div class="button-container">
-                                    <button onclick="TRM_RoomBooking_API.bookRoom()" type="submit" class="btn">Book Now</button>
-                                    <button onclick="TRM_RoomBooking_API.updateBooking()" type="submit" class="btn">Update Booking</button>
-                                    <button onclick="TRM_RoomBooking_API.deleteBooking()" type="submit" class="btn">Delete Booking</button>
-                                    <a href="roomoccupancy.html" class="btn">Room Occupancy</a>
-                                </div>
-                            </form>
-                        </div>
+                            <div class="button-container">
+                                <button onclick="TRM_RoomBooking_API.bookRoom()" type="submit" class="btn">Book Now</button>
+                                <button onclick="TRM_RoomBooking_API.updateBooking()" type="submit" class="btn">Update Booking</button>
+                                <button onclick="TRM_RoomBooking_API.deleteBooking()" type="submit" class="btn">Delete Booking</button>
+                                <a href="roomoccupancy.html" class="btn">Room Occupancy</a>
+                            </div>
+                        </form>
                     </div>
+                </div>
 
-                    <!--Booking Summary-->
-                    <div class="col-md-9 col-sm-12">
-                        <div class="booking-summary">
-                            <h2 class="date-picker">Booking Summary</h2>
-                            <div class="date-picker">
-                                <button class="btn" id="previousBtn" disabled>Previous</button>&nbsp;&nbsp;
-                                <span id="dateDisplay"></span>
-                                <button class="btn" id="nextBtn">Next</button>
-                            </div>
+                <!--Booking Summary-->
+                <div class="col-md-9 col-sm-12">
+                    <div class="booking-summary">
+                        <h2 class="date-picker">Booking Summary</h2>
+                        <div class="date-picker">
+                            <button class="btn" id="previousBtn" disabled>Previous</button>&nbsp;&nbsp;
+                            <span id="dateDisplay"></span>
+                            <button class="btn" id="nextBtn">Next</button>
+                        </div>
 
-                            <div class="booking-list">
-                                <h3>Room 1</h3>
-                                <table class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th style="width:10%">Booking code</th>
-                                        <th style="width:5%">Start time</th>
-                                        <th style="width:5%">End time</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="room1Table"></tbody>
-                                </table>
-                                
-                                <h3>Room 2</h3>
-                                <table class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th style="width:10%">Booking code</th>
-                                        <th style="width:5%">Start time</th>
-                                        <th style="width:5%">End time</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="room2Table"></tbody>
-                                </table>
-                            </div>
+                        <div class="booking-list">
+                            <h3>Room 1</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th style="width:10%">Booking code</th>
+                                    <th style="width:5%">Start time</th>
+                                    <th style="width:5%">End time</th>
+                                </tr>
+                                </thead>
+                                <tbody id="room1Table"></tbody>
+                            </table>
+                            
+                            <h3>Room 2</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th style="width:10%">Booking code</th>
+                                    <th style="width:5%">Start time</th>
+                                    <th style="width:5%">End time</th>
+                                </tr>
+                                </thead>
+                                <tbody id="room2Table"></tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-            </main>
-
-            <div class="signout-container">
-                <span id ="userstatus"></span>
-                <input type="submit" class="btn" id="signOutButton" value="Sign out" onclick="TRM_RoomBooking_API.signOut()">
             </div>
-
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
