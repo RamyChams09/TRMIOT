@@ -109,8 +109,21 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
 
             if (bookingsToday && bookingsToday.length > 0) {
                 dis = bookingsToday[0]['user_status'];
-                userstatus.innerHTML = "Welcome: " + dis;
+                var statusAdmin = dis.slice(-7);
+                var mailParts = dis.split('@');
+                var surnameLastname = mailParts[0];
+                var surname = surnameLastname.split('.')[0];
+                var lastname = surnameLastname.split('.')[1];
 
+                var formattedSurname = surname.charAt(0).toUpperCase() + surname.slice(1).toLowerCase();
+                var formattedLastname = lastname.charAt(0).toUpperCase() + lastname.slice(1).toLowerCase();
+        
+                userstatus.innerHTML = "Welcome: " + formattedSurname + " " + formattedLastname;
+                
+                if(statusAdmin === "[Admin]"){
+                    userstatus.innerHTML += " " + statusAdmin;
+                }
+                
                 for (var i = 0; i < bookingsToday.length; i++) {
 
                     // if booking was made by me, show the booking code
