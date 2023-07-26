@@ -73,7 +73,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
                     onFailure(err);
                 }
             }
-        );
+        );alert("You have been registered.");
     }
 
     function signin(email, password, onSuccess, onFailure) {
@@ -86,7 +86,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: onSuccess,
             onFailure: onFailure
-        });
+        });alert("You are signed in");
     }
 
     function verify(email, code, onSuccess, onFailure) {
@@ -96,7 +96,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             } else {
                 onFailure(err);
             }
-        });
+        });alert("You are verified");
     }
 
     function createCognitoUser(email) {
@@ -117,7 +117,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             onFailure: function(err){
                 alert(err.message || JSON.stringify(err));
             }
-        });
+        });alert("You requested a reset code");
     }
 
     TRM_RoomBooking_API.requestCodeToResetPassword = requestCodeToResetPassword;
@@ -132,7 +132,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             onFailure: function(err){
                 alert(err.message || JSON.stringify(err));
             }
-        });
+        });alert("You have resetted your pw");
     }
 
     TRM_RoomBooking_API.resetPassword = resetPassword;
@@ -149,19 +149,6 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         $('#forgotPasswordForm').submit(handleForgotPassword);
         $('#resetPasswordForm').submit(handleResetPassword);
     });
-
-    function signin(email, password, onSuccess, onFailure) {
-        var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
-            Username: email,
-            Password: password
-        });
-
-        var cognitoUser = createCognitoUser(email);
-        cognitoUser.authenticateUser(authenticationDetails, {
-            onSuccess: onSuccess,
-            onFailure: onFailure
-        });
-    }
 
     function handleSignin(event) {
         var email = $('#emailInputSignin').val();
@@ -225,7 +212,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
             }
         );
 
-        signin(email, newPassword,
+        signin(email, password,
             function signinSuccess() {
                 console.log('Successfully Logged In');
                 window.location.href = roombookingURL;
