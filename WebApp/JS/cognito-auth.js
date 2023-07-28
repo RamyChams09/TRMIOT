@@ -29,8 +29,9 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
     }
 
     TRM_RoomBooking_API.signOut = function signOut() {
-        console.log(userPool.getCurrentUser());
         userPool.getCurrentUser().signOut();
+        alert("You have been signed out.");
+        window.location.href = signinURL;
     };
 
     TRM_RoomBooking_API.authToken = new Promise(function fetchCurrentAuthToken(resolve, reject) {
@@ -147,28 +148,7 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
         $('#verifyForm').submit(handleVerify);
         $('#forgotPasswordForm').submit(handleForgotPassword);
         $('#resetPasswordForm').submit(handleResetPassword);
-        //$('#logOutButton').submit(handleSignOut);
     });
-
-    function logOut(){
-        
-        TRM_RoomBooking_API.signOut();
-        alert("You have been signed out.");
-        window.location.href = signinURL;
-    }
-
-    function signin(email, password, onSuccess, onFailure) {
-        var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
-            Username: email,
-            Password: password
-        });
-
-        var cognitoUser = createCognitoUser(email);
-        cognitoUser.authenticateUser(authenticationDetails, {
-            onSuccess: onSuccess,
-            onFailure: onFailure
-        });
-    }
 
     function handleSignin(event) {
         var email = $('#emailInputSignin').val();
@@ -228,16 +208,6 @@ var TRM_RoomBooking_API = window.TRM_RoomBooking_API || {};
                 window.location.href = signinURL;
             },
             function verifyError(err) {
-                alert(err);
-            }
-        );
-
-        signin(email, newPassword,
-            function signinSuccess() {
-                console.log('Successfully Logged In');
-                window.location.href = roombookingURL;
-            },
-            function signinError(err) {
                 alert(err);
             }
         );

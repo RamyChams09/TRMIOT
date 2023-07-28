@@ -1,153 +1,126 @@
-/* room booking */
-.container {
-  justify-content: center;
-  width: 50%;
+.background {
+    position: absolute;
+    min-width: 100vH;
+    min-height: 100vH;
+    background-image: url("../trmLogo.png");
+    background-size: cover;
+    opacity: 0.2;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-image: url("../trmLogo.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-color: black;
-  color: #fff; /* Set the default text color to white */
+    display: flex;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgb(23, 27, 36);
+    color: #fff;flex-direction: column;
 }
 
-/* Summary roombooking and the whole Page */
-main {
-  flex: 1;
-}
-
-.logout-container {
-  position: fixed;
-  right: 30px;
-  z-index: 9999;
-}
-
-.logout-button {
-  background-color: #880808; /* Set the background color */
-  color: #fff; /* Set the text color */
-  border: none; /* Remove the border */
-  font-size: 20px;
-  font-weight: bold;
-  padding: 10px 30px; /* Adjust the padding */
+.room-booking {
+    margin: 65px 60px 0 60px;
 }
 
 .booking-summary {
-  background-color: rgba(200, 203, 206, 0.8); /* Adjust the background color and transparency */
-  padding: 20px;
-  height: 200%;
-  justify-content: center;
-  color: #000; /* Set the text color inside the booking summary */
-  margin-top: 77px;
-  margin-right: 10px;
+    background-color: rgba(184, 202, 220, 0.8);
+    padding: 20px;
+    height: 89.7%;
+    color: #000;
+    margin: 75px 60px 0 70px;
 }
 
 .booking-summary h2 {
-  font-size: 20px;
-  font-weight: bold;
-  color: #000; /* Set the heading color inside the booking summary */
-  text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .booking-summary table {
-  border-collapse: collapse;
-  width: 100%;
+    border-collapse: collapse;
+    width: 100%;
 }
 
 .booking-summary th,
 .booking-summary td {
-  border: 1px solid black;
-  padding: 8px;
+    border: 2px solid black;
+    padding: 8px;
+    color: #000;
+}
+
+.booking-summary th {
+    background-color: #30486c;
+    color: #fff;
 }
 
 .booking-list {
-  margin-top: 20px;
-  height: calc(100% - 50px);
-  overflow-y: auto;
-}
-
-.booking-list .booking-item {
-  margin-bottom: 10px;
-}
-
-.booking-list .booking-item .booking-details {
-  font-size: 14px;
-  color: #000; /* Set the text color inside the booking list */
+    margin-top: 20px;
+    height: calc(100% - 50px);
+    overflow-y: auto;
 }
 
 /* Date Display */
-.timebtn {
-  display: flex;
-  justify-content: center;
+.date-picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+    gap: 20px;
 }
 
-/* View room Occupancy */
-.view-room-booking-btn {
-  background-color: #007bff; /* Set the background color */
-  color: #fff; /* Set the text color */
-  padding: 10px 20px; /* Adjust the padding */
-  font-size: 16px; /* Adjust the font size */
-  border: none; /* Remove the border */
-  margin-top: 30px;
-  margin-left: 218px;
+.signout-container {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 15px;
+    right: 72px;
+    gap: 20px;
 }
 
-.view-room-booking-btn:hover {
-  background-color: #0056b3; /* Set the background color on hover */
+#signOutButton {
+    background-color: #273a57;
+    color: #fff;
+    border-color: #fff !important;
 }
 
-/* Book Now Button */
-.book-now-btn {
-  background-color: #007bff; /* Set the background color */
-  color: #fff; /* Set the text color */
-  padding: 10px 20px; /* Adjust the padding */
-  font-size: 16px; /* Adjust the font size */
-  border: none; /* Remove the border */
-  margin-right: 50px;
-  margin-top: 20px;
-}g
-
-.book-now-btn:hover {
-  background-color: #0056b3; /* Set the background color on hover */
+#userstatus {
+    gap: 10px;
+    min-width: fit-content;
 }
 
-/* Update Booking Button */
-.update-booking-btn {
-  background-color: #007bff; /* Set the background color */
-  color: #fff; /* Set the text color */
-  padding: 10px 20px; /* Adjust the padding */
-  font-size: 16px; /* Adjust the font size */
-  border: none; /* Remove the border */
-  margin-right: 50px;
-  margin-top: 20px;
+#signOutButton:hover {
+    background-color:#1b283c;
+    color: #fff;
 }
 
-.update-booking-btn:hover {
-  background-color: #0056b3; /* Set the background color on hover */
-}
-
-/* Delete Booking Button */
-.delete-booking-btn {
-  background-color: #007bff; /* Set the background color */
-  color: #fff; /* Set the text color */
-  padding: 10px 20px; /* Adjust the padding */
-  font-size: 16px; /* Adjust the font size */
-  border: none; /* Remove the border */
-  margin-left: 0px;
-  margin-top: 20px;
-}
-
-.delete-booking-btn:hover {
-  background-color: #0056b3; /* Set the background color on hover */
-}
-
-/* Centered Button Container */
 .button-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
+    display: flex;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+
+.btn {
+    margin: 10px 5px;
+    padding: 10px 20px;
+    width: 100%;
+    background-color: #273a57;
+    border-color: #fff !important;
+    color: #fff;
+}
+
+.btn:hover {
+    background-color:#1b283c;
+    color: #fff;
+}
+
+/* Media Queries */
+@media (max-width: 767px) {
+    /* Small screens */
+    .button-container {
+    flex-direction: column;
+    align-items: center;
+    }
+}
+
+#dateDisplay {
+    display: flex;
+    justify-content: center;
+    width: 40%;
 }

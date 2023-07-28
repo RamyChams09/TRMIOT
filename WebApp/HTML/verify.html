@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html class="en">
     <head>
 
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <title>TRM Room Booking - Verify Email</title>
 
         <!-- Add Bootstrap and CSS -->
@@ -14,10 +13,14 @@
 
     </head>
 
-    <body class="background-image"> 
+    <body> 
+
         <div class="container">
+            <div class="background"></div>
+
             <section class="form-wrap">
                 <h1 class="mt-5">Verify Email</h1>
+                
                 <form id="verifyForm" class="mt-4">
                     <div class="form-group">
                         <input type="email" id="emailInputVerify" placeholder="Email" class="form-control" required>
@@ -26,7 +29,7 @@
                         <input type="text" id="codeInputVerify" placeholder="Verification Code" class="form-control" pattern=".*" required>
                     </div>
                     <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Verify">
+                        <input type="submit" class="btn" value="Verify">
                     </div>
                 </form>
             </section>
