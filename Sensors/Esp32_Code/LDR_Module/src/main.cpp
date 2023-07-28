@@ -6,6 +6,9 @@
 #include <ArduinoJson.h>
 #include <PubSubClient.h>
 #include <vector>
+#include <fstream>
+#include <iostream>
+#include <string.h>
 
 #include "secrets.hpp"
 
@@ -50,6 +53,53 @@ int  reMap(int analogValue)
     int newAnalogValue = (((analogValue - MIN_ANALOG_VALUE) * newRange) / oldRange) +  MIN_MAPPED_VALUE;
 
     return newAnalogValue;
+}
+
+
+/**
+* Reads the content of the file.
+*/
+const char* readTextFile(const std::string& filePath) {
+    std::ifstream file(filePath);
+    if (!file) {
+        std::cerr << "Failed to open file: " << filePath << std::endl;
+        return nullptr;
+    }
+
+    std::string content((std::istreambuf_iterator<char>(file)),
+                        std::istreambuf_iterator<char>());
+
+    // Allocate memory for the content of the file
+    char* fileContent = new char[content.length() + 1];
+    strcpy(fileContent, content.c_str());
+
+    return fileContent;
+}
+
+/**
+* Converts readed content into useableform.
+*/
+static const char* convertToStaticConstChar(const char* fileContent) {
+    static const char convertedContent[] PROGMEM = "";
+    strcpy(const_cast<char*>(convertedContent), fileContent);
+    return convertedContent;
+}
+
+
+/**
+* Inserts key or certificate to necessary functions
+*/
+static const char* insertCertificate(const std::string& filePath)
+{
+  const char* fileContent = readTextFile(filePath);
+  
+  if(fileContent != nullptr)
+  {
+    auto convertedContent = convertToStaticConstChar(fileContent);
+    delete[] fileContent;
+    return convertedContent;
+  }
+  return "No Content found!";
 }
 
 
@@ -274,6 +324,7 @@ void connectToAWS()
     return;
   }
 
+  //net.setCACert(insertCertificate(PATH_AWS_CERT_CA));
   net.setCACert(AWS_CERT_CA);
   net.setCertificate(AWS_CERT_CRT);
   net.setPrivateKey(AWS_CERT_PRIVATE);

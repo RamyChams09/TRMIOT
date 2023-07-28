@@ -6,18 +6,12 @@ project       = "Smart-Office-Solution"
 naming_prefix = "TRM-IaC"
 
 
-########################################
-#       NETWORK
-########################################
-vpc_cidr_block = {
-  Development = "10.0.0.0/16"
-  UAT         = "10.1.0.0/16"
-  Production  = "10.2.0.0/16"
-}
 
-vpc_subnet_count = {
-  Development = 1
-  UAT         = 2
-  Production  = 3
-}
+##########################
+#       BACKEND
+##########################
+backend_bucket         = "state-bucket-trm"
+backend_key            = lower(local.naming_prefix)
+backend_region         = "eu-west-1"
+backend_dynamodb_table = "state-lock-db-trm"
 

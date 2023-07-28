@@ -1,0 +1,4 @@
+Here in this folder, there will be necessary .txt files will be created after initialization of IaC infrastructure.
+Once they are created, put them in Sensors/Esp32_Code/LDR_Module/include/secrets.hpp file. 
+
+secrets.hpp file will has secrets. So it wont be in the folder. In order to be able to create that file, read README of Repo.
