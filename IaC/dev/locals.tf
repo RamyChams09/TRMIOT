@@ -10,6 +10,6 @@ locals {
     project     = "${var.company}-${var.project}"
     environment = terraform.workspace
   }
-  naming_prefix  = "${var.naming_prefix}-${terraform.workspace}"
-  s3_bucket_name = lower("${local.naming_prefix}-${random_integer.rand.result}")
+
+  naming_prefix = "${var.naming_prefix}-${terraform.workspace}"
 }

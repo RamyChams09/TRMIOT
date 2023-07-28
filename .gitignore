@@ -4,8 +4,12 @@ getMethod.py
 
 #sensor Libraries
 packages
+**/sensor_certificates/*.txt
+packages.zip
+
 #sensor Sensitive Data
 secrets.hpp
+secrets_test.hpp
 
 #Local .terraform directories
 **/.terraform/*
