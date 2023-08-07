@@ -1,14 +1,12 @@
 import json
-
 import boto3
 
 import variables
-from changeDateFormat import changeDateFormat
+from validateNewEntry import validateNewEntry
 from checkUpdateBookedEntry import checkUpdateBookedEntry
 from deleteOldEntry import deleteOldEntry
-from returnMessage import create_response
 from sendEmail import sendEmail
-from validateNewEntry import validateNewEntry
+from returnMessage import create_response
 
 # load the clients
 dynamodb = boto3.resource("dynamodb")
@@ -24,22 +22,22 @@ def lambda_handler(event, context):
         return create_response(400, 'Missing parameters in request.')
 
     userEmail = event.get('requestContext', {})
-    body = json.loads(event.get('body', {}))
+    body = event.get('body', {})
 
     print("User email:", userEmail)  # Log user email
     print("Body:", body)  # Log the received body
 
-    if 'booking_code' not in body or not body["booking_code"] or 'booking_date' not in body or not body[
-        "booking_date"] or 'authorizer' not in userEmail:
+    if 'booking_code' not in body or not body.get("booking_code") or 'booking_date' not in body or not body.get(
+            "booking_date") or 'authorizer' not in userEmail:
         return create_response(400, 'Missing parameters in body.')
 
     booking_code = body["booking_code"]
     employeeID = userEmail['authorizer']['claims']['email']
-    booking_date = changeDateFormat(body['booking_date'])  # The date is already in the correct format "24-07-2023"
-    new_meetingroomID = body["meetingroomID"]
-    new_date = changeDateFormat(body['booking_date'])  # The date is already in the correct format "30-07-2023"
-    new_start_time = body["start_time"]
-    new_end_time = body["end_time"]
+    booking_date = body['booking_date']  # The date is already in the correct format "24-07-2023"
+    new_meetingroomID = body["new_meetingroomID"]
+    new_date = body['new_date']  # The date is already in the correct format "30-07-2023"
+    new_start_time = body["new_start_time"]
+    new_end_time = body["new_end_time"]
 
     body_message = f"""{variables.BODY}
 Your booking has been updated as below:\n
@@ -73,7 +71,7 @@ Your booking team"""
                     )
 
                     if post_response['ResponseMetadata']['HTTPStatusCode'] == 200:
-                        email_response = sendEmail(body_message, employeeID)
+                        email_response = sendEmail(body_message)
 
                         print(create_response(200, 'Booking has been updated and email sent.'))
                         return create_response(200, 'Booking has been updated and email sent.')
