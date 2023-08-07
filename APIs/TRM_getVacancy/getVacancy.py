@@ -1,15 +1,12 @@
 import boto3
-import json
-# import variable
 
 from formatRoom import formatRoom
 from returnMessage import create_response
 
 
-# from getCurrentDate import dateFormat
+# import variable
 
 
-# Todo: Expand to meet requirements!!!!
 def lambda_handler(event, context):
     print(event)
     """
@@ -21,10 +18,6 @@ def lambda_handler(event, context):
 
     """
 
-    # Get the table name and key from the event data
-    # booking_date_V = event['booking_date']
-    #   booking_date_V = dateFormat()
-
     # Create a DynamoDB client
     dynamodb = boto3.client('dynamodb')
     table = 'TRM_MeetingRoom_Booking'
@@ -34,6 +27,24 @@ def lambda_handler(event, context):
     employeeID = userEmail['authorizer']['claims']['email']
     print(employeeID)
 
+    try:
+        response = dynamodb.get_item(TableName="UserList",
+                                     Key={
+                                         'User Name': {'S': employeeID}
+                                     }
+                                     )
+        Admin_status = response['Item']['Admin']['S']
+        print(Admin_status)
+        if Admin_status == 'True':
+            user_status = f"{employeeID} [Admin]"
+        elif Admin_status == 'False':
+            user_status = f"{employeeID}"
+        else:
+            print('wrong')
+            user_status = f"{employeeID} [EXT]"
+        print(user_status)
+    except Exception as e:
+        return create_response(500, f'Error: {str(e)}')
     try:
         # Retrieve the items from DynamoDB
         response = dynamodb.scan(TableName=table)
@@ -46,8 +57,8 @@ def lambda_handler(event, context):
             meetingroom_data.append(item)
 
         # Format the data and pass the employee ID
-        response = formatRoom(meetingroom_data, employeeID)
+        response = formatRoom(meetingroom_data, employeeID, user_status, Admin_status)
         return create_response(200, response)
 
     except Exception as e:
-        print(500, f'Error: {str(e)}')
+        return create_response(500, f'Error: {str(e)}')
